@@ -9,7 +9,6 @@ export default React.forwardRef((props, ref) => (
         __css={{
             color: 'inherit',
             textDecoration: 'none',
-            fontWeight: 'bold',
             display: 'inline-block',
             '&:hover, &:focus, &.active': {
                 color: 'primary',

@@ -1,3 +1,5 @@
+import { lighten, darken } from '@theme-ui/color';
+
 const alerts = {
 	primary: {
 		color: 'background',
@@ -23,36 +25,146 @@ const alerts = {
 		bg: 'background',
 		borderColor: 'error',
 		borderWidth: 'thin',
-		borderStyle: 'primary'
+		borderStyle: 'solid'
 	}
 }
 
 const colors = {
 	primary: '#009de9',
-	secondary: '#6e707a',
-	muted: '#a4afb7',
+	//secondary: '#13568f',
+	secondary: darken('#009de9', 0.15)(),
+	muted: '#717F8A',
 	card: '#ffffff',
 	text: '#000000',
-	background: '#f0f0ff',
+	background: '#f2f2ff',
 	border: '#dfdfe6',
 	error: '#e10019',
 	warning: '#ffbf00',
 	success: '#19d400',
 	modes : {
 		dark: {
-			text: '#ffffff',
+			//secondary: '#9cd4fc',
+			secondary: lighten('#009de9', 0.15)(),
+			muted: '#a4afb7',
 			card: '#171D3F',
-			background: '#11162e',
+			text: '#ffffff',
+			background: '#0C0F21',
 			border: '#18345f'
 		}
 	}
 }
 
+const layout = {
+	container : {
+
+	},
+	sidebar: {
+		bg: 'card',
+		flexBasis: 'sidebar',
+		flexGrow: '0',
+		flexShrink: '0',
+		height: '100%'
+	}
+}
+
+const links = {
+	nav: {
+		px: 2,
+		py: 1,
+		color: 'text',
+	},
+	sidebar: {
+		display: 'block',
+		color: 'muted',
+		stroke: 'muted',
+		strokeWidth: '1px',
+		fill: 'muted',
+		bg: 'card',
+		px: 4,
+		py: 3,
+		borderLeftWidth: 'heavy',
+		borderLeftStyle: 'solid',
+		borderLeftColor: 'transparent',
+		transition: 'all .25s ease-in-out',
+
+		':hover' : {
+			bg: 'background',
+			color: 'text',
+			stroke: 'text',
+			fill: 'text'
+		},
+		'&.active' : {
+			bg: 'background',
+			borderLeftWidth: 'heavy',
+			borderLeftColor: 'primary',
+			color: 'text',
+			stroke: 'text',
+			fill: 'text'
+		}
+	}
+}
+
+const buttons = {
+	default : {
+		bg: 'transparent',
+		color: 'text',
+		fill: 'text',
+		stroke: 'text',
+		fontWeight: 'bold',
+		fontFamily: 'body',
+		borderRadius: 'small',
+		transition: 'all .25s ease-in-out',
+		cursor: 'pointer',
+		':active, &.active' : {
+			bg: 'muted',
+			color: 'background',
+			fill: 'background',
+			stroke: 'background'
+		}
+	},
+	primary: {
+		fontWeight: 'bold',
+		fontFamily: 'body',
+		borderRadius: 'small',
+		transition: 'all .25s ease-in-out',
+		cursor: 'pointer',
+	},
+	secondary: {
+		bg: 'secondary',
+	},
+	outline: {
+		color: 'primary',
+		bg: 'transparent',
+		boxShadow: '0 0 0 1px inset ',
+		boxShadowColor: 'primary',
+		transition: 'all .25s ease-in-out',
+		fill: 'primary',
+		stroke: 'primary',
+		borderRadius: 'small',
+		fontWeight: 'bold',
+		fontFamily: 'body',
+		cursor: 'pointer',
+		':hover' : {
+			boxShadow: '0 0 0 2px inset',
+			boxShadowColor: 'secondary',
+			color: 'secondary',
+			fill: 'secondary',
+			stroke: 'secondary',
+		}
+	},
+	icon: {
+		borderColor: 'border'
+	},
+	close: {
+		
+	}
+}
 
 export default {
-	space: [0, 4, 8, 16, 24, 32, 48, 64, 72],
+	space: [0, 4, 8, 12, 16, 24, 32, 48, 64, 72],
 	sizes: {
-		container: '75%'
+		container: '75%',
+		sidebar: '256px',
 	},
 	fonts: {
         body: '"Lato", system-ui, sans-serif',
@@ -84,33 +196,7 @@ export default {
 		heading: 1.125,
 	},
 	colors,
-	buttons: {
-		primary: {
-			color: 'card',
-            bg: 'primary',
-            fontWeight: 'button',
-			fontFamily: 'body',
-			':hover' : {
-				bg: 'text'
-			}
-		},
-		secondary: {
-			bg: 'secondary',
-		},
-		outline: {
-			color: 'primary',
-			bg: 'transparent',
-            boxShadow: 'inset 0 0 0 1px',
-            fontWeight: 'button',
-            fontFamily: 'body',
-		},
-		icon: {
-			borderColor: 'border'
-		},
-		close: {
-			
-		}
-	},
+	buttons,
 	icons: {
 		primary: {
 			fill: 'none',
@@ -128,10 +214,15 @@ export default {
 			fill: 'error',
 		}
 	},
+	radii: {
+		small: '4px',
+		medium: '8px',
+		rounded: '99999px'
+	},
 	cards: {
 		primary: {
 			padding: 2,
-			borderRadius: 8,
+			borderRadius: 'medium',
 			boxShadow: '0 0 8px rgba(0, 0, 0, 0.125)',
 			backgroundColor: 'card'
 		},
@@ -171,19 +262,13 @@ export default {
 
 	},
 	borderWidths: {
-		thin: '1px'
+		thin: '1px',
+		heavy: '4px'
 	},
 	borderStyles: {
-		primary: 'solid'
+		solid: 'solid'
 	},
-	links: {
-		nav: {
-			px: 2,
-			py: 1,
-			textTransform: 'uppercase',
-			letterSpacing: '0.2em',
-		}
-	},
+	links,
 	alerts,
 	messages: {
 		color: 'text',
@@ -210,11 +295,7 @@ export default {
 			borderRadius: 99999
 		}
 	},
-	layout : {
-		container: {
-			
-		}
-	},
+	layout,
 	styles: {
 		root: {
 			fontFamily: 'body',
@@ -271,6 +352,7 @@ export default {
 		},
 		a: {
 			color: 'primary',
+			fontWeigth: 'body',
 		},
 		img: {
 			maxWidth: '100%',

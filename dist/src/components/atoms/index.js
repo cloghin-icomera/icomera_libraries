@@ -183,6 +183,12 @@ Object.defineProperty(exports, "NavLink", {
     return _NavLink.default;
   }
 });
+Object.defineProperty(exports, "NavLinkRouted", {
+  enumerable: true,
+  get: function get() {
+    return _NavLinkRouted.default;
+  }
+});
 Object.defineProperty(exports, "Message", {
   enumerable: true,
   get: function get() {
@@ -261,6 +267,8 @@ var _AspectImage = _interopRequireDefault(require("./AspectImage/AspectImage"));
 var _Container = _interopRequireDefault(require("./Container/Container"));
 
 var _NavLink = _interopRequireDefault(require("./NavLink/NavLink"));
+
+var _NavLinkRouted = _interopRequireDefault(require("./NavLinkRouted/NavLinkRouted"));
 
 var _Message = _interopRequireDefault(require("./Message/Message"));
 

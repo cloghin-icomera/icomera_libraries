@@ -326,7 +326,20 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms/nav-link@0.0.4": {
+    "icomera.components/atoms/nav-link-routed@0.0.1": {
+        "files": [
+            {
+                "relativePath": "src/components/atoms/NavLinkRouted/NavLinkRouted.js",
+                "test": false,
+                "name": "NavLinkRouted.js"
+            }
+        ],
+        "mainFile": "src/components/atoms/NavLinkRouted/NavLinkRouted.js",
+        "trackDir": "src/components/atoms/NavLinkRouted",
+        "origin": "AUTHORED",
+        "exported": true
+    },
+    "icomera.components/atoms/nav-link@0.0.5": {
         "files": [
             {
                 "relativePath": "src/components/atoms/NavLink/NavLink.js",
@@ -430,7 +443,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms@0.0.3": {
+    "icomera.components/atoms@0.0.4": {
         "files": [
             {
                 "relativePath": "src/components/atoms/index.js",
@@ -439,6 +452,31 @@
             }
         ],
         "mainFile": "src/components/atoms/index.js",
+        "origin": "AUTHORED",
+        "exported": true
+    },
+    "icomera.components/layout/sidebar@0.0.1": {
+        "files": [
+            {
+                "relativePath": "src/components/layout/Sidebar/Sidebar.js",
+                "test": false,
+                "name": "Sidebar.js"
+            }
+        ],
+        "mainFile": "src/components/layout/Sidebar/Sidebar.js",
+        "trackDir": "src/components/layout/Sidebar",
+        "origin": "AUTHORED",
+        "exported": true
+    },
+    "icomera.components/layout@0.0.1": {
+        "files": [
+            {
+                "relativePath": "src/components/layout/index.js",
+                "test": false,
+                "name": "index.js"
+            }
+        ],
+        "mainFile": "src/components/layout/index.js",
         "origin": "AUTHORED",
         "exported": true
     },
@@ -455,7 +493,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/add-circle@0.0.4": {
+    "icomera.icons/outline/add-circle@0.0.5": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/AddCircle/AddCircle.js",
@@ -468,7 +506,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/add@0.0.1": {
+    "icomera.icons/outline/add@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/Add/Add.js",
@@ -481,7 +519,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/arrow-down@0.0.3": {
+    "icomera.icons/outline/arrow-down@0.0.4": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/ArrowDown/ArrowDown.js",
@@ -494,7 +532,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/arrow-up@0.0.3": {
+    "icomera.icons/outline/arrow-up@0.0.4": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/ArrowUp/ArrowUp.js",
@@ -507,7 +545,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/calendar@0.0.1": {
+    "icomera.icons/outline/calendar@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/Calendar/Calendar.js",
@@ -520,7 +558,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/confirm@0.0.2": {
+    "icomera.icons/outline/confirm@0.0.3": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/Confirm/Confirm.js",
@@ -533,7 +571,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/copy@0.0.1": {
+    "icomera.icons/outline/copy@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/Copy/Copy.js",
@@ -546,7 +584,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/delete@0.0.2": {
+    "icomera.icons/outline/delete@0.0.3": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/Delete/Delete.js",
@@ -559,7 +597,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/edit@0.0.1": {
+    "icomera.icons/outline/edit@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/Edit/Edit.js",
@@ -572,7 +610,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/kibana@0.0.1": {
+    "icomera.icons/outline/kibana@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/Kibana/Kibana.js",
@@ -585,7 +623,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/link@0.0.1": {
+    "icomera.icons/outline/link@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/Link/Link.js",
@@ -598,7 +636,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/portal@0.0.1": {
+    "icomera.icons/outline/portal@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/Portal/Portal.js",
@@ -611,7 +649,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/remove-circle@0.0.2": {
+    "icomera.icons/outline/remove-circle@0.0.3": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/RemoveCircle/RemoveCircle.js",
@@ -624,7 +662,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/remove@0.0.1": {
+    "icomera.icons/outline/remove@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/Remove/Remove.js",
@@ -637,7 +675,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/search@0.0.1": {
+    "icomera.icons/outline/search@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/Search/Search.js",
@@ -650,7 +688,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/sync@0.0.1": {
+    "icomera.icons/outline/sync@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/Sync/Sync.js",
@@ -663,7 +701,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/system@0.0.1": {
+    "icomera.icons/outline/system@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/System/System.js",
@@ -676,7 +714,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/timer@0.0.1": {
+    "icomera.icons/outline/timer@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/Timer/Timer.js",
@@ -689,7 +727,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline/upload@0.0.1": {
+    "icomera.icons/outline/upload@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/Upload/Upload.js",
@@ -702,7 +740,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline@0.0.4": {
+    "icomera.icons/outline@0.0.5": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/index.js",
@@ -714,7 +752,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/solid/error@0.0.1": {
+    "icomera.icons/solid/error@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/solid/Error/Error.js",
@@ -727,7 +765,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/solid/grid-view@0.0.1": {
+    "icomera.icons/solid/grid-view@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/solid/GridView/GridView.js",
@@ -740,7 +778,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/solid/list-view@0.0.1": {
+    "icomera.icons/solid/list-view@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/solid/ListView/ListView.js",
@@ -753,7 +791,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/solid/success@0.0.1": {
+    "icomera.icons/solid/success@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/solid/Success/Success.js",
@@ -766,7 +804,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/solid/sync-action@0.0.1": {
+    "icomera.icons/solid/sync-action@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/solid/SyncAction/SyncAction.js",
@@ -779,7 +817,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/solid@0.0.1": {
+    "icomera.icons/solid@0.0.2": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/solid/index.js",
@@ -791,7 +829,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/svg@0.0.6": {
+    "icomera.icons/svg@0.0.7": {
         "files": [
             {
                 "relativePath": "src/icons/SVG/SVG.js",
@@ -804,7 +842,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.themes/icomera@0.0.29": {
+    "icomera.themes/icomera@0.0.30": {
         "files": [
             {
                 "relativePath": "src/themes/icomera.js",

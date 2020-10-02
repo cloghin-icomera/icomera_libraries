@@ -28,6 +28,7 @@ import AspectRatio from './AspectRatio/AspectRatio'
 import AspectImage from './AspectImage/AspectImage'
 import Container from './Container/Container'
 import NavLink from './NavLink/NavLink'
+import NavLinkRouted from './NavLinkRouted/NavLinkRouted'
 import Message from './Message/Message'
 import IconButton from './IconButton/IconButton'
 import MenuButton from './MenuButton/MenuButton'
@@ -63,6 +64,7 @@ export {
     AspectImage,
     Container,
     NavLink,
+    NavLinkRouted,
     Message,
     IconButton,
     MenuButton

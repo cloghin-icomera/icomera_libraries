@@ -4,6 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _color = require("@theme-ui/color");
+
 var alerts = {
   primary: {
     color: 'background',
@@ -35,7 +38,7 @@ var alerts = {
 var colors = {
   primary: '#009de9',
   secondary: '#6e707a',
-  muted: '#a4afb7',
+  muted: '#818E96',
   card: '#ffffff',
   text: '#000000',
   background: '#f0f0ff',
@@ -47,15 +50,27 @@ var colors = {
     dark: {
       text: '#ffffff',
       card: '#171D3F',
-      background: '#11162e',
-      border: '#18345f'
+      background: '#0C0F21',
+      border: '#18345f',
+      muted: '#a4afb7'
     }
   }
 };
+var layout = {
+  container: {},
+  sidebar: {
+    bg: 'card',
+    flexBasis: 'sidebar',
+    flexGrow: '0',
+    flexShrink: '0',
+    height: '100%'
+  }
+};
 var _default = {
-  space: [0, 4, 8, 16, 24, 32, 48, 64, 72],
+  space: [0, 4, 8, 12, 16, 24, 32, 48, 64, 72],
   sizes: {
-    container: '75%'
+    container: '75%',
+    sidebar: '256px'
   },
   fonts: {
     body: '"Lato", system-ui, sans-serif',
@@ -170,17 +185,43 @@ var _default = {
   },
   borders: {},
   borderWidths: {
-    thin: '1px'
+    thin: '1px',
+    heavy: '4px'
   },
   borderStyles: {
-    primary: 'solid'
+    solid: 'solid'
   },
   links: {
     nav: {
       px: 2,
       py: 1,
-      textTransform: 'uppercase',
-      letterSpacing: '0.2em'
+      color: 'text'
+    },
+    sidebar: {
+      display: 'block',
+      color: 'muted',
+      stroke: 'muted',
+      strokeWidth: '1px',
+      fill: 'muted',
+      px: 5,
+      py: 3,
+      borderLeftWidth: 'heavy',
+      borderLeftStyle: 'solid',
+      borderLeftColor: 'transparent',
+      ':hover': {
+        bg: (0, _color.lighten)('card', .1),
+        color: 'text',
+        stroke: 'text',
+        fill: 'text'
+      },
+      '&.active': {
+        bg: 'background',
+        borderLeftWidth: 'heavy',
+        borderLeftColor: 'primary',
+        color: 'text',
+        stroke: 'text',
+        fill: 'text'
+      }
     }
   },
   alerts: alerts,
@@ -209,9 +250,7 @@ var _default = {
       borderRadius: 99999
     }
   },
-  layout: {
-    container: {}
-  },
+  layout: layout,
   styles: {
     root: {
       fontFamily: 'body',
@@ -267,7 +306,8 @@ var _default = {
       lineHeight: 'body'
     },
     a: {
-      color: 'primary'
+      color: 'primary',
+      fontWeigth: 'body'
     },
     img: {
       maxWidth: '100%'
