@@ -14,7 +14,11 @@ export const ColorModeProvider = ({mode, children}) => {
 	const new_theme = applyColorMode(theme, mode)
 	return (
 		<ThemeProvider theme={new_theme}>
-			{children}
+			<ColorContext.Provider value={mode}>
+				{children}
+			</ColorContext.Provider>
 		</ThemeProvider>
 	)
 }
+
+export const ColorContext = React.createContext('default')

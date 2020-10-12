@@ -1,9 +1,9 @@
-import { lighten, darken } from '@theme-ui/color';
+import { lighten, darken, alpha } from '@theme-ui/color';
 
 const alerts = {
 	primary: {
 		color: 'background',
-		bg: 'primary',
+		bg: 'brand',
 		fontSize: 1,
 	},
 	secondary: {
@@ -31,25 +31,29 @@ const alerts = {
 
 const colors = {
 	primary: '#009de9',
-	//secondary: '#13568f',
-	secondary: darken('#009de9', 0.15)(),
-	muted: '#717F8A',
-	card: '#ffffff',
-	text: '#000000',
+	brand: '#009de9',
+	brand_hover: '#0077b3',
+	secondary: darken('#009de9', 0.2)(),
+	muted: '#6e7c91',
+	disabled: '#a8b0bd',
+	text: '#0C090A', // text colour on light backgrounds
 	background: '#f2f2ff',
+	card: '#ffffff',
 	border: '#dfdfe6',
-	error: '#e10019',
+	error: '#db001a',
 	warning: '#ffbf00',
 	success: '#19d400',
 	modes : {
 		dark: {
-			//secondary: '#9cd4fc',
-			secondary: lighten('#009de9', 0.15)(),
-			muted: '#a4afb7',
-			card: '#171D3F',
-			text: '#ffffff',
+			secondary: lighten('#009de9', 0.2)(),
+			brand_hover: '#4dc4ff',
+			muted: '#a8b0bd',
+			text: '#fcfcfc',
 			background: '#0C0F21',
-			border: '#18345f'
+			card: '#1A2046',
+			border: '#18345f',
+			error: '#FC001D',
+			disabled: '#6e7c91'
 		}
 	}
 }
@@ -96,64 +100,126 @@ const links = {
 		'&.active' : {
 			bg: 'background',
 			borderLeftWidth: 'heavy',
-			borderLeftColor: 'primary',
+			borderLeftColor: 'brand',
 			color: 'text',
 			stroke: 'text',
 			fill: 'text'
-		}
+		},
 	}
 }
 
 const buttons = {
 	default : {
-		bg: 'transparent',
+		bg: 'background',
 		color: 'text',
 		fill: 'text',
 		stroke: 'text',
+		fontSize: 2,
 		fontWeight: 'bold',
 		fontFamily: 'body',
 		borderRadius: 'small',
 		transition: 'all .25s ease-in-out',
 		cursor: 'pointer',
-		':active, &.active' : {
-			bg: 'muted',
-			color: 'background',
-			fill: 'background',
-			stroke: 'background'
+		'&:not(.active):hover' : {
+			bg: alpha('text', 0.15)
+		},
+		'&.active' : {
+			bg: 'text',
+			color: 'card',
+			fill: 'card',
+			stroke: 'card'
+		},
+		'&.disabled' : {
+			color: 'disabled',
+			fill: 'disabled',
+			stroke: 'disabled',
+			pointerEvents: 'none'
+		},
+		'&.rounded' : {
+			borderRadius: 'rounded'
 		}
 	},
 	primary: {
+		bg: 'brand',
+		color: 'card',
+		fill: 'card',
+		stroke: 'card',
+		fontSize: 2,
 		fontWeight: 'bold',
 		fontFamily: 'body',
 		borderRadius: 'small',
 		transition: 'all .25s ease-in-out',
 		cursor: 'pointer',
-	},
-	secondary: {
-		bg: 'secondary',
-	},
-	outline: {
-		color: 'primary',
-		bg: 'transparent',
-		boxShadow: '0 0 0 1px inset ',
-		boxShadowColor: 'primary',
-		transition: 'all .25s ease-in-out',
-		fill: 'primary',
-		stroke: 'primary',
-		borderRadius: 'small',
-		fontWeight: 'bold',
-		fontFamily: 'body',
-		cursor: 'pointer',
-		':hover' : {
-			boxShadow: '0 0 0 2px inset',
-			boxShadowColor: 'secondary',
-			color: 'secondary',
-			fill: 'secondary',
-			stroke: 'secondary',
+		'&:not(.active):hover' : {
+			bg: 'brand_hover',
+		},
+		'&.active' : {
+			bg: 'text',
+		},
+		'&.disabled' : {
+			bg: 'disabled',
+			pointerEvents: 'none'
+		},
+		'&.rounded' : {
+			borderRadius: 'rounded'
 		}
 	},
 	icon: {
-		borderColor: 'border'
+		bg: 'transparent',
+		color: 'muted',
+		fill: 'muted',
+		stroke: 'muted',
+		fontSize: 2,
+		fontWeight: 'bold',
+		fontFamily: 'body',
+		borderRadius: 'small',
+		borderColor: 'border',
+		transition: 'all .25s ease-in-out',
+		cursor: 'pointer',
+		':hover' : {
+			color: 'text',
+			fill: 'text',
+			stroke: 'text',
+		},
+		'&.disabled' : {
+			fill: 'disabled',
+			stroke: 'disabled',
+			pointerEvents: 'none'
+		},
+	},
+	outlined: {
+		color: 'brand',
+		fill: 'brand',
+		stroke: 'brand',
+		bg: 'transparent',
+		boxShadow: '0 0 0 1px inset ',
+		boxShadowColor: 'muted',
+		transition: 'all .25s ease-in-out',
+		borderRadius: 'small',
+		fontSize: 2,
+		fontWeight: 'bold',
+		fontFamily: 'body',
+		cursor: 'pointer',
+		'&:not(.active):hover' : {
+			bg: alpha('primary', 0.15),
+			boxShadow: '0 0 0 2px inset',
+		},
+		'&.active' : {
+			boxShadow: 'none',
+			color: 'card',
+			fill: 'card',
+			stroke: 'card',
+			bg: 'text'
+		},
+		'&.disabled' : {
+			color: 'disabled',
+			fill: 'disabled',
+			stroke: 'disabled',
+			pointerEvents: 'none'
+		},
+		'&.rounded' : {
+			borderRadius: 'rounded'
+		}
 	},
 	close: {
 		
@@ -171,7 +237,7 @@ export default {
         heading: 'inherit',
         monospace: 'Menlo, monospace',
     },
-	fontSizes: [12, 14, 16, 20, 24, 28, 32, 48, 64],
+	fontSizes: [13, 14, 15, 16, 20, 24, 28, 32, 48, 64],
 	fontWeights: {
 		body: 400,
 		heading: 700,
@@ -186,12 +252,14 @@ export default {
 			letterSpacing: '0.2em',
 		},
 		heading: {
+			color: 'text',
 			fontFamily: 'heading',
 			fontWeight: 'heading',
 			lineHeight: 'heading',
 		},
 	},
 	lineHeights: {
+		compact: 1.25,
 		body: 1.5,
 		heading: 1.125,
 	},
@@ -200,7 +268,7 @@ export default {
 	icons: {
 		primary: {
 			fill: 'none',
-			stroke: 'primary',
+			stroke: 'brand',
 			strokeWidth : '2',
 			strokeLinecap : 'round'
 		},
@@ -235,14 +303,14 @@ export default {
 	},
 	forms : {
 		label: {
-			color: 'primary',
+			color: 'brand',
 			fontWeight: 'bold'
 		},
 		checkbox: {
-			color: 'primary'
+			color: 'brand'
 		},
 		radio: {
-			color: 'primary'
+			color: 'brand'
 		},
 		input: {
 			borderColor: 'border'
@@ -251,7 +319,7 @@ export default {
 			borderColor: 'border'
 		},
 		slider: {
-			color: 'primary'
+			color: 'brand'
 		},
 		textarea: {
 			backgroundColor: 'card',
@@ -284,10 +352,10 @@ export default {
 	badges: {
 		primary: {
 			color: 'background',
-			bg: 'primary',
+			bg: 'brand',
 		},
 		outline: {
-			color: 'primary',
+			color: 'brand',
 			bg: 'transparent',
 			boxShadow: 'inset 0 0 0 1px',
 		},
@@ -301,34 +369,35 @@ export default {
 			fontFamily: 'body',
 			lineHeight: 'body',
 			fontWeight: 'body',
+			fontSize: 3
 		},
 		h1: {
 			color: 'text',
 			fontFamily: 'heading',
 			lineHeight: 'heading',
 			fontWeight: 'heading',
-			fontSize: 5,
+			fontSize: 6,
 		},
 		h2: {
 			color: 'text',
 			fontFamily: 'heading',
 			lineHeight: 'heading',
 			fontWeight: 'heading',
-			fontSize: 4,
+			fontSize: 5,
 		},
 		h3: {
 			color: 'text',
 			fontFamily: 'heading',
 			lineHeight: 'heading',
 			fontWeight: 'heading',
-			fontSize: 3,
+			fontSize: 4,
 		},
 		h4: {
 			color: 'text',
 			fontFamily: 'heading',
 			lineHeight: 'heading',
 			fontWeight: 'heading',
-			fontSize: 2,
+			fontSize: 3,
 		},
 		h5: {
 			color: 'text',
@@ -351,7 +420,7 @@ export default {
 			lineHeight: 'body',
 		},
 		a: {
-			color: 'primary',
+			color: 'brand',
 			fontWeigth: 'body',
 		},
 		img: {

@@ -31,8 +31,7 @@ var _default = _react.default.forwardRef(function (props, ref) {
       py: 2,
       color: 'white',
       bg: 'primary',
-      border: 0,
-      borderRadius: 4
+      border: 0
     }
   }));
 });

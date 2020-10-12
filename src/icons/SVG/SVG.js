@@ -5,11 +5,15 @@ const SVG = ({title = undefined, size = 24, children, ...props}) => {
     const { theme } = useThemeUI();
     let svg_style = {};
     if (theme) {
-        if ( props.stroke ) {
+        if ( props.stroke && theme.colors[props.stroke] ) {
             svg_style.stroke = theme.colors[props.stroke];
+        } else {
+            svg_style.stroke = props.stroke;
         }
-        if ( props.fill ) {
+        if ( props.fill && theme.colors[props.fill] ) {
             svg_style.fill = theme.colors[props.fill];
+        } else {
+            svg_style.fill = props.fill;
         }
     } else {
         svg_style = {

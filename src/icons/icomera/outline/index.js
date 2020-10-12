@@ -2,6 +2,7 @@ import Add from './Add/Add';
 import AddCircle from './AddCircle/AddCircle';
 import ArrowDown from './ArrowDown/ArrowDown';
 import ArrowUp from './ArrowUp/ArrowUp';
+import Back from './Back/Back';
 import Calendar from './Calendar/Calendar';
 import Confirm from './Confirm/Confirm';
 import Copy from './Copy/Copy';
@@ -23,6 +24,7 @@ export {
     AddCircle,
     ArrowDown,
     ArrowUp,
+    Back,
     Calendar,
     Confirm,
     Copy,

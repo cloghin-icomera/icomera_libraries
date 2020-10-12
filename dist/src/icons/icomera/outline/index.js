@@ -27,6 +27,12 @@ Object.defineProperty(exports, "ArrowUp", {
     return _ArrowUp.default;
   }
 });
+Object.defineProperty(exports, "Back", {
+  enumerable: true,
+  get: function get() {
+    return _Back.default;
+  }
+});
 Object.defineProperty(exports, "Calendar", {
   enumerable: true,
   get: function get() {
@@ -125,6 +131,8 @@ var _AddCircle = _interopRequireDefault(require("./AddCircle/AddCircle"));
 var _ArrowDown = _interopRequireDefault(require("./ArrowDown/ArrowDown"));
 
 var _ArrowUp = _interopRequireDefault(require("./ArrowUp/ArrowUp"));
+
+var _Back = _interopRequireDefault(require("./Back/Back"));
 
 var _Calendar = _interopRequireDefault(require("./Calendar/Calendar"));
 
