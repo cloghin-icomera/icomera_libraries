@@ -2,10 +2,10 @@ import React from 'react';
 import { Link as RouterLink, useRouteMatch } from 'react-router-dom';
 
 import { ColorModeProvider } from '../components/utils';
-import { Box, Flex, Heading } from '../components/atoms';
+import { Box, Close, Flex, Heading, MenuButton } from '../components/atoms';
 import Button from '../components/atoms/Button/Button';
 import IconButton from '../components/atoms/IconButton/IconButton';
-import { AddCircle, Back, Calendar, Confirm, Delete, Edit } from '../icons/icomera/outline';
+import { AddCircle, Back, Calendar, Confirm, Delete, Edit, Menu, Remove } from '../icons/icomera/outline';
 import { Error, GridView, ListView } from '../icons/icomera/solid';
 
 const sxFlex = {
@@ -102,6 +102,8 @@ const Buttons = () => (
                 <IconButton icon={<Confirm />} color='#00C781' hoverIndicator />
                 <IconButton icon={<Calendar />} size='small' color='brand' />
                 <IconButton icon={<Error />} disabled />
+                <Close icon={<Remove />} color='error' hoverIndicator />
+                <MenuButton icon={<Menu />} variant='action' rounded />
             </Flex>
             <Flex bg='card' p={6} sx={ sxRow }>
                 <IconButton icon={<GridView />} />
@@ -112,6 +114,8 @@ const Buttons = () => (
                 <IconButton icon={<Confirm />} color='#00C781' hoverIndicator />
                 <IconButton icon={<Calendar />} size='small' color='brand' />
                 <IconButton icon={<Error />} disabled />
+                <Close />
+                <MenuButton />
             </Flex>
         </Box>
         <Box sx={{ width: '100%' }}>

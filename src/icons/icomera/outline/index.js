@@ -10,6 +10,7 @@ import Delete from './Delete/Delete';
 import Edit from './Edit/Edit';
 import Kibana from './Kibana/Kibana';
 import Link from './Link/Link';
+import Menu from './Menu/Menu';
 import Portal from './Portal/Portal';
 import Remove from './Remove/Remove';
 import RemoveCircle from './RemoveCircle/RemoveCircle';
@@ -32,6 +33,7 @@ export {
     Edit,
     Kibana,
     Link,
+    Menu,
     Portal,
     Remove,
     RemoveCircle,

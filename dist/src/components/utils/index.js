@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ColorModeProvider = void 0;
+exports.ColorContext = exports.ColorModeProvider = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -29,9 +29,15 @@ var ColorModeProvider = function ColorModeProvider(_ref) {
   var new_theme = applyColorMode(theme, mode);
   return /*#__PURE__*/_react.default.createElement(_themeUi.ThemeProvider, {
     theme: new_theme
-  }, children);
+  }, /*#__PURE__*/_react.default.createElement(ColorContext.Provider, {
+    value: mode
+  }, children));
 };
 
 exports.ColorModeProvider = ColorModeProvider;
+
+var ColorContext = _react.default.createContext('default');
+
+exports.ColorContext = ColorContext;
 
 //# sourceMappingURL=index.js.map

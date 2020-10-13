@@ -38,27 +38,29 @@ var alerts = {
 var colors = {
   primary: '#009de9',
   brand: '#009de9',
-  //secondary: '#13568f',
-  secondary: (0, _color.darken)('#009de9', 0.15)(),
-  muted: (0, _color.lighten)('#191919', 0.25)(),
-  disabled: (0, _color.lighten)('#191919', 0.5)(),
-  text: '#191919',
+  brand_hover: '#0077b3',
+  secondary: (0, _color.darken)('#009de9', 0.2)(),
+  muted: '#6e7c91',
+  disabled: '#a8b0bd',
+  text: '#0C090A',
+  // text colour on light backgrounds
   background: '#f2f2ff',
-  card: (0, _color.lighten)('#f2f2ff', 0.15)(),
+  card: '#ffffff',
   border: '#dfdfe6',
-  error: '#e10019',
+  error: '#db001a',
   warning: '#ffbf00',
   success: '#19d400',
   modes: {
     dark: {
-      //secondary: '#9cd4fc',
-      secondary: (0, _color.lighten)('#009de9', 0.15)(),
-      muted: (0, _color.darken)('#fbfbfb', 0.25)(),
-      disabled: (0, _color.darken)('#fbfbfb', 0.5)(),
-      text: '#fbfbfb',
+      secondary: (0, _color.lighten)('#009de9', 0.2)(),
+      brand_hover: '#4dc4ff',
+      muted: '#a8b0bd',
+      text: '#fcfcfc',
       background: '#0C0F21',
-      card: (0, _color.lighten)('#0C0F21', 0.1)(),
-      border: '#18345f'
+      card: '#1A2046',
+      border: '#18345f',
+      error: '#FC001D',
+      disabled: '#6e7c91'
     }
   }
 };
@@ -110,27 +112,23 @@ var links = {
 var buttons = {
   default: {
     bg: 'background',
-    color: 'muted',
-    fill: 'muted',
-    stroke: 'muted',
+    color: 'text',
+    fill: 'text',
+    stroke: 'text',
+    fontSize: 2,
     fontWeight: 'bold',
     fontFamily: 'body',
     borderRadius: 'small',
     transition: 'all .25s ease-in-out',
-    boxShadow: '0 0 0 1px inset transparent',
     cursor: 'pointer',
     '&:not(.active):hover': {
-      color: 'text',
-      fill: 'text',
-      stroke: 'text',
-      boxShadow: '0 0 0 1px inset'
+      bg: (0, _color.alpha)('text', 0.15)
     },
     '&.active': {
-      bg: 'muted',
-      color: 'background',
-      fill: 'background',
-      stroke: 'background',
-      borderColor: 'muted'
+      bg: 'text',
+      color: 'card',
+      fill: 'card',
+      stroke: 'card'
     },
     '&.disabled': {
       color: 'disabled',
@@ -147,30 +145,24 @@ var buttons = {
     color: 'card',
     fill: 'card',
     stroke: 'card',
+    fontSize: 2,
     fontWeight: 'bold',
     fontFamily: 'body',
     borderRadius: 'small',
     transition: 'all .25s ease-in-out',
     cursor: 'pointer',
+    '&:not(.active):hover': {
+      bg: 'brand_hover'
+    },
+    '&.active': {
+      bg: 'text'
+    },
+    '&.disabled': {
+      bg: 'disabled',
+      pointerEvents: 'none'
+    },
     '&.rounded': {
       borderRadius: 'rounded'
-    }
-  },
-  action: {
-    bg: 'background',
-    color: 'muted',
-    fill: 'muted',
-    stroke: 'muted',
-    fontWeight: 'bold',
-    fontFamily: 'body',
-    borderRadius: 'small',
-    transition: 'all .25s ease-in-out',
-    cursor: 'pointer',
-    ':hover': {
-      bg: 'muted',
-      color: 'card',
-      fill: 'card',
-      stroke: 'card'
     }
   },
   icon: {
@@ -178,35 +170,90 @@ var buttons = {
     color: 'muted',
     fill: 'muted',
     stroke: 'muted',
+    fontSize: 2,
     fontWeight: 'bold',
     fontFamily: 'body',
     borderRadius: 'small',
-    borderColor: 'border',
     transition: 'all .25s ease-in-out',
     cursor: 'pointer',
     ':hover': {
-      color: 'text',
       fill: 'text',
       stroke: 'text'
+    },
+    '&.disabled': {
+      fill: 'disabled',
+      stroke: 'disabled',
+      pointerEvents: 'none'
+    },
+    '&.rounded': {
+      borderRadius: 'rounded'
+    },
+    '&.hover-back:hover': {
+      bg: (0, _color.alpha)('text', 0.15)
+    },
+    '&.active': {
+      fill: 'card',
+      stroke: 'card',
+      bg: 'text'
     }
   },
-  outlined: {
+  action: {
+    bg: 'card',
     color: 'muted',
     fill: 'muted',
     stroke: 'muted',
+    fontSize: 2,
+    fontWeight: 'bold',
+    fontFamily: 'body',
+    borderRadius: 'small',
+    transition: 'all .25s ease-in-out',
+    cursor: 'pointer',
+    ':hover': {
+      bg: 'muted',
+      fill: 'card',
+      stroke: 'card'
+    },
+    '&.disabled': {
+      fill: 'disabled',
+      stroke: 'disabled',
+      pointerEvents: 'none'
+    },
+    '&.rounded': {
+      borderRadius: 'rounded'
+    }
+  },
+  outlined: {
+    color: 'brand',
+    fill: 'brand',
+    stroke: 'brand',
     bg: 'transparent',
     boxShadow: '0 0 0 1px inset ',
     boxShadowColor: 'muted',
     transition: 'all .25s ease-in-out',
     borderRadius: 'small',
+    fontSize: 2,
     fontWeight: 'bold',
     fontFamily: 'body',
     cursor: 'pointer',
-    ':hover': {
-      boxShadow: '0 0 0 2px inset',
-      color: 'text',
-      fill: 'text',
-      stroke: 'text'
+    '&:not(.active):hover': {
+      color: 'brand_hover',
+      fill: 'brand_hover',
+      stroke: 'brand_hover',
+      bg: (0, _color.alpha)('brand', 0.15),
+      boxShadow: '0 0 0 2px inset'
+    },
+    '&.active': {
+      boxShadow: 'none',
+      color: 'card',
+      fill: 'card',
+      stroke: 'card',
+      bg: 'text'
+    },
+    '&.disabled': {
+      color: 'disabled',
+      fill: 'disabled',
+      stroke: 'disabled',
+      pointerEvents: 'none'
     },
     '&.rounded': {
       borderRadius: 'rounded'
@@ -225,7 +272,7 @@ var _default = {
     heading: 'inherit',
     monospace: 'Menlo, monospace'
   },
-  fontSizes: [12, 14, 16, 20, 24, 28, 32, 48, 64],
+  fontSizes: [13, 14, 15, 16, 20, 24, 28, 32, 48, 64],
   fontWeights: {
     body: 400,
     heading: 700,
@@ -247,6 +294,7 @@ var _default = {
     }
   },
   lineHeights: {
+    compact: 1.25,
     body: 1.5,
     heading: 1.125
   },
@@ -353,35 +401,36 @@ var _default = {
     root: {
       fontFamily: 'body',
       lineHeight: 'body',
-      fontWeight: 'body'
+      fontWeight: 'body',
+      fontSize: 3
     },
     h1: {
       color: 'text',
       fontFamily: 'heading',
       lineHeight: 'heading',
       fontWeight: 'heading',
-      fontSize: 5
+      fontSize: 6
     },
     h2: {
       color: 'text',
       fontFamily: 'heading',
       lineHeight: 'heading',
       fontWeight: 'heading',
-      fontSize: 4
+      fontSize: 5
     },
     h3: {
       color: 'text',
       fontFamily: 'heading',
       lineHeight: 'heading',
       fontWeight: 'heading',
-      fontSize: 3
+      fontSize: 4
     },
     h4: {
       color: 'text',
       fontFamily: 'heading',
       lineHeight: 'heading',
       fontWeight: 'heading',
-      fontSize: 2
+      fontSize: 3
     },
     h5: {
       color: 'text',
