@@ -4,9 +4,9 @@ import { Link as RouterLink, useRouteMatch } from 'react-router-dom';
 import { ColorModeProvider } from '../components/utils';
 import { Box, Flex, Heading } from '../components/atoms';
 import Button from '../components/atoms/Button/Button';
-import NewIconButton from '../components/atoms/IconButton/NewIconButton';
-import { AddCircle, Back, Delete, Edit } from '../icons/icomera/outline';
-import { Error, GridView } from '../icons/icomera/solid';
+import IconButton from '../components/atoms/IconButton/IconButton';
+import { AddCircle, Back, Calendar, Confirm, Delete, Edit } from '../icons/icomera/outline';
+import { Error, GridView, ListView } from '../icons/icomera/solid';
 
 const sxFlex = {
     flex: '1 1 50%',
@@ -94,18 +94,24 @@ const Buttons = () => (
         <Box sx={{ width: '100%' }}>
             <Heading as='h3' pt={6} px={6}>Icon Buttons</Heading>
             <Flex p={6} sx={ sxRow }>
-                <NewIconButton icon={<GridView />} />
-                <NewIconButton icon={<AddCircle />} strong />
-                <NewIconButton icon={<Back />} muted />
-                <NewIconButton icon={<Delete />} color='error' rounded />
-                <NewIconButton icon={<Error />} disabled />
+                <IconButton icon={<GridView />} />
+                <IconButton icon={<ListView />} active />
+                <IconButton icon={<Edit />} label='Edit' labelPosition='right' variant='action' color='brand' rounded />
+                <IconButton icon={<Delete />} variant='action' label='Delete' labelPosition='top' color='error' rounded />
+                <IconButton icon={<Back />} size='large' hoverIndicator />
+                <IconButton icon={<Confirm />} color='#00C781' hoverIndicator />
+                <IconButton icon={<Calendar />} size='small' color='brand' />
+                <IconButton icon={<Error />} disabled />
             </Flex>
             <Flex bg='card' p={6} sx={ sxRow }>
-                <NewIconButton icon={<GridView />} />
-                <NewIconButton icon={<AddCircle />} strong />
-                <NewIconButton icon={<Back />} muted />
-                <NewIconButton icon={<Delete />} color='#00C781' rounded />
-                <NewIconButton icon={<Error />} disabled />
+                <IconButton icon={<GridView />} />
+                <IconButton icon={<ListView />} active />
+                <IconButton icon={<Edit />} label='Edit' variant='action' color='brand' rounded />
+                <IconButton icon={<Delete />} variant='action' label='Delete' labelPosition='left' color='error' rounded />
+                <IconButton icon={<Back />} size='large' hoverIndicator />
+                <IconButton icon={<Confirm />} color='#00C781' hoverIndicator />
+                <IconButton icon={<Calendar />} size='small' color='brand' />
+                <IconButton icon={<Error />} disabled />
             </Flex>
         </Box>
         <Box sx={{ width: '100%' }}>

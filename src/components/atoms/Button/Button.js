@@ -13,7 +13,10 @@ const getColors = (variant, color, activeMode) => {
 					fill: color,
 					stroke: color,
 					'&:not(.active):hover' : {
-						bg: alpha(color, 0.1)
+						bg: alpha(color, 0.1),
+						color: (activeMode === 'dark') ? lighten(color, 0.2) : darken(color, 0.15),
+						fill: (activeMode === 'dark') ? lighten(color, 0.2) : darken(color, 0.15),
+						stroke: (activeMode === 'dark') ? lighten(color, 0.2) : darken(color, 0.15),
 					}
 				}
 			case 'primary':
@@ -29,7 +32,10 @@ const getColors = (variant, color, activeMode) => {
 					fill: color,
 					stroke: color,
 					'&:not(.active):hover' : {
-						bg: alpha(color, 0.1) 
+						bg: alpha(color, 0.1),
+						color: (activeMode === 'dark') ? lighten(color, 0.2) : darken(color, 0.15),
+						fill: (activeMode === 'dark') ? lighten(color, 0.2) : darken(color, 0.15),
+						stroke: (activeMode === 'dark') ? lighten(color, 0.2) : darken(color, 0.15), 
 					}
 				}
 			default:
@@ -89,11 +95,13 @@ const getSizes = size => {
 			icon: {
 				label: {
 					mr: 2,
-					ml: -1
+					ml: -1,
+					size: 28
 				},
 				default: {
 					mr: -1,
-					ml: -1
+					ml: -1,
+					size: 28
 				}
 			}
 		}

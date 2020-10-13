@@ -90,7 +90,6 @@ const links = {
 		borderLeftStyle: 'solid',
 		borderLeftColor: 'transparent',
 		transition: 'all .25s ease-in-out',
-
 		':hover' : {
 			bg: 'background',
 			color: 'text',
@@ -173,11 +172,9 @@ const buttons = {
 		fontWeight: 'bold',
 		fontFamily: 'body',
 		borderRadius: 'small',
-		borderColor: 'border',
 		transition: 'all .25s ease-in-out',
 		cursor: 'pointer',
 		':hover' : {
-			color: 'text',
 			fill: 'text',
 			stroke: 'text',
 		},
@@ -186,6 +183,42 @@ const buttons = {
 			stroke: 'disabled',
 			pointerEvents: 'none'
 		},
+		'&.rounded' : {
+			borderRadius: 'rounded'
+		},
+		'&.hover-back:hover' : {
+			bg: alpha('text', 0.15),
+		},
+		'&.active' : {
+			fill: 'card',
+			stroke: 'card',
+			bg: 'text',
+		},
+	},
+	action: {
+		bg: 'card',
+		color: 'muted',
+		fill: 'muted',
+		stroke: 'muted',
+		fontSize: 2,
+		fontWeight: 'bold',
+		fontFamily: 'body',
+		borderRadius: 'small',
+		transition: 'all .25s ease-in-out',
+		cursor: 'pointer',
+		':hover' : {
+			bg: 'muted',
+			fill: 'card',
+			stroke: 'card',
+		},
+		'&.disabled' : {
+			fill: 'disabled',
+			stroke: 'disabled',
+			pointerEvents: 'none'
+		},
+		'&.rounded' : {
+			borderRadius: 'rounded'
+		}
 	},
 	outlined: {
 		color: 'brand',
@@ -201,7 +234,10 @@ const buttons = {
 		fontFamily: 'body',
 		cursor: 'pointer',
 		'&:not(.active):hover' : {
-			bg: alpha('primary', 0.15),
+			color: 'brand_hover',
+			fill: 'brand_hover',
+			stroke: 'brand_hover',
+			bg: alpha('brand', 0.15),
 			boxShadow: '0 0 0 2px inset',
 		},
 		'&.active' : {
