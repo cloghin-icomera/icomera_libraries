@@ -1,9 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { lighten, darken, alpha } from '@theme-ui/color';
 import Box from '../Box/Box';
 import Flex from '../Flex/Flex';
-import { ColorContext } from '../../utils';
-import { useColorMode } from 'theme-ui';
 
 const getClassName = (active, rounded, disabled, hoverIndicator) => {
 	let className = '';
@@ -13,7 +11,17 @@ const getClassName = (active, rounded, disabled, hoverIndicator) => {
 	return className;
 }
 
-const getColors = (variant, color, activeMode) => {
+const getHoverColor = (t, color) => {
+    if (t.colors.modeID === 'dark') {
+        // dark color mode
+        return lighten(color, 0.2)
+    } else {
+        // default color mode
+        return darken(color, 0.2)
+    }
+}
+
+const getColors = (variant, color) => {
 	if (color) {
 		switch(variant) {
 			case 'icon':
@@ -21,8 +29,8 @@ const getColors = (variant, color, activeMode) => {
 					fill: color,
 					stroke: color,
 					'&:not(.active):hover' : {
-                        fill: (activeMode === 'dark') ? lighten(color, 0.2) : darken(color, 0.15),
-                        stroke: (activeMode === 'dark') ? lighten(color, 0.2) : darken(color, 0.15)
+                        fill: t => getHoverColor(t, color),
+                        stroke: t => getHoverColor(t, color)
                     },
                     '&.hover-back:hover' : {
                         bg: alpha(color, 0.15),
@@ -82,16 +90,16 @@ const Tooltip = ({ label, position = 'bottom', children }) => {
     let sxPos = {};
     switch(position) {
         case 'top':
-            sxPos = { bottom: '120%' }
+            sxPos = { bottom: '48px' }
             break;
         case 'left':
-            sxPos = { right: '120%' }
+            sxPos = { right: '48px' }
             break;
         case 'right':
-            sxPos = { left: '120%' }
+            sxPos = { left: '48px' }
             break;
         default:
-            sxPos = { top: '120%' }
+            sxPos = { top: '48px' }
     }
     return (
         <Flex sx={{
@@ -109,6 +117,7 @@ const Tooltip = ({ label, position = 'bottom', children }) => {
                 className='label'
                 as='span'
                 sx={{
+                    width: 'max-content',
                     opacity: 0,
                     transition: 'all .25s ease-in-out',
                     visibility: 'hidden',
@@ -121,6 +130,7 @@ const Tooltip = ({ label, position = 'bottom', children }) => {
                     borderRadius: 'small',
                     position: 'absolute',
                     zIndex: '1',
+                    pointerEvents: 'none',
                     ...sxPos
                 }}
             >
@@ -148,16 +158,8 @@ const IconButton = React.forwardRef(
     ref
 ) => {
 
-    const [ colorMode ] = useColorMode();
-	const localMode = useContext(ColorContext);
-   	let activeMode = localMode;
-
-   	if (colorMode !== 'default' && localMode === 'default') {
-		activeMode = colorMode
-	}
-
     const className = getClassName(active, rounded, disabled, hoverIndicator);
-    const sxColor = getColors(variant, color, activeMode);
+    const sxColor = getColors(variant, color);
     const sxSize = getSizes(size);
 
     icon = React.cloneElement( icon, sxSize.icon );

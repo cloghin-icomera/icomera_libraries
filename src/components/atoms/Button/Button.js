@@ -1,121 +1,9 @@
-import React, { useContext } from 'react';
-import { lighten, darken, alpha } from '@theme-ui/color';
+import React from 'react';
+import PropTypes from 'prop-types'
 import Box from '../Box/Box';
-import { ColorContext } from '../../utils';
-import { useColorMode } from 'theme-ui';
-
-const getColors = (variant, color, activeMode) => {
-	if (color) {
-		switch(variant) {
-			case 'default':
-				return {
-					color: color,
-					fill: color,
-					stroke: color,
-					'&:not(.active):hover' : {
-						bg: alpha(color, 0.1),
-						color: (activeMode === 'dark') ? lighten(color, 0.2) : darken(color, 0.15),
-						fill: (activeMode === 'dark') ? lighten(color, 0.2) : darken(color, 0.15),
-						stroke: (activeMode === 'dark') ? lighten(color, 0.2) : darken(color, 0.15),
-					}
-				}
-			case 'primary':
-				return {
-					bg: color,
-					'&:not(.active):hover' : {
-						bg: (activeMode === 'dark') ? lighten(color, 0.2) : darken(color, 0.15)
-					}
-				}
-			case 'outlined':
-				return {
-					color: color,
-					fill: color,
-					stroke: color,
-					'&:not(.active):hover' : {
-						bg: alpha(color, 0.1),
-						color: (activeMode === 'dark') ? lighten(color, 0.2) : darken(color, 0.15),
-						fill: (activeMode === 'dark') ? lighten(color, 0.2) : darken(color, 0.15),
-						stroke: (activeMode === 'dark') ? lighten(color, 0.2) : darken(color, 0.15), 
-					}
-				}
-			default:
-				return
-		}
-	} else {
-		return
-	}
-}
-
-const getSizes = size => {
-	switch (size) {
-	case 'small': 
-		return {
-			button: {
-				px: 2,
-				py: 1,
-				fontSize: 0
-			},
-			icon: {
-				label: {
-					mr: 1,
-					ml: -1,
-					size: 19
-				},
-				default: {
-					mr: -1,
-					ml: -1,
-					size: 19
-				}
-			}
-		}
-	case 'medium':
-		return {
-			button: {
-				px: 3,
-				py: 2,
-			},
-			icon: {
-				label: {
-					mr: 2,
-					ml: -1
-				},
-				default: {
-					mr: -1,
-					ml: -1
-				}
-			}
-		}
-	case 'large': 
-		return {
-			button: {
-				px: 4,
-				py: 3,
-				fontSize: 3
-			},
-			icon: {
-				label: {
-					mr: 2,
-					ml: -1,
-					size: 28
-				},
-				default: {
-					mr: -1,
-					ml: -1,
-					size: 28
-				}
-			}
-		}
-	default:
-		return
-	}
-}
-
-const getClassName = (active, rounded, disabled) => {
-	let className = '';
-	className = active ? 'active' : disabled ? 'disabled' : '';
-	className += rounded ? ' rounded' : '';
-	return className;
-}
+import { getSizes } from './sizes'
+import { getClassName } from './classes'
+import { getColors } from './colors'
 
 const Button = React.forwardRef(
 ({
@@ -133,22 +21,14 @@ const Button = React.forwardRef(
     ref
 ) => {
 	
-	const [ colorMode ] = useColorMode();
-	const localMode = useContext(ColorContext);
-   	let activeMode = localMode;
-
-   	if (colorMode !== 'default' && localMode === 'default') {
-		activeMode = colorMode
-	}
-    
     const className = getClassName(active, rounded, disabled);
-	const sxColor = getColors(variant, color, activeMode);
+	const sxColor = getColors(variant, color);
 	const sxSize = getSizes(size);
 
-	if (icon && label) {
-        icon = React.cloneElement( icon, sxSize.icon.label );
-	} else if( icon ) {
-		icon = React.cloneElement( icon, sxSize.icon.default );
+	if (React.isValidElement(icon)) {
+		icon = label ?
+			React.cloneElement( icon, sxSize.icon.label ) :
+			React.cloneElement( icon, sxSize.icon.default )
 	}
 	
 	const buttonJSX = 
@@ -183,5 +63,9 @@ const Button = React.forwardRef(
 		return buttonJSX
 	}
 })
+
+Button.propTypes = {
+	icon: PropTypes.element
+}
 
 export default Button

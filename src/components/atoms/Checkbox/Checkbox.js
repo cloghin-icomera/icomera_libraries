@@ -25,6 +25,14 @@ const CheckboxUnchecked = (props) => (
     </SVG>
 )
 
+const CheckboxIndeterminate = (props) => (
+    <SVG {...props}>
+        <g transform="translate(3.000000, 3.000000)">
+            <path d="M4,8 L14,8 C14.5522847,8 15,8.44771525 15,9 C15,9.55228475 14.5522847,10 14,10 L4,10 C3.44771525,10 3,9.55228475 3,9 C3,8.44771525 3.44771525,8 4,8 Z M16,0 L2,0 C0.9,0 0,0.9 0,2 L0,16 C0,17.1 0.9,18 2,18 L16,18 C17.1,18 18,17.1 18,16 L18,2 C18,0.9 17.1,0 16,0 Z"></path>
+        </g>
+    </SVG>
+)
+
 const CheckboxIcon = (props) => (
     <React.Fragment>
     <CheckboxChecked
@@ -43,13 +51,31 @@ const CheckboxIcon = (props) => (
         'input:checked ~ &': {
             display: 'none',
         },
+        '&.indeterminate': {
+            display: 'none',
+        },
+        }}
+    />
+    <CheckboxIndeterminate
+        {...props}
+        __css={{
+        display: 'none',
+        '&.indeterminate': {
+            display: 'block',
+        },
         }}
     />
     </React.Fragment>
 )
 
 export default React.forwardRef(
-    ({ className, sx, variant = 'checkbox', children, ...props }, ref) => (
+({
+    className,
+    sx,
+    variant = 'checkbox',
+    children,
+    ...props
+}, ref) => (
     <Box>
         <Box
             ref={ref}
@@ -75,15 +101,18 @@ export default React.forwardRef(
             __css={{
                 mr: 2,
                 borderRadius: 4,
-                color: 'gray',
+                color: 'muted',
                 flexShrink: 0,
                 'input:checked ~ &': {
-                color: 'primary',
+                    color: 'primary',
                 },
                 'input:focus ~ &': {
-                color: 'primary',
-                bg: 'highlight',
+                    color: 'primary',
+                    bg: 'highlight',
                 },
+                '&.indeterminate': {
+                    color: 'muted'
+                }
             }}
         />
         {children}

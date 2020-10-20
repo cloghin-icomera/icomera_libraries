@@ -21,7 +21,6 @@ var _default = _react.default.forwardRef(function (props, ref) {
   }, props, {
     __themeKey: "forms",
     __css: {
-      width: '100%',
       display: 'flex'
     }
   }));

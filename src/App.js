@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { ThemeProvider } from 'theme-ui';
 import Home from './domains/Home';
 import Buttons from './domains/Buttons';
+import Test from './domains/Test';
+import Tables from './domains/Tables';
 import icomera from './themes/icomera';
 
 import './App.css';
@@ -18,6 +20,12 @@ function App() {
 					</Route>
 					<Route exact path='/buttons'>
 						<Buttons />
+					</Route>
+					<Route exact path='/test'>
+						<Test />
+					</Route>
+					<Route exact path='/tables'>
+						<Tables />
 					</Route>
 				</Switch>
 			</Router>

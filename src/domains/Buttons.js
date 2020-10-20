@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link as RouterLink, useRouteMatch } from 'react-router-dom';
-
 import { ColorModeProvider } from '../components/utils';
 import { Box, Close, Flex, Heading, MenuButton } from '../components/atoms';
 import Button from '../components/atoms/Button/Button';
@@ -96,7 +94,7 @@ const Buttons = () => (
             <Flex p={6} sx={ sxRow }>
                 <IconButton icon={<GridView />} />
                 <IconButton icon={<ListView />} active />
-                <IconButton icon={<Edit />} label='Edit' labelPosition='right' variant='action' color='brand' rounded />
+                <IconButton icon={<Edit />} label='Edit Project' labelPosition='right' variant='action' color='brand' rounded />
                 <IconButton icon={<Delete />} variant='action' label='Delete' labelPosition='top' color='error' rounded />
                 <IconButton icon={<Back />} size='large' hoverIndicator />
                 <IconButton icon={<Confirm />} color='#00C781' hoverIndicator />

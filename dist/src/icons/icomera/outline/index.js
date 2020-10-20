@@ -21,6 +21,18 @@ Object.defineProperty(exports, "ArrowDown", {
     return _ArrowDown.default;
   }
 });
+Object.defineProperty(exports, "ArrowLeft", {
+  enumerable: true,
+  get: function get() {
+    return _ArrowLeft.default;
+  }
+});
+Object.defineProperty(exports, "ArrowRight", {
+  enumerable: true,
+  get: function get() {
+    return _ArrowRight.default;
+  }
+});
 Object.defineProperty(exports, "ArrowUp", {
   enumerable: true,
   get: function get() {
@@ -73,6 +85,12 @@ Object.defineProperty(exports, "Link", {
   enumerable: true,
   get: function get() {
     return _Link.default;
+  }
+});
+Object.defineProperty(exports, "Menu", {
+  enumerable: true,
+  get: function get() {
+    return _Menu.default;
   }
 });
 Object.defineProperty(exports, "Portal", {
@@ -130,6 +148,10 @@ var _AddCircle = _interopRequireDefault(require("./AddCircle/AddCircle"));
 
 var _ArrowDown = _interopRequireDefault(require("./ArrowDown/ArrowDown"));
 
+var _ArrowLeft = _interopRequireDefault(require("./ArrowLeft/ArrowLeft"));
+
+var _ArrowRight = _interopRequireDefault(require("./ArrowRight/ArrowRight"));
+
 var _ArrowUp = _interopRequireDefault(require("./ArrowUp/ArrowUp"));
 
 var _Back = _interopRequireDefault(require("./Back/Back"));
@@ -147,6 +169,8 @@ var _Edit = _interopRequireDefault(require("./Edit/Edit"));
 var _Kibana = _interopRequireDefault(require("./Kibana/Kibana"));
 
 var _Link = _interopRequireDefault(require("./Link/Link"));
+
+var _Menu = _interopRequireDefault(require("./Menu/Menu"));
 
 var _Portal = _interopRequireDefault(require("./Portal/Portal"));
 

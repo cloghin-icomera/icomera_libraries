@@ -3,7 +3,9 @@ import { jsx, useThemeUI, Box } from 'theme-ui';
 
 const SVG = ({title = undefined, size = 24, children, ...props}) => {
     const { theme } = useThemeUI();
-    let svg_style = {};
+    let svg_style = {
+        display: 'block'
+    };
     if (theme) {
         if ( props.stroke && theme.colors[props.stroke] ) {
             svg_style.stroke = theme.colors[props.stroke];
@@ -17,6 +19,7 @@ const SVG = ({title = undefined, size = 24, children, ...props}) => {
         }
     } else {
         svg_style = {
+            ...svg_style,
             stroke: props.stroke || '#000',
             fill: props.fill || '#000'
         }

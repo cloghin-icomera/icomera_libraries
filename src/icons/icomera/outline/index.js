@@ -1,6 +1,8 @@
 import Add from './Add/Add';
 import AddCircle from './AddCircle/AddCircle';
 import ArrowDown from './ArrowDown/ArrowDown';
+import ArrowLeft from './ArrowLeft/ArrowLeft';
+import ArrowRight from './ArrowRight/ArrowRight';
 import ArrowUp from './ArrowUp/ArrowUp';
 import Back from './Back/Back';
 import Calendar from './Calendar/Calendar';
@@ -24,6 +26,8 @@ export {
     Add,
     AddCircle,
     ArrowDown,
+    ArrowLeft,
+    ArrowRight,
     ArrowUp,
     Back,
     Calendar,

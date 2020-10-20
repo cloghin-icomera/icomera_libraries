@@ -44,6 +44,14 @@ var CheckboxUnchecked = function CheckboxUnchecked(props) {
   }));
 };
 
+var CheckboxIndeterminate = function CheckboxIndeterminate(props) {
+  return /*#__PURE__*/_react.default.createElement(SVG, props, /*#__PURE__*/_react.default.createElement("g", {
+    transform: "translate(3.000000, 3.000000)"
+  }, /*#__PURE__*/_react.default.createElement("path", {
+    d: "M4,8 L14,8 C14.5522847,8 15,8.44771525 15,9 C15,9.55228475 14.5522847,10 14,10 L4,10 C3.44771525,10 3,9.55228475 3,9 C3,8.44771525 3.44771525,8 4,8 Z M16,0 L2,0 C0.9,0 0,0.9 0,2 L0,16 C0,17.1 0.9,18 2,18 L16,18 C17.1,18 18,17.1 18,16 L18,2 C18,0.9 17.1,0 16,0 Z"
+  })));
+};
+
 var CheckboxIcon = function CheckboxIcon(props) {
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(CheckboxChecked, _extends({}, props, {
     __css: {
@@ -57,6 +65,16 @@ var CheckboxIcon = function CheckboxIcon(props) {
       display: 'block',
       'input:checked ~ &': {
         display: 'none'
+      },
+      '&.indeterminate': {
+        display: 'none'
+      }
+    }
+  })), /*#__PURE__*/_react.default.createElement(CheckboxIndeterminate, _extends({}, props, {
+    __css: {
+      display: 'none',
+      '&.indeterminate': {
+        display: 'block'
       }
     }
   })));
@@ -93,7 +111,7 @@ var _default = _react.default.forwardRef(function (_ref2, ref) {
     __css: {
       mr: 2,
       borderRadius: 4,
-      color: 'gray',
+      color: 'muted',
       flexShrink: 0,
       'input:checked ~ &': {
         color: 'primary'
@@ -101,6 +119,9 @@ var _default = _react.default.forwardRef(function (_ref2, ref) {
       'input:focus ~ &': {
         color: 'primary',
         bg: 'highlight'
+      },
+      '&.indeterminate': {
+        color: 'muted'
       }
     }
   }), children);

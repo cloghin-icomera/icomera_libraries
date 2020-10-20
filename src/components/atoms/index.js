@@ -32,6 +32,7 @@ import NavLinkRouted from './NavLinkRouted/NavLinkRouted'
 import Message from './Message/Message'
 import IconButton from './IconButton/IconButton'
 import MenuButton from './MenuButton/MenuButton'
+import Switch from './Switch/Switch' 
 
 export {
     Box,
@@ -67,5 +68,6 @@ export {
     NavLinkRouted,
     Message,
     IconButton,
-    MenuButton
+    MenuButton,
+    Switch
 }

@@ -3,13 +3,33 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ColorContext = exports.ColorModeProvider = void 0;
+exports.MyThemeProvider = exports.ColorModeProvider = exports.MyThemeContext = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
 var _themeUi = require("theme-ui");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var theme = {
+  colors: {
+    modes: {
+      light: {
+        brand: 'blue'
+      },
+      dark: {
+        brand: 'yellow'
+      }
+    }
+  }
+};
+
+var MyThemeContext = _react.default.createContext({
+  theme: theme,
+  mode: 'light'
+});
+
+exports.MyThemeContext = MyThemeContext;
 
 var applyColorMode = function applyColorMode(theme, mode) {
   if (!mode) return theme;
@@ -29,15 +49,24 @@ var ColorModeProvider = function ColorModeProvider(_ref) {
   var new_theme = applyColorMode(theme, mode);
   return /*#__PURE__*/_react.default.createElement(_themeUi.ThemeProvider, {
     theme: new_theme
-  }, /*#__PURE__*/_react.default.createElement(ColorContext.Provider, {
-    value: mode
-  }, children));
+  }, children);
 };
 
 exports.ColorModeProvider = ColorModeProvider;
 
-var ColorContext = _react.default.createContext('default');
+var MyThemeProvider = function MyThemeProvider(_ref2) {
+  var theme = _ref2.theme,
+      _ref2$mode = _ref2.mode,
+      mode = _ref2$mode === void 0 ? 'light' : _ref2$mode,
+      children = _ref2.children;
+  return /*#__PURE__*/_react.default.createElement(MyThemeContext.Provider, {
+    value: {
+      theme: theme,
+      mode: mode
+    }
+  }, children);
+};
 
-exports.ColorContext = ColorContext;
+exports.MyThemeProvider = MyThemeProvider;
 
 //# sourceMappingURL=index.js.map

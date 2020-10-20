@@ -50,6 +50,7 @@ var colors = {
   error: '#db001a',
   warning: '#ffbf00',
   success: '#19d400',
+  modeID: 'default',
   modes: {
     dark: {
       secondary: (0, _color.lighten)('#009de9', 0.2)(),
@@ -60,7 +61,8 @@ var colors = {
       card: '#1A2046',
       border: '#18345f',
       error: '#FC001D',
-      disabled: '#6e7c91'
+      disabled: '#6e7c91',
+      modeID: 'dark'
     }
   }
 };
@@ -125,7 +127,7 @@ var buttons = {
       bg: (0, _color.alpha)('text', 0.15)
     },
     '&.active': {
-      bg: 'text',
+      bg: 'muted',
       color: 'card',
       fill: 'card',
       stroke: 'card'
@@ -338,14 +340,13 @@ var _default = {
   },
   forms: {
     label: {
-      color: 'brand',
-      fontWeight: 'bold'
+      color: 'text'
     },
     checkbox: {
-      color: 'brand'
+      color: 'border'
     },
     radio: {
-      color: 'brand'
+      color: 'muted'
     },
     input: {
       borderColor: 'border'
@@ -359,6 +360,23 @@ var _default = {
     textarea: {
       backgroundColor: 'card',
       borderColor: 'border'
+    },
+    switch: {
+      width: '40px',
+      height: '24px',
+      borderRadius: 'rounded',
+      bg: 'border',
+      color: 'muted',
+      p: 1,
+      transition: 'all .35s ease-in-out',
+      '.handle': {
+        width: '16px',
+        height: '16px',
+        borderRadius: 'rounded',
+        bg: 'muted',
+        ml: 0,
+        transition: 'all .25s ease-in-out'
+      }
     }
   },
   borders: {},
