@@ -264,6 +264,45 @@ const buttons = {
 	}
 }
 
+const tables = {
+	table_body: {
+		
+	},
+	body : {
+		bg: 'transparent',
+		borderBottomColor: alpha('border', 0.5),
+		borderBottomWidth: 'thin',
+		borderBottomStyle: 'solid',
+		py: 3,
+		pl: 3
+	},
+	header : {
+		bg: 'transparent',
+		borderBottomColor: 'border',
+		borderBottomWidth: 'thin',
+		borderBottomStyle: 'solid',
+		py: 3,
+		pl: 3,
+	},
+	headerTitle: {
+		fontSize: 0,
+		fontFamily: 'heading',
+		textTransform: 'uppercase',
+		color: 'muted',
+		letterSpacing: 1,
+		fontWeight: 'bold'
+	},
+	footer : {
+
+	},
+	row: {
+		'&.selected' : {
+			bg: alpha('border', 0.25),
+			boxShadow: `4px 0 ${colors.brand} inset`
+		}
+	},
+}
+
 export default {
 	space: [0, 4, 8, 12, 16, 24, 32, 48, 64, 72],
 	sizes: {
@@ -392,6 +431,7 @@ export default {
 	},
 	links,
 	alerts,
+	tables,
 	messages: {
 		color: 'text',
 		bg: 'card'

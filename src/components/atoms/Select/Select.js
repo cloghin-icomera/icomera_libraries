@@ -39,6 +39,7 @@ export default React.forwardRef((props, ref) => (
         {...getMargin(props)}
         sx={{
             display: 'flex',
+            width: props.width
         }}
     >
         <Box

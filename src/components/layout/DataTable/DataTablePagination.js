@@ -2,7 +2,6 @@ import React from 'react'
 import { Button, Flex, IconButton } from '../../atoms'
 import { ArrowLeft, ArrowRight } from '../../../icons/icomera/outline'
 
-
 export default ({ pages, active, setActive }) => (
     <Flex ml='auto'>
         <IconButton 

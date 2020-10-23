@@ -1,105 +1,101 @@
-import React, {useState} from 'react'
-import { Flex, Heading } from '../../atoms'
+import React, { useState } from 'react'
+import { Flex } from '../../atoms'
 import { ArrowUp, ArrowDown } from '../../../icons/icomera/outline'
+import Cell from './DataTableCell'
 
-
-const sxRow = {
-    p: 3,
-    borderBottomColor: 'border',
-    borderBottomWidth: 'thin',
-    borderBottomStyle: 'solid'
+const buttonStyle = {
+    fontFamily: 'heading',
+    fontWeight: 'bold',
+    fontSize: 0,
+    color: 'muted',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    outline: 'none'
 }
 
-const sxCell = width => (
-    {
-        flexBasis: width,
-        flexGrow: width,
-        flexShrink: 0,
-        alignItems: 'center'
-    }
-)
+const handleSort = (column, sorting, setSorting, sortData) => {
 
-const sortRows = (rows, column, direction) => {
-    return [...rows].sort( (a, b) => {
-        if (a[column] < b[column]) {
-            return direction === 'asc' ? -1 : 1;
-        }
-        if (a[column] > b[column]) {
-            return direction === 'asc' ? 1 : -1;
-        }
-        return 0;
-    })
+    const order = 
+        sorting.field !== column.field
+        ? 'asc'
+        : sorting.order === 'asc' 
+            ? 'desc' 
+            : 'asc'
+
+    setSorting({ field: column.field, order })
+    sortData(column.field, order)   
 }
 
-const ColumnTitle = ({ label, isSorted, setIsSorted, setSorted, sortFn, rows, field }) => {
-    const [sortOrder, setSortOrder] = useState(false)
-    return (
-        <React.Fragment>
-            <Heading
-                as='h5'
-                color={ isSorted === field ? 'text' : 'muted' }
-                sx={{
-                    mr: 1,
-                    textTransform: 'uppercase',
-                    letterSpacing: 1,
-                    cursor: 'pointer',
-                    lineHeight: '16px'
-                }}
-                onClick={() => {
+const SortButton = ({ column, sortData, sorting, setSorting}) => 
+    <Flex
+        as='button'
+        variant= 'headerTitle'
+        color={ sorting.field === column.field ? 'text' : 'muted' }
+        onClick={() => handleSort(column, sorting, setSorting, sortData)}
+        __themeKey = 'table'
+        __css = {{
+            appearance: 'none',
+            border: 0,
+            p: 0,
+            bg: 'transparent',
+            ...buttonStyle
+        }}
+    >
+        {column.header}
+        { sorting.order === 'desc' && sorting.field === column.field && <ArrowUp stroke='text' size={16} />}
+        { sorting.order === 'asc' && sorting.field === column.field && <ArrowDown stroke='text' size={16} />}
+    </Flex>
 
-                    if( !sortOrder ) {
-                        setSortOrder('asc')
-                        setSorted(sortFn(rows, field, 'asc'))
-                        setIsSorted(field)
-                    }
-                    if( sortOrder === 'asc' ) {
-                        setSortOrder('desc')
-                        setSorted(sortFn(rows, field, 'desc'))
-                        setIsSorted(field)
-                    }
-                    if ( sortOrder === 'desc' ) {
-                        setSortOrder(false)
-                        setSorted(rows)
-                        setIsSorted(false)
-                    }
-                    
+
+const getColumnHeader = (column, sortData, sorting, setSorting) => {
+    if (React.isValidElement(column.header)) {
+        return column.header
+    } else if (column.sortable) {
+        return (
+            <SortButton column={column} sortData={sortData} sorting={sorting} setSorting={setSorting} />
+        )
+    } else {
+        return (
+            <Flex
+                variant = 'headerTitle'
+                __themeKey = 'table'
+                __css = {{
+                    ...buttonStyle
                 }}
             >
-                {label}
-            </Heading>
-            { sortOrder === 'desc' && isSorted === field && <ArrowUp stroke='text' size={16} />}
-            { sortOrder === 'asc' && isSorted === field && <ArrowDown stroke='text' size={16} />}
-        </React.Fragment>
-    )
+                {column.header}
+            </Flex>
+        )
+    }
 }
 
-
-
-export default ({ columns, rows, setSorted, ...rest }) => {
-    const [ isSorted, setIsSorted ] = useState(false)
+const Header = React.memo(
+({
+    columns,
+    rows,
+    sortData,
+    ...rest
+}) => {
+    const [ sorting, setSorting ] = useState({
+        field: '',
+        order: 'asc'
+    })
     return (
-    <Flex sx={sxRow} {...rest}>
-        {columns.map( (column, index) => 
-            {
-                //console.log(column)
-                return (<Flex
+        <Flex
+            {...rest}
+        >
+            { columns.map( (column, index) =>
+                <Cell
                     key={index}
-                    sx={ sxCell(column.width || 100 / columns.length) }
-                >
-                    { column.headerName &&
-                        <ColumnTitle
-                            label={column.headerName}
-                            rows={rows}
-                            field={column.field}
-                            setSorted={setSorted}
-                            isSorted={isSorted}
-                            setIsSorted={setIsSorted}
-                            sortFn={column.sortFn ? column.sortFn : sortRows}
-                        />
-                    }
-                    { column.headerObj }
-                </Flex>)
-            }
-        )}
-    </Flex>
-)}
+                    align={column.align}
+                    data={getColumnHeader(column, sortData, sorting, setSorting)}
+                    fixed={column.fixed}
+                    variant='header'
+                    width={column.width || 100 / columns.length}
+                />
+            )}
+        </Flex>
+    )
+})
+
+export default Header

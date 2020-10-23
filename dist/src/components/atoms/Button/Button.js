@@ -7,9 +7,15 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _color2 = require("@theme-ui/color");
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _Box = _interopRequireDefault(require("../Box/Box"));
+
+var _sizes = require("./sizes");
+
+var _classes = require("./classes");
+
+var _colors = require("./colors");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25,182 +31,53 @@ function _objectWithoutProperties(source, excluded) { if (source == null) return
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-var getHoverColor = function getHoverColor(t, color) {
-  if (t.colors.modeID === 'dark') {
-    // dark color mode
-    return (0, _color2.lighten)(color, 0.2);
-  } else {
-    // default color mode
-    return (0, _color2.darken)(color, 0.2);
-  }
-};
-
-var getColors = function getColors(variant, _color) {
-  if (_color) {
-    switch (variant) {
-      case 'default':
-        return {
-          color: _color,
-          fill: _color,
-          stroke: _color,
-          '&:not(.active):hover': {
-            bg: (0, _color2.alpha)(_color, 0.1),
-            color: function color(t) {
-              return getHoverColor(t, _color);
-            },
-            fill: function fill(t) {
-              return getHoverColor(t, _color);
-            },
-            stroke: function stroke(t) {
-              return getHoverColor(t, _color);
-            }
-          }
-        };
-
-      case 'primary':
-        return {
-          bg: _color,
-          '&:not(.active):hover': {
-            bg: function bg(t) {
-              return getHoverColor(t, _color);
-            }
-          }
-        };
-
-      case 'outlined':
-        return {
-          color: _color,
-          fill: _color,
-          stroke: _color,
-          '&:not(.active):hover': {
-            bg: (0, _color2.alpha)(_color, 0.1),
-            color: function color(t) {
-              return getHoverColor(t, _color);
-            },
-            fill: function fill(t) {
-              return getHoverColor(t, _color);
-            },
-            stroke: function stroke(t) {
-              return getHoverColor(t, _color);
-            }
-          }
-        };
-
-      default:
-        return;
-    }
-  } else {
-    return;
-  }
-};
-
-var getSizes = function getSizes(size) {
-  switch (size) {
-    case 'small':
-      return {
-        button: {
-          px: 2,
-          py: 1,
-          fontSize: 0
-        },
-        icon: {
-          label: {
-            mr: 1,
-            ml: -1,
-            size: 19
-          },
-          default: {
-            mr: -1,
-            ml: -1,
-            size: 19
-          }
-        }
-      };
-
-    case 'medium':
-      return {
-        button: {
-          px: 3,
-          py: 2
-        },
-        icon: {
-          label: {
-            mr: 2,
-            ml: -1
-          },
-          default: {
-            mr: -1,
-            ml: -1
-          }
-        }
-      };
-
-    case 'large':
-      return {
-        button: {
-          px: 4,
-          py: 3,
-          fontSize: 3
-        },
-        icon: {
-          label: {
-            mr: 2,
-            ml: -1,
-            size: 28
-          },
-          default: {
-            mr: -1,
-            ml: -1,
-            size: 28
-          }
-        }
-      };
-
-    default:
-      return;
-  }
-};
-
-var getClassName = function getClassName(active, rounded, disabled) {
-  var className = '';
-  className = active ? 'active' : disabled ? 'disabled' : '';
-  className += rounded ? ' rounded' : '';
-  return className;
-};
-
 var Button = _react.default.forwardRef(function (_ref, ref) {
-  var icon = _ref.icon,
-      label = _ref.label,
-      color = _ref.color,
-      _ref$variant = _ref.variant,
-      variant = _ref$variant === void 0 ? 'default' : _ref$variant,
-      _ref$size = _ref.size,
-      size = _ref$size === void 0 ? 'medium' : _ref$size,
-      _ref$active = _ref.active,
+  var _ref$active = _ref.active,
       active = _ref$active === void 0 ? false : _ref$active,
-      _ref$rounded = _ref.rounded,
-      rounded = _ref$rounded === void 0 ? false : _ref$rounded,
+      _ref$as = _ref.as,
+      as = _ref$as === void 0 ? 'button' : _ref$as,
+      _ref$color = _ref.color,
+      color = _ref$color === void 0 ? null : _ref$color,
       _ref$disabled = _ref.disabled,
       disabled = _ref$disabled === void 0 ? false : _ref$disabled,
-      wrapper = _ref.wrapper,
-      props = _objectWithoutProperties(_ref, ["icon", "label", "color", "variant", "size", "active", "rounded", "disabled", "wrapper"]);
+      _ref$href = _ref.href,
+      href = _ref$href === void 0 ? undefined : _ref$href,
+      _ref$icon = _ref.icon,
+      icon = _ref$icon === void 0 ? null : _ref$icon,
+      _ref$label = _ref.label,
+      label = _ref$label === void 0 ? null : _ref$label,
+      _ref$onClick = _ref.onClick,
+      onClick = _ref$onClick === void 0 ? undefined : _ref$onClick,
+      _ref$rounded = _ref.rounded,
+      rounded = _ref$rounded === void 0 ? false : _ref$rounded,
+      _ref$size = _ref.size,
+      size = _ref$size === void 0 ? 'medium' : _ref$size,
+      _ref$variant = _ref.variant,
+      variant = _ref$variant === void 0 ? 'default' : _ref$variant,
+      _ref$wrapper = _ref.wrapper,
+      wrapper = _ref$wrapper === void 0 ? null : _ref$wrapper,
+      rest = _objectWithoutProperties(_ref, ["active", "as", "color", "disabled", "href", "icon", "label", "onClick", "rounded", "size", "variant", "wrapper"]);
 
-  var className = getClassName(active, rounded, disabled);
-  var sxColor = getColors(variant, color);
-  var sxSize = getSizes(size);
+  var className = (0, _classes.getClassName)(active, rounded, disabled, href, onClick);
+  var sxColor = (0, _colors.getColors)(variant, color);
+  var sxSize = (0, _sizes.getSizes)(size);
 
-  if (icon && label) {
-    icon = _react.default.cloneElement(icon, sxSize.icon.label);
-  } else if (icon) {
-    icon = _react.default.cloneElement(icon, sxSize.icon.default);
+  if (_react.default.isValidElement(icon)) {
+    icon = label ? _react.default.cloneElement(icon, sxSize.icon.label) : _react.default.cloneElement(icon, sxSize.icon.default);
+  }
+
+  if (href && !onClick) {
+    as = 'a';
   }
 
   var buttonJSX = /*#__PURE__*/_react.default.createElement(_Box.default, _extends({
     ref: ref,
-    as: "button",
+    as: as,
     className: className,
+    href: href ? href : undefined,
+    onClick: onClick ? onClick : undefined,
     variant: variant
-  }, props, {
+  }, rest, {
     __themeKey: "buttons",
     __css: {
       appearance: 'none',
@@ -223,6 +100,23 @@ var Button = _react.default.forwardRef(function (_ref, ref) {
   }
 });
 
+Button.propTypes = {
+  active: _propTypes.default.bool,
+  as: _propTypes.default.oneOf(['button', 'a']),
+  color: _propTypes.default.string,
+  disabled: _propTypes.default.bool,
+  href: _propTypes.default.string,
+  icon: _propTypes.default.element,
+  label: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number]),
+  onClick: _propTypes.default.func,
+  ref: _propTypes.default.oneOfType([_propTypes.default.func, _propTypes.default.shape({
+    current: _propTypes.default.any
+  })]),
+  rounded: _propTypes.default.bool,
+  size: _propTypes.default.oneOf(['small', 'medium', 'large']),
+  variant: _propTypes.default.oneOf(['default', 'primary', 'outlined']),
+  wrapper: _propTypes.default.element
+};
 var _default = Button;
 exports.default = _default;
 

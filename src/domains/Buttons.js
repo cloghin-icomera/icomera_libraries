@@ -23,8 +23,8 @@ const Buttons = () => (
         <Box sx={{ width: '100%' }}>
             <Heading as='h3' pt={6} px={6}>Default Buttons</Heading>
             <Flex p={6} sx={ sxRow }>
-                <Button label='Default' />
-                <Button label='Error' color='error' href='/' as='a' />
+                <Button label='Default' onClick={() => alert('clicked!')} />
+                <Button label='Error' color='error' href='/someplace' />
                 <Button label='Active' active />
                 <Button label='Custom' color='#00C781' />
                 <Button label='Rounded' rounded />
@@ -94,7 +94,7 @@ const Buttons = () => (
             <Flex p={6} sx={ sxRow }>
                 <IconButton icon={<GridView />} />
                 <IconButton icon={<ListView />} active />
-                <IconButton icon={<Edit />} label='Edit Project' labelPosition='right' variant='action' color='brand' rounded />
+                <IconButton icon={<Edit />} label='Edit Project' labelPosition='right' onClick={() => alert('clicked')} variant='action' color='brand' rounded />
                 <IconButton icon={<Delete />} variant='action' label='Delete' labelPosition='top' color='error' rounded />
                 <IconButton icon={<Back />} size='large' hoverIndicator />
                 <IconButton icon={<Confirm />} color='#00C781' hoverIndicator />

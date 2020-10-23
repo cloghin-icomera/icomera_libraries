@@ -7,21 +7,24 @@ import { getColors } from './colors'
 
 const Button = React.forwardRef(
 ({
-    icon,
-    label,
-    color,
-	variant = 'default',
-	size = 'medium',
-    active = false,
-    rounded = false,
+	active = false,
+	as = 'button',
+	color = null,
 	disabled = false,
-	wrapper,
-    ...props
+	href = undefined,
+    icon = null,
+	label = null,
+	onClick = undefined,
+	rounded = false,
+	size = 'medium',
+	variant = 'default',
+	wrapper = null,
+    ...rest
 },
     ref
 ) => {
 	
-    const className = getClassName(active, rounded, disabled);
+    const className = getClassName(active, rounded, disabled, href, onClick);
 	const sxColor = getColors(variant, color);
 	const sxSize = getSizes(size);
 
@@ -30,14 +33,20 @@ const Button = React.forwardRef(
 			React.cloneElement( icon, sxSize.icon.label ) :
 			React.cloneElement( icon, sxSize.icon.default )
 	}
+
+	if ( href && !onClick) {
+		as = 'a'
+	}
 	
 	const buttonJSX = 
 		<Box
 			ref={ref}
-			as='button'
-			className={ className }
+			as={as}
+			className={className}
+			href={href ? href : undefined}
+			onClick={onClick ? onClick : undefined}
 			variant={ variant }
-			{...props}
+			{...rest}
 			__themeKey='buttons'
 			__css={{
 				appearance: 'none',
@@ -65,7 +74,25 @@ const Button = React.forwardRef(
 })
 
 Button.propTypes = {
-	icon: PropTypes.element
+	active: PropTypes.bool,
+	as: PropTypes.oneOf(['button', 'a']),
+	color: PropTypes.string,
+	disabled: PropTypes.bool,
+	href: PropTypes.string,
+	icon: PropTypes.element,
+	label: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number
+	]),
+	onClick: PropTypes.func,
+	ref: PropTypes.oneOfType([
+		PropTypes.func, 
+		PropTypes.shape({ current: PropTypes.any })
+	]),
+	rounded: PropTypes.bool,
+	size: PropTypes.oneOf(['small', 'medium', 'large']),
+	variant: PropTypes.oneOf(['default', 'primary', 'outlined']),
+	wrapper: PropTypes.element
 }
 
 export default Button

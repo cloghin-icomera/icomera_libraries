@@ -263,6 +263,40 @@ var buttons = {
   },
   close: {}
 };
+var tables = {
+  table_body: {},
+  body: {
+    bg: 'transparent',
+    borderBottomColor: (0, _color.alpha)('border', 0.5),
+    borderBottomWidth: 'thin',
+    borderBottomStyle: 'solid',
+    py: 3,
+    pl: 3
+  },
+  header: {
+    bg: 'transparent',
+    borderBottomColor: 'border',
+    borderBottomWidth: 'thin',
+    borderBottomStyle: 'solid',
+    py: 3,
+    pl: 3
+  },
+  headerTitle: {
+    fontSize: 0,
+    fontFamily: 'heading',
+    textTransform: 'uppercase',
+    color: 'muted',
+    letterSpacing: 1,
+    fontWeight: 'bold'
+  },
+  footer: {},
+  row: {
+    '&.selected': {
+      bg: (0, _color.alpha)('border', 0.25),
+      boxShadow: "4px 0 ".concat(colors.brand, " inset")
+    }
+  }
+};
 var _default = {
   space: [0, 4, 8, 12, 16, 24, 32, 48, 64, 72],
   sizes: {
@@ -389,6 +423,7 @@ var _default = {
   },
   links: links,
   alerts: alerts,
+  tables: tables,
   messages: {
     color: 'text',
     bg: 'card'

@@ -1,146 +1,116 @@
-import React, { useState, useMemo } from 'react'
-import { Box, Checkbox, Label } from '../../atoms'
+import React, { useState, useMemo, useCallback } from 'react'
+import PropTypes from 'prop-types'
+import { Box } from '../../atoms'
 
 import Header from './DataTableHeader'
 import Body from './DataTableBody'
 import Footer from './DataTableFooter'
 import Pagination from './DataTablePagination'
 
-
-const TableCheckbox = (
-{
-    checked,
-    indeterminate,
-    onChange,
-    children,
-    ...props
-}) => (
-    <Label {...props} sx={{ fontSize: 1, color: 'muted', pl: 1 }}>
-        <Checkbox
-            checked={checked}
-            className={indeterminate ? 'indeterminate' : ''}
-            onChange={onChange}
-        />
-        {children}
-    </Label>
-)
-
-const getTemplate = columns => (
-    columns.map( column => (
-        { 
-            field: column.field,
-            width: column.width || 100 / columns.length,
-            render: column.render
-        }
-    ))
-)
-
-const getPages = (rows, pageSize) => {
-    let pages = []
-    if( pageSize && rows.length > pageSize ) {
-        for ( let index = 0; index < Math.ceil(rows.length / pageSize); index++ ) {
-            const start = index * pageSize
-            const end = index * pageSize + pageSize
-            pages.push( rows.slice( start, end ) )
-        }
-    } else {
-        pages.push(rows)
-    }
-    return pages
-}
-
-//TODO: Optimize code so that it only re-renders components that change
-const getSelectionColumns = (columns, rows, selected, setSelected) => {
-    return ([
-        {
-            field: 'select',
-            width: 32,
-            headerObj: (
-                <TableCheckbox
-                    checked={selected.length === rows.length}
-                    indeterminate={
-                        selected.length > 0 && selected.length < rows.length
-                    }
-                    onChange={e => {
-                        setSelected(
-                            e.target.checked
-                            ? rows.map( (r, i) => i )
-                            : []
-                        )
-                    }}
-                >
-                    { selected.length > 0 && `(${selected.length})` }
-                </TableCheckbox>
-            ),
-            render: (val = null, id) => 
-                <TableCheckbox
-                    key={id}
-                    checked={selected.indexOf(id) !== -1}
-                    onChange={e => {
-                        setSelected(
-                            e.target.checked
-                            ? selected.concat(id)
-                            : selected.filter( val => val !== id )
-                        )
-                    }}
-                />,
-        },
-        ...columns
-    ])
-}
-
-const generateRowsUID = rows =>
-    rows.map((row, index) => (
-        {
-            uid : index,
-            ...row
-        }
-    ))
+import { addCheckboxes, adjustData, getPages, getPrimary } from './utils'
 
 const DataTable = React.forwardRef(
 ({
-    title,
-    rows = [],
     columns = [],
-    pageSize,
-    checkboxSelection = false,
-    selected,
-    setSelected,
-    ...props
+    pageSize = undefined,
+    primaryKey = undefined,
+    rows = [],
+    selected = undefined,
+    onSelect = undefined,
+    title = undefined,
+    ...rest
 }, ref ) => {
-    
-    const [activePage, setActivePage] = useState(0)
 
-    rows = generateRowsUID(rows)
-
-    const [sortedRows, setSortedRows ] = useState(rows)
-
-    if (checkboxSelection) {
-        columns = useMemo(
-            () => getSelectionColumns(columns, sortedRows, selected, setSelected),
-            [columns, sortedRows, selected, setSelected]
-        )
-    }
-
-    const template = useMemo(
-        () => getTemplate(columns),
-        [columns]
+    const primary = useMemo(
+        () => getPrimary(columns, primaryKey),
+        [columns, primaryKey]
     )
     
+    let [adjustedColumns, adjustedRows] = useMemo(
+        () => adjustData(columns, rows),
+        [columns, rows]
+    )
+
+    const [activePage, setActivePage] = useState(0)
+    const [sortedRows, setSortedRows] = useState(adjustedRows)
+    
+    const selectAll = useCallback(
+        e => {
+            if (!onSelect) {
+                console.warn("To enable selection, provide the 'onSelect' function to 'DataTable' component. If you are storing select state via a 'useState' hook, you can do something like: '<DataTable select={select} onSelect={setSelect} />'. See https://bit.dev/icomera/components/layout/data-table for more information.")
+            } else {
+                onSelect(
+                    e.target.checked
+                    ? sortedRows.map( row => row[primary] )
+                    : []
+                )
+            }
+        },
+        [primary, sortedRows, onSelect]
+    )
+
+    const selectRow = useCallback(
+        (e, row) => {
+            if (!onSelect) {
+                console.warn("To enable selection, provide the 'onSelect' function to 'DataTable' component. If you are storing select state via a 'useState' hook, you can do something like: '<DataTable select={select} onSelect={setSelect} />'. See https://bit.dev/icomera/components/layout/data-table for more information.")
+            } else {
+                onSelect(
+                    e.target.checked
+                    ? selected.concat(row[primary])
+                    : selected.filter( val => val !== row[primary] )
+                )
+            }
+        },
+        [primary, selected, onSelect]
+    )
+
+    const sortData = useCallback(
+        (field, direction) => {
+            console.log('sort function called:', field, direction)
+            const sorted = [...adjustedRows].sort(
+                (a, b) => {
+                    if (a[field] < b[field]) {
+                        return direction === 'asc' ? -1 : 1;
+                    }
+                    if (a[field] > b[field]) {
+                        return direction === 'asc' ? 1 : -1;
+                    }
+                    return 0;
+                }
+            )
+            setSortedRows(sorted)
+        },
+        [adjustedRows, setSortedRows]
+    )
+
+    if (selected) {
+        adjustedColumns = useMemo(
+            () => addCheckboxes(adjustedColumns, sortedRows, selected, selectAll, selectRow, primary),
+            [adjustedColumns, sortedRows, selected, selectAll, selectRow, primary]
+        )
+    }
+    
     const pages = useMemo(
-        () => getPages(sortedRows, pageSize),
-        [sortedRows, pageSize]
+        () => getPages(sortedRows, pageSize, primary),
+        [sortedRows, pageSize, primary]
     )
 
     return (
-        <Box ref={ref} {...props}>
-            <Header columns={columns} rows={rows} setSorted={setSortedRows} />
+        <Box ref={ref} {...rest}>
+            <Header
+                columns={adjustedColumns}
+                rows={adjustedRows}
+                setSorted={setSortedRows}
+                sortData={sortData}
+            />
             <Body
                 pages={pages}
                 activePage={activePage}
-                template={template}
                 pageSize={pageSize}
                 selected={selected}
+                columns={adjustedColumns}
+                rows={sortedRows}
+                primary={primary}
             />
             { pageSize && sortedRows.length > pageSize &&
                 <Footer>
@@ -150,5 +120,41 @@ const DataTable = React.forwardRef(
         </Box>
     )
 })
+
+DataTable.propTypes = {
+    columns: PropTypes.arrayOf(
+        PropTypes.shape({
+            align: PropTypes.oneOf([
+                'center',
+                'left',
+                'right'
+            ]),
+            field: PropTypes.string.isRequired,
+            fixed: PropTypes.bool,
+            header: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.element
+            ]),
+            render: PropTypes.oneOfType([
+                PropTypes.func,
+                PropTypes.element
+            ]),
+            primary: PropTypes.bool,
+            sortable: PropTypes.bool,
+            sortOn: PropTypes.oneOfType([
+                PropTypes.func,
+                PropTypes.string,
+                PropTypes.number
+            ]),
+            width: PropTypes.number,
+        })
+    ).isRequired,
+    rows: PropTypes.arrayOf(PropTypes.object).isRequired,
+    onSelect: PropTypes.func,
+    pageSize: PropTypes.number,
+    primaryKey: PropTypes.string,
+    selected: PropTypes.array,
+    title: PropTypes.string,
+}
 
 export default DataTable

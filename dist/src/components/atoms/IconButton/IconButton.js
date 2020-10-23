@@ -7,19 +7,21 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _color = require("@theme-ui/color");
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _Box = _interopRequireDefault(require("../Box/Box"));
 
-var _Flex = _interopRequireDefault(require("../Flex/Flex"));
+var _Tooltip = _interopRequireDefault(require("../Tooltip/Tooltip"));
+
+var _classes = require("./classes");
+
+var _colors = require("./colors");
+
+var _sizes = require("./sizes");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -27,196 +29,58 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var getClassName = function getClassName(active, rounded, disabled, hoverIndicator) {
-  var className = '';
-  className = active ? 'active' : disabled ? 'disabled' : '';
-  className += rounded ? ' rounded' : '';
-  className += hoverIndicator ? 'hover-back' : '';
-  return className;
-};
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
-var getHoverColor = function getHoverColor(t, color) {
-  if (t.colors.modeID === 'dark') {
-    // dark color mode
-    return (0, _color.lighten)(color, 0.2);
-  } else {
-    // default color mode
-    return (0, _color.darken)(color, 0.2);
-  }
-};
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-var getColors = function getColors(variant, color) {
-  if (color) {
-    switch (variant) {
-      case 'icon':
-        return {
-          fill: color,
-          stroke: color,
-          '&:not(.active):hover': {
-            fill: function fill(t) {
-              return getHoverColor(t, color);
-            },
-            stroke: function stroke(t) {
-              return getHoverColor(t, color);
-            }
-          },
-          '&.hover-back:hover': {
-            bg: (0, _color.alpha)(color, 0.15)
-          }
-        };
+var IconButton = _react.default.forwardRef(function (_ref, ref) {
+  var _ref$active = _ref.active,
+      active = _ref$active === void 0 ? false : _ref$active,
+      _ref$as = _ref.as,
+      as = _ref$as === void 0 ? 'button' : _ref$as,
+      _ref$color = _ref.color,
+      color = _ref$color === void 0 ? null : _ref$color,
+      _ref$disabled = _ref.disabled,
+      disabled = _ref$disabled === void 0 ? false : _ref$disabled,
+      _ref$hoverIndicator = _ref.hoverIndicator,
+      hoverIndicator = _ref$hoverIndicator === void 0 ? false : _ref$hoverIndicator,
+      _ref$href = _ref.href,
+      href = _ref$href === void 0 ? undefined : _ref$href,
+      _ref$icon = _ref.icon,
+      icon = _ref$icon === void 0 ? undefined : _ref$icon,
+      _ref$label = _ref.label,
+      label = _ref$label === void 0 ? undefined : _ref$label,
+      _ref$labelPosition = _ref.labelPosition,
+      labelPosition = _ref$labelPosition === void 0 ? undefined : _ref$labelPosition,
+      _ref$onClick = _ref.onClick,
+      onClick = _ref$onClick === void 0 ? undefined : _ref$onClick,
+      _ref$rounded = _ref.rounded,
+      rounded = _ref$rounded === void 0 ? false : _ref$rounded,
+      _ref$size = _ref.size,
+      size = _ref$size === void 0 ? 'medium' : _ref$size,
+      _ref$variant = _ref.variant,
+      variant = _ref$variant === void 0 ? 'icon' : _ref$variant,
+      _ref$wrapper = _ref.wrapper,
+      wrapper = _ref$wrapper === void 0 ? undefined : _ref$wrapper,
+      rest = _objectWithoutProperties(_ref, ["active", "as", "color", "disabled", "hoverIndicator", "href", "icon", "label", "labelPosition", "onClick", "rounded", "size", "variant", "wrapper"]);
 
-      case 'action':
-        return {
-          fill: color,
-          stroke: color,
-          '&:not(.active):hover': {
-            bg: color
-          }
-        };
-
-      default:
-        return;
-    }
-  } else {
-    return;
-  }
-};
-
-var getSizes = function getSizes(size) {
-  switch (size) {
-    case 'small':
-      return {
-        button: {
-          p: 1
-        },
-        icon: {
-          size: 19
-        }
-      };
-
-    case 'medium':
-      return {
-        button: {
-          p: 2
-        },
-        icon: {
-          m: 0
-        }
-      };
-
-    case 'large':
-      return {
-        button: {
-          p: 3
-        },
-        icon: {
-          size: 28
-        }
-      };
-
-    default:
-      return;
-  }
-};
-
-var Tooltip = function Tooltip(_ref) {
-  var label = _ref.label,
-      _ref$position = _ref.position,
-      position = _ref$position === void 0 ? 'bottom' : _ref$position,
-      children = _ref.children;
-  var sxPos = {};
-
-  switch (position) {
-    case 'top':
-      sxPos = {
-        bottom: '48px'
-      };
-      break;
-
-    case 'left':
-      sxPos = {
-        right: '48px'
-      };
-      break;
-
-    case 'right':
-      sxPos = {
-        left: '48px'
-      };
-      break;
-
-    default:
-      sxPos = {
-        top: '48px'
-      };
-  }
-
-  return /*#__PURE__*/_react.default.createElement(_Flex.default, {
-    sx: {
-      position: 'relative',
-      alignItems: 'center',
-      justifyContent: 'center',
-      '&:hover .label': {
-        opacity: '100%',
-        visibility: 'visible',
-        transitionDelay: '.2s'
-      }
-    }
-  }, children, /*#__PURE__*/_react.default.createElement(_Box.default, {
-    className: "label",
-    as: "span",
-    sx: _objectSpread({
-      width: 'max-content',
-      opacity: 0,
-      transition: 'all .25s ease-in-out',
-      visibility: 'hidden',
-      bg: (0, _color.alpha)('text', 0.85),
-      color: 'card',
-      textAlign: 'center',
-      py: 1,
-      px: 2,
-      fontSize: 0,
-      borderRadius: 'small',
-      position: 'absolute',
-      zIndex: '1',
-      pointerEvents: 'none'
-    }, sxPos)
-  }, label));
-};
-
-var IconButton = _react.default.forwardRef(function (_ref2, ref) {
-  var _ref2$active = _ref2.active,
-      active = _ref2$active === void 0 ? false : _ref2$active,
-      _ref2$rounded = _ref2.rounded,
-      rounded = _ref2$rounded === void 0 ? false : _ref2$rounded,
-      _ref2$disabled = _ref2.disabled,
-      disabled = _ref2$disabled === void 0 ? false : _ref2$disabled,
-      _ref2$hoverIndicator = _ref2.hoverIndicator,
-      hoverIndicator = _ref2$hoverIndicator === void 0 ? false : _ref2$hoverIndicator,
-      icon = _ref2.icon,
-      color = _ref2.color,
-      _ref2$size = _ref2.size,
-      size = _ref2$size === void 0 ? 'medium' : _ref2$size,
-      _ref2$variant = _ref2.variant,
-      variant = _ref2$variant === void 0 ? 'icon' : _ref2$variant,
-      wrapper = _ref2.wrapper,
-      _ref2$label = _ref2.label,
-      label = _ref2$label === void 0 ? undefined : _ref2$label,
-      _ref2$labelPosition = _ref2.labelPosition,
-      labelPosition = _ref2$labelPosition === void 0 ? undefined : _ref2$labelPosition,
-      props = _objectWithoutProperties(_ref2, ["active", "rounded", "disabled", "hoverIndicator", "icon", "color", "size", "variant", "wrapper", "label", "labelPosition"]);
-
-  var className = getClassName(active, rounded, disabled, hoverIndicator);
-  var sxColor = getColors(variant, color);
-  var sxSize = getSizes(size);
+  var className = (0, _classes.getClassName)(active, rounded, disabled, href, onClick, hoverIndicator);
+  var sxColor = (0, _colors.getColors)(variant, color);
+  var sxSize = (0, _sizes.getSizes)(size);
   icon = _react.default.cloneElement(icon, sxSize.icon);
+
+  if (href && !onClick) {
+    as = 'a';
+  }
 
   var buttonJSX = /*#__PURE__*/_react.default.createElement(_Box.default, _extends({
     ref: ref,
-    as: "button",
+    as: as,
+    href: href ? href : undefined,
+    onClick: onClick ? onClick : undefined,
     variant: variant,
     className: className
-  }, props, {
+  }, rest, {
     __themeKey: "buttons",
     __css: {
       appearance: 'none',
@@ -237,7 +101,7 @@ var IconButton = _react.default.forwardRef(function (_ref2, ref) {
     });
   } else {
     if (label) {
-      return /*#__PURE__*/_react.default.createElement(Tooltip, {
+      return /*#__PURE__*/_react.default.createElement(_Tooltip.default, {
         label: label,
         position: labelPosition
       }, buttonJSX);
@@ -247,6 +111,25 @@ var IconButton = _react.default.forwardRef(function (_ref2, ref) {
   }
 });
 
+IconButton.propTypes = {
+  active: _propTypes.default.bool,
+  as: _propTypes.default.oneOf(['button', 'a']),
+  color: _propTypes.default.string,
+  disabled: _propTypes.default.bool,
+  hoverIndicator: _propTypes.default.bool,
+  href: _propTypes.default.string,
+  icon: _propTypes.default.element.isRequired,
+  label: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number]),
+  labelPosition: _propTypes.default.oneOf(['top', 'right', 'bottom', 'left']),
+  onClick: _propTypes.default.func,
+  ref: _propTypes.default.oneOfType([_propTypes.default.func, _propTypes.default.shape({
+    current: _propTypes.default.any
+  })]),
+  rounded: _propTypes.default.bool,
+  size: _propTypes.default.oneOf(['small', 'medium', 'large']),
+  variant: _propTypes.default.oneOf(['icon', 'action']),
+  wrapper: _propTypes.default.element
+};
 var _default = IconButton;
 exports.default = _default;
 

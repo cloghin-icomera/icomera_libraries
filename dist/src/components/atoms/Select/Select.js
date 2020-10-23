@@ -63,7 +63,8 @@ var DownArrow = function DownArrow(props) {
 var _default = _react.default.forwardRef(function (props, ref) {
   return /*#__PURE__*/_react.default.createElement(_Box.default, _extends({}, getMargin(props), {
     sx: {
-      display: 'flex'
+      display: 'flex',
+      width: props.width
     }
   }), /*#__PURE__*/_react.default.createElement(_Box.default, _extends({
     ref: ref,

@@ -7,8 +7,6 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _core = require("@emotion/core");
-
 var _reactRouterDom = require("react-router-dom");
 
 var _Flex = _interopRequireDefault(require("../Flex/Flex"));

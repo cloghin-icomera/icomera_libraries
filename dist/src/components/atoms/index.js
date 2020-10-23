@@ -213,6 +213,12 @@ Object.defineProperty(exports, "Switch", {
     return _Switch.default;
   }
 });
+Object.defineProperty(exports, "Tooltip", {
+  enumerable: true,
+  get: function get() {
+    return _Tooltip.default;
+  }
+});
 
 var _Box = _interopRequireDefault(require("./Box/Box"));
 
@@ -283,6 +289,8 @@ var _IconButton = _interopRequireDefault(require("./IconButton/IconButton"));
 var _MenuButton = _interopRequireDefault(require("./MenuButton/MenuButton"));
 
 var _Switch = _interopRequireDefault(require("./Switch/Switch"));
+
+var _Tooltip = _interopRequireDefault(require("./Tooltip/Tooltip"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

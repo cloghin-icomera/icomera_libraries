@@ -32,7 +32,9 @@ import NavLinkRouted from './NavLinkRouted/NavLinkRouted'
 import Message from './Message/Message'
 import IconButton from './IconButton/IconButton'
 import MenuButton from './MenuButton/MenuButton'
-import Switch from './Switch/Switch' 
+import Switch from './Switch/Switch'
+
+export { default as Tooltip } from './Tooltip/Tooltip'
 
 export {
     Box,

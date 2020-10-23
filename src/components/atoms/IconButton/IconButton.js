@@ -1,176 +1,51 @@
 import React from 'react';
-import { lighten, darken, alpha } from '@theme-ui/color';
+import PropTypes from 'prop-types'
 import Box from '../Box/Box';
-import Flex from '../Flex/Flex';
-
-const getClassName = (active, rounded, disabled, hoverIndicator) => {
-	let className = '';
-	className = active ? 'active' : disabled ? 'disabled' : '';
-    className += rounded ? ' rounded' : '';
-    className += hoverIndicator ? 'hover-back' : '';
-	return className;
-}
-
-const getHoverColor = (t, color) => {
-    if (t.colors.modeID === 'dark') {
-        // dark color mode
-        return lighten(color, 0.2)
-    } else {
-        // default color mode
-        return darken(color, 0.2)
-    }
-}
-
-const getColors = (variant, color) => {
-	if (color) {
-		switch(variant) {
-			case 'icon':
-				return {
-					fill: color,
-					stroke: color,
-					'&:not(.active):hover' : {
-                        fill: t => getHoverColor(t, color),
-                        stroke: t => getHoverColor(t, color)
-                    },
-                    '&.hover-back:hover' : {
-                        bg: alpha(color, 0.15),
-                    }
-				}
-			case 'action':
-				return {
-                    fill: color,
-					stroke: color,
-					'&:not(.active):hover' : {
-						bg: color
-					}
-				}
-			default:
-				return
-		}
-	} else {
-		return
-	}
-}
-
-const getSizes = size => {
-	switch (size) {
-	case 'small': 
-		return {
-			button: {
-				p: 1
-			},
-			icon: {
-				size: 19
-			}
-		}
-	case 'medium':
-		return {
-			button: {
-				p: 2
-			},
-			icon: {
-				m: 0
-			}
-		}
-	case 'large': 
-		return {
-			button: {
-				p: 3,
-			},
-			icon: {
-                size: 28
-			}
-		}
-	default:
-		return
-	}
-}
-
-const Tooltip = ({ label, position = 'bottom', children }) => {
-    let sxPos = {};
-    switch(position) {
-        case 'top':
-            sxPos = { bottom: '48px' }
-            break;
-        case 'left':
-            sxPos = { right: '48px' }
-            break;
-        case 'right':
-            sxPos = { left: '48px' }
-            break;
-        default:
-            sxPos = { top: '48px' }
-    }
-    return (
-        <Flex sx={{
-            position: 'relative',
-            alignItems: 'center',
-            justifyContent: 'center',
-            '&:hover .label' : {
-                opacity: '100%',
-                visibility: 'visible',
-                transitionDelay: '.2s',
-            }
-        }}>
-            {children}
-            <Box
-                className='label'
-                as='span'
-                sx={{
-                    width: 'max-content',
-                    opacity: 0,
-                    transition: 'all .25s ease-in-out',
-                    visibility: 'hidden',
-                    bg: alpha('text', 0.85),
-                    color: 'card',
-                    textAlign: 'center',
-                    py: 1,
-                    px: 2,
-                    fontSize: 0,
-                    borderRadius: 'small',
-                    position: 'absolute',
-                    zIndex: '1',
-                    pointerEvents: 'none',
-                    ...sxPos
-                }}
-            >
-                {label}
-            </Box>
-        </Flex>
-    )
-}
+import Tooltip from '../Tooltip/Tooltip';
+import { getClassName } from './classes'
+import { getColors } from './colors'
+import { getSizes } from './sizes'
 
 const IconButton = React.forwardRef(
 ({
     active = false,
-    rounded = false,
+    as = 'button',
+    color = null,
     disabled = false,
     hoverIndicator = false,
-    icon,
-    color,
-    size = 'medium',
-    variant = 'icon',
-    wrapper,
+    href = undefined, 
+    icon = undefined,
     label = undefined,
     labelPosition = undefined,
-    ...props
+    onClick = undefined,
+    rounded = false,
+    size = 'medium',
+    variant = 'icon',
+    wrapper = undefined,
+    ...rest
 },
     ref
 ) => {
 
-    const className = getClassName(active, rounded, disabled, hoverIndicator);
+    const className = getClassName(active, rounded, disabled, href, onClick, hoverIndicator);
     const sxColor = getColors(variant, color);
     const sxSize = getSizes(size);
 
     icon = React.cloneElement( icon, sxSize.icon );
+    
+    if ( href && !onClick) {
+		as = 'a'
+	}
 
     const buttonJSX =
         <Box
             ref={ref}
-            as="button"
+            as={as}
+            href={href ? href : undefined}
+			onClick={onClick ? onClick : undefined}
             variant={variant}
             className={className}
-            {...props}
+            {...rest}
             __themeKey="buttons"
             __css={{
                 appearance: 'none',
@@ -201,5 +76,31 @@ const IconButton = React.forwardRef(
 		
 	}
 })
+
+IconButton.propTypes = {
+    active: PropTypes.bool,
+	as: PropTypes.oneOf(['button', 'a']),
+	color: PropTypes.string,
+    disabled: PropTypes.bool,
+    hoverIndicator: PropTypes.bool,
+	href: PropTypes.string,
+	icon: PropTypes.element.isRequired,
+	label: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number
+    ]),
+    labelPosition: PropTypes.oneOf([
+        'top', 'right', 'bottom', 'left'
+    ]),
+	onClick: PropTypes.func,
+	ref: PropTypes.oneOfType([
+		PropTypes.func, 
+		PropTypes.shape({ current: PropTypes.any })
+	]),
+	rounded: PropTypes.bool,
+	size: PropTypes.oneOf(['small', 'medium', 'large']),
+	variant: PropTypes.oneOf(['icon', 'action']),
+	wrapper: PropTypes.element
+}
 
 export default IconButton
