@@ -11,7 +11,7 @@ const randVal = data => {
     return data[index]
 }
 
-const genRandomID = digits => Math.floor(Math.random() * (10 ** digits))
+const genRandomID = digits => Math.floor((10 ** (digits-1)) + Math.random() * (10 ** digits))
 
 const generateRows = number => {
     const rows = [];
@@ -27,9 +27,9 @@ const generateRows = number => {
 }
 
 const columns = [
-    { field: 'sysid', header: 'ID', width: 70 },
-    { field: 'firstName', header: 'First Name', width: 140 },
-    { field: 'lastName', header: 'Last Name', width: 140 },
+    { field: 'sysid', header: 'ID', width: 70, search: true },
+    { field: 'firstName', header: 'First Name', width: 140, search: true },
+    { field: 'lastName', header: 'Last Name', width: 140, search: true },
     {
         field: 'fullName',
         header: 'Full Name',
@@ -61,7 +61,7 @@ const columns = [
     }
 ]
 
-const rows = generateRows(20)
+const rows = generateRows(250)
 
 export default () => {
     
@@ -70,11 +70,10 @@ export default () => {
     return (
         <Container p={6}>
             <Card p={4}>
-                <button onClick={() => console.log(selected)}>Log Selected</button>
                 <DataTable
                     columns={columns}
                     rows={rows}
-                    pageSize={6}
+                    pageSize={20}
                     selected={selected}
                     onSelect={setSelected}
                 />

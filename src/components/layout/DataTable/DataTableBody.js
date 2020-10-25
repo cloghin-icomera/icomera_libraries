@@ -10,7 +10,7 @@ const Body = React.memo(
     selected,
     primary
 }) => 
-    <React.Fragment>
+    (<React.Fragment>
     { rows
         .filter( row => pages[activePage].indexOf(row[primary]) !== -1 )
         .map( row => 
@@ -23,7 +23,7 @@ const Body = React.memo(
             />
         )
     }
-    </React.Fragment>
+    </React.Fragment>)
 )
 
 export default Body

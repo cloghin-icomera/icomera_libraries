@@ -12,7 +12,7 @@ const TableCheckbox = (
         <Label {...props} sx={{ fontSize: 1, color: 'muted', pl: 1 }}>
             <Checkbox
                 checked={checked}
-                className={indeterminate ? 'indeterminate' : ''}
+                className={indeterminate ? 'indeterminate' : undefined}
                 onChange={onChange}
             />
             {children}
@@ -27,7 +27,7 @@ export const addCheckboxes = (columns, rows, selected, selectAll, selectRow, pri
             fixed: true,
             header:
                 <TableCheckbox
-                    checked={selected.length === rows.length}
+                    checked={selected.length === rows.length && rows.length > 0}
                     indeterminate={ selected.length > 0 && selected.length < rows.length }
                     onChange={e => selectAll(e)}
                 >

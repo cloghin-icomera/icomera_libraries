@@ -6,11 +6,12 @@ export const getClassName = (
     onClick,
     hoverIndicator
 ) => {
-    let className = rounded ? 'rounded ' : ''
-    className += hoverIndicator ? 'hover-back' : ''
-	if( !href && !onClick ) {
-		return className + 'disabled '
-	}
-	className = active ? 'active ' : disabled ? 'disabled ' : ''
-	return className;
+    let classes = []
+
+    if( active ) { classes.push('active') }
+    if(rounded) { classes.push('rounded')  }
+    if(hoverIndicator) { classes.push('hover-back') }
+    if(disabled || (!href && !onClick)) { classes.push('disabled') }
+
+    return (classes.join(' '))
 }

@@ -13,13 +13,13 @@ const getSize = size => {
     }
 }
 
-const X = ({size, ...props}) => (
+const X = ({size, ...rest}) => (
     <Box
         css={{
             width : `${size}px`,
             height : `${size}px`
         }}
-        {...props}
+        {...rest}
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -33,13 +33,14 @@ const X = ({size, ...props}) => (
     </Box>
 )
 
-export default React.forwardRef(({ icon, ...props }, ref) => {
-    icon = icon ? icon : <X size={getSize(props.size)} />;
+export default React.forwardRef(({ icon, size, ...rest }, ref) => {
+    icon = icon ? icon : <X size={getSize(size)} />;
     return (
         <IconButton
             ref={ref}
             icon={icon}
-            {...props}
+            size={size}
+            {...rest}
         />
     )
 })

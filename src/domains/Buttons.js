@@ -92,12 +92,12 @@ const Buttons = () => (
         <Box sx={{ width: '100%' }}>
             <Heading as='h3' pt={6} px={6}>Icon Buttons</Heading>
             <Flex p={6} sx={ sxRow }>
-                <IconButton icon={<GridView />} />
+                <IconButton icon={<GridView />} onClick={() => console.log('click')} />
                 <IconButton icon={<ListView />} active />
                 <IconButton icon={<Edit />} label='Edit Project' labelPosition='right' onClick={() => alert('clicked')} variant='action' color='brand' rounded />
                 <IconButton icon={<Delete />} variant='action' label='Delete' labelPosition='top' color='error' rounded />
-                <IconButton icon={<Back />} size='large' hoverIndicator />
-                <IconButton icon={<Confirm />} color='#00C781' hoverIndicator />
+                <IconButton icon={<Back />} size='large' onClick={() => console.log('click')} hoverIndicator />
+                <IconButton icon={<Confirm />} color='#00C781' onClick={() => console.log('click')} hoverIndicator />
                 <IconButton icon={<Calendar />} size='small' color='brand' />
                 <IconButton icon={<Error />} disabled />
                 <Close icon={<Remove />} color='error' hoverIndicator />

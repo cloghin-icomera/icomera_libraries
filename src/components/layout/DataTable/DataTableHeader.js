@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Flex } from '../../atoms'
-import { ArrowUp, ArrowDown } from '../../../icons/icomera/outline'
+import { Box, Close, Flex, IconButton, Input } from '../../atoms'
+import { ArrowUp, ArrowDown, Search } from '../../../icons/icomera/outline'
 import Cell from './DataTableCell'
 
 const buttonStyle = {
@@ -13,25 +13,24 @@ const buttonStyle = {
     outline: 'none'
 }
 
-const handleSort = (column, sorting, setSorting, sortData) => {
+const handleSort = (column, sorting, sortData) => {
 
     const order = 
         sorting.field !== column.field
         ? 'asc'
-        : sorting.order === 'asc' 
+        : sorting.direction === 'asc' 
             ? 'desc' 
             : 'asc'
 
-    setSorting({ field: column.field, order })
     sortData(column.field, order)   
 }
 
-const SortButton = ({ column, sortData, sorting, setSorting}) => 
+const SortButton = ({ column, sortData, sorting, ...rest}) => 
     <Flex
         as='button'
         variant= 'headerTitle'
         color={ sorting.field === column.field ? 'text' : 'muted' }
-        onClick={() => handleSort(column, sorting, setSorting, sortData)}
+        onClick={() => handleSort(column, sorting, sortData)}
         __themeKey = 'table'
         __css = {{
             appearance: 'none',
@@ -40,31 +39,52 @@ const SortButton = ({ column, sortData, sorting, setSorting}) =>
             bg: 'transparent',
             ...buttonStyle
         }}
+        {...rest}
     >
         {column.header}
-        { sorting.order === 'desc' && sorting.field === column.field && <ArrowUp stroke='text' size={16} />}
-        { sorting.order === 'asc' && sorting.field === column.field && <ArrowDown stroke='text' size={16} />}
+        { sorting.direction === 'desc' && sorting.field === column.field && <ArrowUp stroke='text' size={16} />}
+        { sorting.direction === 'asc' && sorting.field === column.field && <ArrowDown stroke='text' size={16} />}
     </Flex>
 
-
-const getColumnHeader = (column, sortData, sorting, setSorting) => {
+const getColumnHeader = (column, sortData, sorting, search, handleSearch) => {
     if (React.isValidElement(column.header)) {
         return column.header
     } else if (column.sortable) {
         return (
-            <SortButton column={column} sortData={sortData} sorting={sorting} setSorting={setSorting} />
+            <Flex sx={{ flexWrap: 'wrap', position: 'relative' }}>
+                { column.search && 
+                    <IconButton icon={<Search />} onClick={() => console.log('hello world')} size='small' ml={-2} />
+                }
+                <SortButton column={column} sortData={sortData} sorting={sorting} sx={{ alignSelf: 'center' }} />
+                { column.search &&
+                    <Input
+                        size='small'
+                        name={column.field}
+                        value={search[column.field]}
+                        onChange={e => handleSearch(e)} 
+                    />
+                }
+                { column.search &&
+                    <Box sx={{ position: 'absolute', zIndex: 1, right: 0, bottom: 0 }}>
+                        <Close p={1} size='small' onClick={() => console.log('close')} />
+                    </Box>
+                }
+            </Flex>
         )
     } else {
         return (
-            <Flex
-                variant = 'headerTitle'
-                __themeKey = 'table'
-                __css = {{
-                    ...buttonStyle
-                }}
-            >
-                {column.header}
-            </Flex>
+            <>
+                <Search stroke='muted' />
+                <Flex
+                    variant = 'headerTitle'
+                    __themeKey = 'table'
+                    __css = {{
+                        ...buttonStyle
+                    }}
+                >
+                    {column.header}
+                </Flex>
+            </>
         )
     }
 }
@@ -72,14 +92,13 @@ const getColumnHeader = (column, sortData, sorting, setSorting) => {
 const Header = React.memo(
 ({
     columns,
-    rows,
     sortData,
+    search,
+    sorting,
+    handleSearch,
     ...rest
 }) => {
-    const [ sorting, setSorting ] = useState({
-        field: '',
-        order: 'asc'
-    })
+
     return (
         <Flex
             {...rest}
@@ -88,7 +107,7 @@ const Header = React.memo(
                 <Cell
                     key={index}
                     align={column.align}
-                    data={getColumnHeader(column, sortData, sorting, setSorting)}
+                    data={getColumnHeader(column, sortData, sorting, search, handleSearch)}
                     fixed={column.fixed}
                     variant='header'
                     width={column.width || 100 / columns.length}

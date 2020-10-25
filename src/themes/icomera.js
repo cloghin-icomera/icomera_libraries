@@ -389,7 +389,24 @@ export default {
 			color: 'muted'
 		},
 		input: {
-			borderColor: 'border'
+			p: 2,
+			fontFamily: 'body',
+			fontSize: 2,
+			lineHeight: 'inherit',
+			borderColor: 'border',
+			borderWidth: 'thin',
+			borderStyle: 'solid',
+			borderRadius: 4,
+			color: 'inherit',
+			bg: 'transparent',
+			outline: 'none',
+			'&.small' : {
+				p: 1,
+				fontSize: 0
+			},
+			'&:focus' : {
+				borderColor: 'text',
+			}
 		},
 		select : {
 			borderColor: 'border'

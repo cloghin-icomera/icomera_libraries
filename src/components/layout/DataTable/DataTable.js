@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react'
+import React, { useState, useMemo, useCallback, useReducer, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Box } from '../../atoms'
 
@@ -31,22 +31,37 @@ const DataTable = React.forwardRef(
         [columns, rows]
     )
 
+    let initialState = {}
+    columns.forEach( column => {
+        if( column.search ) { initialState[column.field] = '' }
+    })
+
     const [activePage, setActivePage] = useState(0)
-    const [sortedRows, setSortedRows] = useState(adjustedRows)
+    const [filtered, setFiltered] = useState(adjustedRows)
+    const [perPage, setPerPage] = useState(pageSize)
+    const [sorting, setSorting] = useState({})
+
+    const [search, setSearch] = useReducer(
+        (state, newState) => {
+            return ({...state, ...newState})
+        },
+        initialState
+    )
     
     const selectAll = useCallback(
         e => {
             if (!onSelect) {
                 console.warn("To enable selection, provide the 'onSelect' function to 'DataTable' component. If you are storing select state via a 'useState' hook, you can do something like: '<DataTable select={select} onSelect={setSelect} />'. See https://bit.dev/icomera/components/layout/data-table for more information.")
             } else {
+                console.log(e.target.checked)
                 onSelect(
                     e.target.checked
-                    ? sortedRows.map( row => row[primary] )
+                    ? filtered.map( row => row[primary] )
                     : []
                 )
             }
         },
-        [primary, sortedRows, onSelect]
+        [primary, filtered, onSelect]
     )
 
     const selectRow = useCallback(
@@ -66,8 +81,7 @@ const DataTable = React.forwardRef(
 
     const sortData = useCallback(
         (field, direction) => {
-            console.log('sort function called:', field, direction)
-            const sorted = [...adjustedRows].sort(
+            const sorted = [...filtered].sort(
                 (a, b) => {
                     if (a[field] < b[field]) {
                         return direction === 'asc' ? -1 : 1;
@@ -78,43 +92,141 @@ const DataTable = React.forwardRef(
                     return 0;
                 }
             )
-            setSortedRows(sorted)
+            setSorting({field, direction})
+            setFiltered(sorted)
         },
-        [adjustedRows, setSortedRows]
+        [filtered]
     )
 
     if (selected) {
         adjustedColumns = useMemo(
-            () => addCheckboxes(adjustedColumns, sortedRows, selected, selectAll, selectRow, primary),
-            [adjustedColumns, sortedRows, selected, selectAll, selectRow, primary]
+            () => addCheckboxes(
+                adjustedColumns,
+                filtered,
+                selected,
+                selectAll,
+                selectRow,
+                primary)
+            ,
+            [adjustedColumns, filtered, selected, selectAll, selectRow, primary]
         )
     }
     
+    // Search
+
+    const handleSearch = event => {
+        const {name, value} = event.target
+        setSearch({[name] : value})
+        if (selected) {
+            filterSelected(name, value)
+        }
+        filterAll(name, value)
+    }
+
+    const filterAll = useCallback(
+        (field, query) => {
+
+            let rows = adjustedRows
+
+            // if sorting is active, sort the rows before filtering
+            if(Object.keys(sorting).length !== 0) {
+                rows = [...rows].sort(
+                    (a, b) => {
+                        if (a[sorting.field] < b[sorting.field]) {
+                            return sorting.direction === 'asc' ? -1 : 1;
+                        }
+                        if (a[sorting.field] > b[sorting.field]) {
+                            return sorting.direction === 'asc' ? 1 : -1;
+                        }
+                        return 0;
+                    }
+                )
+            }
+
+            const previous = rows.filter( row => {
+                let match = true
+                for ( const prop in search) {
+                    const source = row[prop].toString().toLowerCase()
+                    const target = search[prop].toLowerCase()
+                    if (!source.includes(target) && prop !== field) {
+                        match = false
+                    }
+                }
+                return match
+            })
+            const result = previous.filter(row => 
+                row[field].toString().toLowerCase().includes(query.toLowerCase())
+            )
+
+            setActivePage(0)
+           
+            setFiltered(result)
+        },
+        [search, adjustedRows, sorting]
+    )
+
+    const filterSelected = useCallback(
+        (field, query) => {
+            const filtered = adjustedRows.filter(row => row[field].toString().toLowerCase().includes(query.toLowerCase()))
+            const filteredIDs = filtered.map(row => row[primary])
+            const result = selected.filter(id => filteredIDs.indexOf(id) !== -1)
+            onSelect(result)
+        },
+        [selected, onSelect, adjustedRows, primary]
+    )
+
+    // pages
+
     const pages = useMemo(
-        () => getPages(sortedRows, pageSize, primary),
-        [sortedRows, pageSize, primary]
+        () => getPages(
+            filtered,
+            perPage,
+            primary)
+        ,
+        [filtered, perPage, primary]
+    )
+
+    const handlePerPage = useCallback(
+        number => {
+            if( activePage > Math.ceil(
+                filtered.length / number
+                )) {
+                setActivePage(Math.ceil(
+                    filtered.length / number
+                ) - 1 )
+            }
+            setPerPage(number)
+        },
+        [activePage, filtered]
     )
 
     return (
         <Box ref={ref} {...rest}>
             <Header
                 columns={adjustedColumns}
-                rows={adjustedRows}
-                setSorted={setSortedRows}
                 sortData={sortData}
+                sorting={sorting}
+                search={search}
+                handleSearch={handleSearch}  
             />
             <Body
-                pages={pages}
                 activePage={activePage}
-                pageSize={pageSize}
-                selected={selected}
                 columns={adjustedColumns}
-                rows={sortedRows}
+                selected={selected}
+                rows={filtered}
+                pages={pages}
                 primary={primary}
             />
-            { pageSize && sortedRows.length > pageSize &&
+            { filtered.length > perPage &&
                 <Footer>
-                    <Pagination pages={pages} active={activePage} setActive={setActivePage} />
+                    <Pagination
+                        totalPages={pages.length}
+                        totalRows={filtered.length}
+                        active={activePage}
+                        setActive={setActivePage}
+                        perPage={perPage}
+                        handlePerPage={handlePerPage}
+                    />
                 </Footer>
             }
         </Box>
@@ -151,7 +263,9 @@ DataTable.propTypes = {
     ).isRequired,
     rows: PropTypes.arrayOf(PropTypes.object).isRequired,
     onSelect: PropTypes.func,
-    pageSize: PropTypes.number,
+    pageSize: PropTypes.oneOf([
+        5, 10, 20, 50
+    ]),
     primaryKey: PropTypes.string,
     selected: PropTypes.array,
     title: PropTypes.string,
