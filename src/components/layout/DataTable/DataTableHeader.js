@@ -22,7 +22,8 @@ const handleSort = (column, sorting, sortData) => {
             ? 'desc' 
             : 'asc'
 
-    sortData(column.field, order)   
+    sortData(column.field, order)
+      
 }
 
 const SortButton = ({ column, sortData, sorting, ...rest}) => 
