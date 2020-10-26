@@ -273,16 +273,14 @@ const tables = {
 		borderBottomColor: alpha('border', 0.5),
 		borderBottomWidth: 'thin',
 		borderBottomStyle: 'solid',
-		py: 3,
-		pl: 3
+		p: 3,
 	},
 	header : {
 		bg: 'transparent',
 		borderBottomColor: 'border',
 		borderBottomWidth: 'thin',
 		borderBottomStyle: 'solid',
-		py: 3,
-		pl: 3,
+		p: 3,
 	},
 	headerTitle: {
 		fontSize: 0,
@@ -334,6 +332,14 @@ export default {
 			fontWeight: 'heading',
 			lineHeight: 'heading',
 		},
+		tableHeader: {
+			fontSize: 0,
+			fontFamily: 'heading',
+			textTransform: 'uppercase',
+			color: 'muted',
+			letterSpacing: 1,
+			fontWeight: 'bold'
+		}
 	},
 	lineHeights: {
 		compact: 1.25,

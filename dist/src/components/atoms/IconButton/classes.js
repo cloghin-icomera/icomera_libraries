@@ -6,15 +6,25 @@ Object.defineProperty(exports, "__esModule", {
 exports.getClassName = void 0;
 
 var getClassName = function getClassName(active, rounded, disabled, href, onClick, hoverIndicator) {
-  var className = rounded ? 'rounded ' : '';
-  className += hoverIndicator ? 'hover-back' : '';
+  var classes = [];
 
-  if (!href && !onClick) {
-    return className + 'disabled ';
+  if (active) {
+    classes.push('active');
   }
 
-  className = active ? 'active ' : disabled ? 'disabled ' : '';
-  return className;
+  if (rounded) {
+    classes.push('rounded');
+  }
+
+  if (hoverIndicator) {
+    classes.push('hover-back');
+  }
+
+  if (disabled || !href && !onClick) {
+    classes.push('disabled');
+  }
+
+  return classes.join(' ');
 };
 
 exports.getClassName = getClassName;

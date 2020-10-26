@@ -6,14 +6,21 @@ Object.defineProperty(exports, "__esModule", {
 exports.getClassName = void 0;
 
 var getClassName = function getClassName(active, rounded, disabled, href, onClick) {
-  var className = rounded ? 'rounded' : '';
+  var classes = [];
 
-  if (!href && !onClick) {
-    return className + ' disabled';
+  if (active) {
+    classes.push('active');
   }
 
-  className = active ? 'active' : disabled ? 'disabled' : '';
-  return className;
+  if (rounded) {
+    classes.push('rounded');
+  }
+
+  if (disabled || !href && !onClick) {
+    classes.push('disabled');
+  }
+
+  return classes.join(' ');
 };
 
 exports.getClassName = getClassName;

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useReducer, useEffect } from 'react'
+import React, { useState, useMemo, useCallback, useReducer } from 'react'
 import PropTypes from 'prop-types'
 import { Box } from '../../atoms'
 
@@ -207,7 +207,7 @@ const DataTable = React.forwardRef(
                 sortData={sortData}
                 sorting={sorting}
                 search={search}
-                handleSearch={handleSearch}  
+                handleSearch={handleSearch}
             />
             <Body
                 activePage={activePage}
@@ -252,6 +252,7 @@ DataTable.propTypes = {
                 PropTypes.element
             ]),
             primary: PropTypes.bool,
+            search: PropTypes.bool,
             sortable: PropTypes.bool,
             sortOn: PropTypes.oneOfType([
                 PropTypes.func,

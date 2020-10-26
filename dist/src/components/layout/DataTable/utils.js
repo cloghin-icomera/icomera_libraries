@@ -50,7 +50,7 @@ var TableCheckbox = function TableCheckbox(_ref) {
     }
   }), /*#__PURE__*/_react.default.createElement(_atoms.Checkbox, {
     checked: checked,
-    className: indeterminate ? 'indeterminate' : '',
+    className: indeterminate ? 'indeterminate' : undefined,
     onChange: onChange
   }), children);
 };
@@ -61,7 +61,7 @@ var addCheckboxes = function addCheckboxes(columns, rows, selected, selectAll, s
     width: 72,
     fixed: true,
     header: /*#__PURE__*/_react.default.createElement(TableCheckbox, {
-      checked: selected.length === rows.length,
+      checked: selected.length === rows.length && rows.length > 0,
       indeterminate: selected.length > 0 && selected.length < rows.length,
       onChange: function onChange(e) {
         return selectAll(e);

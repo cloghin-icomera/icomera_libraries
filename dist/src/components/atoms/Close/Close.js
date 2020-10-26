@@ -34,14 +34,14 @@ var getSize = function getSize(size) {
 
 var X = function X(_ref) {
   var size = _ref.size,
-      props = _objectWithoutProperties(_ref, ["size"]);
+      rest = _objectWithoutProperties(_ref, ["size"]);
 
   return /*#__PURE__*/_react.default.createElement(_Box.default, _extends({
     css: {
       width: "".concat(size, "px"),
       height: "".concat(size, "px")
     }
-  }, props), /*#__PURE__*/_react.default.createElement("svg", {
+  }, rest), /*#__PURE__*/_react.default.createElement("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24"
   }, /*#__PURE__*/_react.default.createElement("g", {
@@ -63,15 +63,17 @@ var X = function X(_ref) {
 
 var _default = _react.default.forwardRef(function (_ref2, ref) {
   var icon = _ref2.icon,
-      props = _objectWithoutProperties(_ref2, ["icon"]);
+      size = _ref2.size,
+      rest = _objectWithoutProperties(_ref2, ["icon", "size"]);
 
   icon = icon ? icon : /*#__PURE__*/_react.default.createElement(X, {
-    size: getSize(props.size)
+    size: getSize(size)
   });
   return /*#__PURE__*/_react.default.createElement(_IconButton.default, _extends({
     ref: ref,
-    icon: icon
-  }, props));
+    icon: icon,
+    size: size
+  }, rest));
 });
 
 exports.default = _default;

@@ -31,6 +31,7 @@ A description of the data. The order controls the column order.
   field: string (required),
   render: function,
   primary: boolean,
+  search: boolean,
   sortable: boolean,
   sortOn: string
 }]

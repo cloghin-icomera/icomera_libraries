@@ -79,7 +79,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms/button@0.0.14": {
+    "icomera.components/atoms/button@0.0.15": {
         "files": [
             {
                 "relativePath": "src/components/atoms/Button/Button.js",
@@ -133,7 +133,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms/close@0.0.23": {
+    "icomera.components/atoms/close@0.0.24": {
         "files": [
             {
                 "relativePath": "src/components/atoms/Close/Close.js",
@@ -198,7 +198,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms/field@0.0.6": {
+    "icomera.components/atoms/field@0.0.7": {
         "files": [
             {
                 "relativePath": "src/components/atoms/Field/Field.js",
@@ -250,7 +250,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms/icon-button@0.0.21": {
+    "icomera.components/atoms/icon-button@0.0.22": {
         "files": [
             {
                 "relativePath": "src/components/atoms/IconButton/IconButton.js",
@@ -291,7 +291,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms/input@0.0.5": {
+    "icomera.components/atoms/input@0.0.6": {
         "files": [
             {
                 "relativePath": "src/components/atoms/Input/Input.js",
@@ -330,7 +330,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms/menu-button@0.0.22": {
+    "icomera.components/atoms/menu-button@0.0.23": {
         "files": [
             {
                 "relativePath": "src/components/atoms/MenuButton/MenuButton.js",
@@ -499,7 +499,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms@0.0.30": {
+    "icomera.components/atoms@0.0.31": {
         "files": [
             {
                 "relativePath": "src/components/atoms/index.js",
@@ -511,7 +511,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/layout/data-table@0.0.14": {
+    "icomera.components/layout/data-table@0.0.18": {
         "files": [
             {
                 "relativePath": "src/components/layout/DataTable/DataTable.js",
@@ -577,7 +577,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/layout@0.0.16": {
+    "icomera.components/layout@0.0.20": {
         "files": [
             {
                 "relativePath": "src/components/layout/index.js",
@@ -641,6 +641,19 @@
         "origin": "AUTHORED",
         "exported": true
     },
+    "icomera.icons/outline/arrow-end@0.0.1": {
+        "files": [
+            {
+                "relativePath": "src/icons/icomera/outline/ArrowEnd/ArrowEnd.js",
+                "test": false,
+                "name": "ArrowEnd.js"
+            }
+        ],
+        "mainFile": "src/icons/icomera/outline/ArrowEnd/ArrowEnd.js",
+        "trackDir": "src/icons/icomera/outline/ArrowEnd",
+        "origin": "AUTHORED",
+        "exported": true
+    },
     "icomera.icons/outline/arrow-left@0.0.3": {
         "files": [
             {
@@ -664,6 +677,19 @@
         ],
         "mainFile": "src/icons/icomera/outline/ArrowRight/ArrowRight.js",
         "trackDir": "src/icons/icomera/outline/ArrowRight",
+        "origin": "AUTHORED",
+        "exported": true
+    },
+    "icomera.icons/outline/arrow-start@0.0.1": {
+        "files": [
+            {
+                "relativePath": "src/icons/icomera/outline/ArrowStart/ArrowStart.js",
+                "test": false,
+                "name": "ArrowStart.js"
+            }
+        ],
+        "mainFile": "src/icons/icomera/outline/ArrowStart/ArrowStart.js",
+        "trackDir": "src/icons/icomera/outline/ArrowStart",
         "origin": "AUTHORED",
         "exported": true
     },
@@ -901,7 +927,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.icons/outline@0.0.13": {
+    "icomera.icons/outline@0.0.15": {
         "files": [
             {
                 "relativePath": "src/icons/icomera/outline/index.js",
@@ -1016,7 +1042,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.themes/icomera@0.0.37": {
+    "icomera.themes/icomera@0.0.38": {
         "files": [
             {
                 "relativePath": "src/themes/icomera.js",

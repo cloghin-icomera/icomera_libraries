@@ -13,24 +13,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-var _default = _react.default.forwardRef(function (props, ref) {
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+var _default = _react.default.forwardRef(function (_ref, ref) {
+  var size = _ref.size,
+      rest = _objectWithoutProperties(_ref, ["size"]);
+
   return /*#__PURE__*/_react.default.createElement(_Box.default, _extends({
     ref: ref,
     as: "input",
-    variant: "input"
-  }, props, {
+    variant: "input",
+    className: size ? size : ''
+  }, rest, {
     __themeKey: "forms",
     __css: {
       display: 'block',
       width: '100%',
-      p: 2,
-      appearance: 'none',
-      fontSize: 'inherit',
-      lineHeight: 'inherit',
-      border: '1px solid',
-      borderRadius: 4,
-      color: 'inherit',
-      bg: 'transparent'
+      appearance: 'none'
     }
   }));
 });

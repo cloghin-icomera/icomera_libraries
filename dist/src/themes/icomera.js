@@ -270,16 +270,14 @@ var tables = {
     borderBottomColor: (0, _color.alpha)('border', 0.5),
     borderBottomWidth: 'thin',
     borderBottomStyle: 'solid',
-    py: 3,
-    pl: 3
+    p: 3
   },
   header: {
     bg: 'transparent',
     borderBottomColor: 'border',
     borderBottomWidth: 'thin',
     borderBottomStyle: 'solid',
-    py: 3,
-    pl: 3
+    p: 3
   },
   headerTitle: {
     fontSize: 0,
@@ -383,7 +381,24 @@ var _default = {
       color: 'muted'
     },
     input: {
-      borderColor: 'border'
+      p: 2,
+      fontFamily: 'body',
+      fontSize: 2,
+      lineHeight: 'inherit',
+      borderColor: 'border',
+      borderWidth: 'thin',
+      borderStyle: 'solid',
+      borderRadius: 4,
+      color: 'inherit',
+      bg: 'transparent',
+      outline: 'none',
+      '&.small': {
+        p: 1,
+        fontSize: 0
+      },
+      '&:focus': {
+        borderColor: 'text'
+      }
     },
     select: {
       borderColor: 'border'

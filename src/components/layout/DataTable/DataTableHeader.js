@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { Box, Close, Flex, IconButton, Input } from '../../atoms'
-import { ArrowUp, ArrowDown, Search } from '../../../icons/icomera/outline'
+import React, { useState, useCallback } from 'react'
+import { Box, Flex, IconButton, Input } from '../../atoms'
+import { ArrowUp, ArrowDown, Remove, Search } from '../../../icons/icomera/outline'
 import Cell from './DataTableCell'
 
 const buttonStyle = {
@@ -21,9 +21,7 @@ const handleSort = (column, sorting, sortData) => {
         : sorting.direction === 'asc' 
             ? 'desc' 
             : 'asc'
-
-    sortData(column.field, order)
-      
+    sortData(column.field, order)  
 }
 
 const SortButton = ({ column, sortData, sorting, ...rest}) => 
@@ -47,45 +45,75 @@ const SortButton = ({ column, sortData, sorting, ...rest}) =>
         { sorting.direction === 'asc' && sorting.field === column.field && <ArrowDown stroke='text' size={16} />}
     </Flex>
 
-const getColumnHeader = (column, sortData, sorting, search, handleSearch) => {
+const SearchField = ({name, value, handleChange, show, toggleShow}) => {
+    return (
+        <Flex ml='auto'>
+            <Box sx={{ flex: '1 1 auto', visibility: show[name] ? 'visible' : 'visible' }}>
+                <Input
+                    size='small'
+                    name={name}
+                    value={value}
+                    placeholder='filter'
+                    onChange={e => handleChange(e)}
+                />
+            </Box>
+            {false &&
+                <Box sx={{ flex: '0 0 32px' }}>
+                    <IconButton
+                        icon={ show[name] ? <Remove /> : <Search />}
+                        onClick={() => toggleShow(name)}
+                        size='small'
+                    />
+                </Box>
+            }
+        </Flex>
+    )
+}
+
+const getColumnHeader = (column, sortData, sorting, search, handleSearch, show, toggleShow) => {
     if (React.isValidElement(column.header)) {
         return column.header
     } else if (column.sortable) {
         return (
-            <Flex sx={{ flexWrap: 'wrap', position: 'relative' }}>
-                { column.search && 
-                    <IconButton icon={<Search />} onClick={() => console.log('hello world')} size='small' ml={-2} />
-                }
-                <SortButton column={column} sortData={sortData} sorting={sorting} sx={{ alignSelf: 'center' }} />
+            <>
+                <Box sx={{ alignSelf: 'center', flex: '1 1 60%' }}>
+                    <SortButton
+                        column={column}
+                        sortData={sortData}
+                        sorting={sorting}
+                    />
+                </Box>
                 { column.search &&
-                    <Input
-                        size='small'
+                    <SearchField
                         name={column.field}
                         value={search[column.field]}
-                        onChange={e => handleSearch(e)} 
+                        show={show}
+                        toggleShow={toggleShow}
+                        handleChange={handleSearch}
                     />
                 }
-                { column.search &&
-                    <Box sx={{ position: 'absolute', zIndex: 1, right: 0, bottom: 0 }}>
-                        <Close p={1} size='small' onClick={() => console.log('close')} />
-                    </Box>
-                }
-            </Flex>
+            </>
         )
     } else {
         return (
-            <>
-                <Search stroke='muted' />
-                <Flex
-                    variant = 'headerTitle'
-                    __themeKey = 'table'
-                    __css = {{
-                        ...buttonStyle
-                    }}
-                >
+            <Flex
+                variant = 'headerTitle'
+                __themeKey = 'table'
+                __css = {{
+                    ...buttonStyle
+                }}
+            >
+                <Box>
                     {column.header}
-                </Flex>
-            </>
+                </Box>
+                { column.search &&
+                    <SearchField
+                        name={column.field}
+                        value={search[column.field]}
+                        handleChange={handleSearch}
+                    />
+                }
+            </Flex>
         )
     }
 }
@@ -100,6 +128,18 @@ const Header = React.memo(
     ...rest
 }) => {
 
+    const [ show, setShow ] = useState({})
+
+    const toggleShow = useCallback(
+        name => {
+            setShow({
+                ...show,
+                [name]: !show[name]
+            })
+        },
+        [show, setShow]
+    )
+
     return (
         <Flex
             {...rest}
@@ -108,7 +148,7 @@ const Header = React.memo(
                 <Cell
                     key={index}
                     align={column.align}
-                    data={getColumnHeader(column, sortData, sorting, search, handleSearch)}
+                    data={getColumnHeader(column, sortData, sorting, search, handleSearch, show, toggleShow)}
                     fixed={column.fixed}
                     variant='header'
                     width={column.width || 100 / columns.length}
