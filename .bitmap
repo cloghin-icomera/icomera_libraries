@@ -79,27 +79,27 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms/button@0.0.15": {
+    "icomera.components/atoms/button@0.0.16": {
         "files": [
             {
+                "name": "Button.js",
                 "relativePath": "src/components/atoms/Button/Button.js",
-                "test": false,
-                "name": "Button.js"
+                "test": false
             },
             {
+                "name": "classes.js",
                 "relativePath": "src/components/atoms/Button/classes.js",
-                "test": false,
-                "name": "classes.js"
+                "test": false
             },
             {
+                "name": "colors.js",
                 "relativePath": "src/components/atoms/Button/colors.js",
-                "test": false,
-                "name": "colors.js"
+                "test": false
             },
             {
+                "name": "sizes.js",
                 "relativePath": "src/components/atoms/Button/sizes.js",
-                "test": false,
-                "name": "sizes.js"
+                "test": false
             }
         ],
         "mainFile": "src/components/atoms/Button/Button.js",

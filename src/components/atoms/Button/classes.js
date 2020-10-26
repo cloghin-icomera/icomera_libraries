@@ -1,15 +1,15 @@
-export const getClassName = (
-    active,
-    rounded,
-    disabled,
-    href,
-    onClick
-) => {
-    let classes = []
+export const getClassName = (active, rounded, disabled, href, onClick) => {
+  let classes = [];
 
-    if( active ) { classes.push('active') }
-    if(rounded) { classes.push('rounded')  }
-    if(disabled || (!href && !onClick)) { classes.push('disabled') }
+  if (active) {
+    classes.push("active");
+  }
+  if (rounded) {
+    classes.push("rounded");
+  }
+  if (disabled) {
+    classes.push("disabled");
+  }
 
-    return (classes.join(' '))
-}
+  return classes.join(" ");
+};
