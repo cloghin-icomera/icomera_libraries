@@ -1,5 +1,6 @@
 import React from 'react';
 import Box from '../Box/Box';
+import Text from '../Text/Text'
 
 const SVG = ({ size = 24, ...props }) => (
     <Box
@@ -71,15 +72,27 @@ const CheckboxIcon = (props) => (
 export default React.forwardRef(
 ({
     indeterminate,
+    checked,
     variant = 'checkbox',
+    label,
+    onChange,
     ...rest
 }, ref) => (
-    <Box as='label'>
+    <Box
+        as='label'
+        variant='label'
+        {...rest}
+        __themeKey='forms'
+        __css={{
+            display: 'flex'
+        }}
+    >
         <Box
             ref={ref}
             as="input"
             type="checkbox"
-            {...rest}
+            checked={checked}
+            onChange={onChange}
             sx={{
                 position: 'absolute',
                 opacity: 0,
@@ -96,6 +109,7 @@ export default React.forwardRef(
             variant={variant}
             className={indeterminate ? 'indeterminate' : undefined}
             __css={{
+                mr: 1,
                 borderRadius: 4,
                 flexShrink: 0,
                 'input:checked ~ &': {
@@ -110,6 +124,7 @@ export default React.forwardRef(
                 }
             }}
         />
+        {label}
     </Box>
     )
 )

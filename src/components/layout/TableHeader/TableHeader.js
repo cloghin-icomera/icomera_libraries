@@ -1,6 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Box, Flex } from '../../atoms'
+import { Box } from '../../atoms'
 
 const TableHeader = ({children, ...rest}) =>
     <Box

@@ -325,6 +325,14 @@ var _default = {
       fontFamily: 'heading',
       fontWeight: 'heading',
       lineHeight: 'heading'
+    },
+    tableHeader: {
+      fontSize: 0,
+      fontFamily: 'heading',
+      textTransform: 'uppercase',
+      color: 'muted',
+      letterSpacing: 1,
+      fontWeight: 'bold'
     }
   },
   lineHeights: {
@@ -375,7 +383,7 @@ var _default = {
       color: 'text'
     },
     checkbox: {
-      color: 'border'
+      color: (0, _color.alpha)('muted', 0.5)
     },
     radio: {
       color: 'muted'

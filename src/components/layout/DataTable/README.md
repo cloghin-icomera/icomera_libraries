@@ -13,27 +13,28 @@ import { DataTable } from '@bit/icomera.components.layout';
 **columns**
 
 A description of the data. The order controls the column order.
-    'field' indicates which property in the data objects to associate the column with and is required.
-    'header' indicates what to display in the column header and can be either a string or a React element.
-    'primary' indicates that this property should be used as the unique identifier. If 'primary' is not used for any column, and 'primaryKey' isn't specified either, then the first column will be used.
-    'render' allows for custom rendering of body cells. Use 'render' for custom formatting for things like currency and date or to display React components. 'render' can be called with a 'row' argument that will make the row data available to the function. When using 'render' sorting will be disabled on the column unless 'sortOn' is defined.
     'align' indicates how the cells in the column are aligned.
+    'field' indicates which property in the data objects to associate the column with and is required.
+    'header' indicates what to display in the column header.
+    'render' allows for custom rendering of body cells. Use 'render' for custom formatting for things like date or to display React components. 'render' can be called with a 'row' argument that will make the row data available to the function.
+    When using 'render' sorting will be disabled on the column unless the 'sort' property is specified.
+    'primary' indicates that this property should be used as the unique identifier. If 'primary' is not used for any column, and 'primaryKey' isn't specified either, then the first column will be used.
 
 ```
 [{
   align: 
-    center
-    left (default)
-    right,
-  header: 
-    string
-    node,
+    start (default)
+    center 
+    end,
   field: string (required),
+  header: 
+    string,
   render: function,
   primary: boolean,
   search: boolean,
-  sortable: boolean,
-  sortOn: string
+  sort:
+    boolean
+    function
 }]
 ```
 
@@ -68,12 +69,20 @@ When supplied, causes checkboxes to be added to each row to indicate which rows 
 ]
 ```
 
-**pageSize**
+**rowsPerPage**
 
-How many rows to render at a time. If no value is provided, all rows will be rendered at once. If 'pageSize' is smaller than the row count, pagination will be automatically generated.
+How many rows to render at a time. If no value is provided, all rows will be rendered and pagination will not be displayed.
 
 ```
 number
+```
+
+**rowsPerPageOptions**
+
+When pagination is visible allows chosing how many rows per page should be displayed. Defaults to [5, 10, 25].
+
+```
+array
 ```
 
 **primaryKey**

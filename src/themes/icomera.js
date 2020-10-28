@@ -51,7 +51,7 @@ const colors = {
 			muted: '#a8b0bd',
 			text: '#fcfcfc',
 			background: '#0C0F21',
-			card: '#1A2046',
+			card: '#131836',
 			border: '#18345f',
 			error: '#FC001D',
 			disabled: '#6e7c91',
@@ -386,10 +386,10 @@ export default {
 	},
 	forms : {
 		label: {
-			color: 'text',
+			color: 'text'
 		},
 		checkbox: {
-			color: 'border'
+			color: alpha('muted', 0.5)
 		},
 		radio: {
 			color: 'muted'
@@ -415,7 +415,8 @@ export default {
 			}
 		},
 		select : {
-			borderColor: 'border'
+			borderColor: 'border',
+			minWidth: 64
 		},
 		slider: {
 			color: 'brand'

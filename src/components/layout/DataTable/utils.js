@@ -1,51 +1,9 @@
-import React from 'react'
-import { Checkbox, Label } from '../../atoms'
+import React, { useCallback, useRef, useEffect } from 'react'
 
-const TableCheckbox = (
-    {
-        checked,
-        indeterminate,
-        onChange,
-        children,
-        ...props
-    }) => (
-        <Label {...props} sx={{ fontSize: 1, color: 'muted', pl: 1 }}>
-            <Checkbox
-                checked={checked}
-                className={indeterminate ? 'indeterminate' : undefined}
-                onChange={onChange}
-            />
-            {children}
-        </Label>
-    )
+import { TableSortButton } from '../TableSortButton'
+import { TableSearchField } from '../TableSearchField'
 
-export const addCheckboxes = (columns, rows, selected, selectAll, selectRow, primaryKey) => {
-    return ([
-        {
-            field: 'select',
-            width: 72,
-            fixed: true,
-            header:
-                <TableCheckbox
-                    checked={selected.length === rows.length && rows.length > 0}
-                    indeterminate={ selected.length > 0 && selected.length < rows.length }
-                    onChange={e => selectAll(e)}
-                >
-                    { selected.length > 0 && `(${selected.length})` }
-                </TableCheckbox>
-            ,
-            render: row => 
-                <TableCheckbox
-                    key={row[primaryKey]}
-                    checked={selected.indexOf(row[primaryKey]) !== -1}
-                    onChange={e => selectRow(e, row)}
-                />,
-        },
-        ...columns
-    ])
-}
-
-export const adjustData = (columns, rows) => {
+export const adjustData = (rows, columns) => {
 
     const renderedColumns = columns
         .filter( c => c.render && !(c.field in rows[0]))
@@ -54,8 +12,8 @@ export const adjustData = (columns, rows) => {
         let obj = {}
         if (renderedColumns.length > 0) {
             renderedColumns.forEach(column => {
-                if ( column.sortOn ) {
-                    obj[column.field] = column.sortOn(row)
+                if ( column.sort ) {
+                    obj[column.field] = column.sort(row)
                 }
             })
             return obj
@@ -63,61 +21,86 @@ export const adjustData = (columns, rows) => {
         else {
             return
         }
-        
     }
-
     // add the rendered fields to rows
-    const adjustedRows = rows.map( row => ({ ...renderedFields(row), ...row }))
-
-    const adjustedColumns = columns
-        .map( c => {
-            if (!c.sortOn && c.render && !(c.field in rows[0])) {
-                console.warn(`Sorting on rendered column '${c.header}' is disabled. To enable, use the 'sortOn' property to return a sortable value eg. sortOn: row => value`)
-                c.sortable = false
-            }
-            else if (c.sortable === undefined) {
-                c.sortable = true
-            } 
-            return c
-        })
-
-    return [ adjustedColumns, adjustedRows]
+    return rows.map( row => ({ ...renderedFields(row), ...row }))
 }
 
-export const getPages = (rows, pageSize, primaryKey) => {
-    let pages = []
-    if( pageSize && rows.length > pageSize ) {
-        for ( let index = 0; index < Math.ceil(rows.length / pageSize); index++ ) {
-            const start = index * pageSize
-            const end = index * pageSize + pageSize
-            let page = []
-            rows
-                .slice( start, end )
-                .forEach( row => {
-                    page.push(row[primaryKey])
-                })
-            pages.push( page )
-        }
-    } else {
-        let page = []
-        rows.forEach( row => {
-            page.push(row[primaryKey])
-        })
-        pages.push(page)
-    }
-    return pages
-}
-
-export const getPrimary = (columns, primaryKey) => {
-    let primary
+export const getFilters = columns => {
+    let result = {}
     columns.forEach( column => {
-        if ('primary' in column) {
-            primary = column.field
-        } else if (primaryKey) {
-            primary = primaryKey
-        } else {
-            primary = columns[0].field
+        if( column.search ) { 
+            result[column.field] = {
+                value : '',
+                active: false
+            } 
         }
     })
-    return primary
+    return result
+}
+
+export const SortController = ({field, label, sorting, onSort, setPage}) => {
+    const handleSorting = useCallback(
+        () => {
+            const value = !sorting[field] ? 'asc' : sorting[field] === 'asc' ? 'desc' : 'asc'
+            setPage(0)
+            onSort({ [field] : value})
+        },
+        [sorting, field, onSort, setPage]
+    )
+    return (
+        <TableSortButton label={label} sortOrder={sorting[field]} onSort={handleSorting} />
+    )
+}
+
+export const SearchController = ({ field, searching, onSearch, focused, setFocused, setPage}) => {
+
+    const inputEl = useRef()
+
+    const handleSearch = useCallback(
+        (e) => {
+            const query = {
+                ...searching,
+                [field]: { active: searching[field].active, value: e.target.value }
+            }
+            setPage(0)
+            onSearch(query)
+        },
+        [field, searching, onSearch, setPage]
+    )
+
+    const handleToggle = useCallback(
+        () => {
+            setFocused(searching[field].active ? null : field)
+            const query = {
+                ...searching,
+                [field]: { active: !searching[field].active, value: '' }
+            }
+            onSearch(query)
+        },
+        [field, searching, setFocused, onSearch]
+    )
+
+    const handleBlur = useCallback(
+        () => setFocused(null),
+        [setFocused]
+    )
+    
+    useEffect(() => {
+        if(inputEl && focused === field) {
+            inputEl.current.focus()
+        }
+    })
+
+    return (
+        <TableSearchField
+            active={searching[field].active}
+            value={searching[field].value}
+            name={field}
+            ref={inputEl}
+            onSearch={handleSearch}
+            onToggle={handleToggle}
+            onBlur={handleBlur}
+        />
+    )
 }

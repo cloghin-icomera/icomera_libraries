@@ -26,7 +26,7 @@ const TableSortButton = React.forwardRef(
             bg: 'transparent'
         }}
     >
-        <Text variant='tableHeader' color={ sortOrder ? 'text' : undefined}>{label}</Text>
+        <Text variant='tableHeader' color={ sortOrder ? 'text' : undefined} sx={{ textAlign: 'left' }}>{label}</Text>
         <Box sx={{ width: '19px', height: '19px' }}>
             { sortOrder === 'asc' && <ArrowUp stroke='text' size={19} /> }
             { sortOrder === 'desc' && <ArrowDown stroke='text' size={19} /> }

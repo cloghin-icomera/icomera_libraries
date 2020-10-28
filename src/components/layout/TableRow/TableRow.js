@@ -1,12 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Box } from '../../atoms' 
 import { alpha } from '@theme-ui/color'
 
-const TableRow = ({children, ...rest}) =>
+const TableRow = ({selected, children, ...rest}) =>
     <Box 
         as='tr'
+        className={ selected ? 'selected' : undefined }
         {...rest}
+        variant='row'
+        __themeKey='tables'
         __css={{
             borderBottomColor: alpha('border', 0.5),
             borderBottomWidth: 'thin',

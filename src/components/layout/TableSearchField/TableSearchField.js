@@ -9,6 +9,7 @@ const TableSearchField = React.forwardRef(
     name,
     onSearch,
     onToggle,
+    onBlur,
     value,
     ...rest
 }, ref ) =>
@@ -17,9 +18,23 @@ const TableSearchField = React.forwardRef(
         sx={{ justifyContent: 'flex-end' }}
         {...rest}
     >
-        { active && <Input ref={ref} name={name} value={value} size='small' onChange={onSearch} /> }
+        { active &&
+            <Input
+                ref={ref}
+                name={name}
+                value={value}
+                size='small'
+                onChange={onSearch}
+                onBlur={onBlur}
+            />
+        }
         <Flex sx={{ flex: '0 0 29px', alignItems: 'center', justifyContent: 'flex-end' }}>
-            <IconButton icon={ !active ? <Search /> : <Remove />} size='small' onClick={onToggle} />
+            <IconButton
+                icon={ !active ? <Search /> : <Remove />} 
+                size='small' 
+                onClick={onToggle}
+                hoverIndicator 
+            />
         </Flex>
     </Flex>
 )

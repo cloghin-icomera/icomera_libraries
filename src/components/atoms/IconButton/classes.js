@@ -11,7 +11,7 @@ export const getClassName = (
     if( active ) { classes.push('active') }
     if(rounded) { classes.push('rounded')  }
     if(hoverIndicator) { classes.push('hover-back') }
-    if(disabled || (!href && !onClick)) { classes.push('disabled') }
+    if(disabled) { classes.push('disabled') }
 
     return (classes.join(' '))
 }

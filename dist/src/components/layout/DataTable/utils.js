@@ -29,8 +29,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
@@ -39,20 +37,18 @@ var TableCheckbox = function TableCheckbox(_ref) {
   var checked = _ref.checked,
       indeterminate = _ref.indeterminate,
       onChange = _ref.onChange,
-      children = _ref.children,
-      props = _objectWithoutProperties(_ref, ["checked", "indeterminate", "onChange", "children"]);
+      label = _ref.label,
+      props = _objectWithoutProperties(_ref, ["checked", "indeterminate", "onChange", "label"]);
 
-  return /*#__PURE__*/_react.default.createElement(_atoms.Label, _extends({}, props, {
-    sx: {
-      fontSize: 1,
-      color: 'muted',
-      pl: 1
-    }
-  }), /*#__PURE__*/_react.default.createElement(_atoms.Checkbox, {
+  return /*#__PURE__*/_react.default.createElement(_atoms.Checkbox, {
     checked: checked,
-    className: indeterminate ? 'indeterminate' : undefined,
-    onChange: onChange
-  }), children);
+    indeterminate: indeterminate,
+    onChange: onChange,
+    label: label,
+    sx: {
+      fontSize: 1
+    }
+  });
 };
 
 var addCheckboxes = function addCheckboxes(columns, rows, selected, selectAll, selectRow, primaryKey) {
@@ -65,8 +61,9 @@ var addCheckboxes = function addCheckboxes(columns, rows, selected, selectAll, s
       indeterminate: selected.length > 0 && selected.length < rows.length,
       onChange: function onChange(e) {
         return selectAll(e);
-      }
-    }, selected.length > 0 && "(".concat(selected.length, ")")),
+      },
+      label: selected.length > 0 && "(".concat(selected.length, ")")
+    }),
     render: function render(row) {
       return /*#__PURE__*/_react.default.createElement(TableCheckbox, {
         key: row[primaryKey],

@@ -127,7 +127,6 @@ var DataTable = _react.default.forwardRef(function (_ref, ref) {
     if (!onSelect) {
       console.warn("To enable selection, provide the 'onSelect' function to 'DataTable' component. If you are storing select state via a 'useState' hook, you can do something like: '<DataTable select={select} onSelect={setSelect} />'. See https://bit.dev/icomera/components/layout/data-table for more information.");
     } else {
-      console.log(e.target.checked);
       onSelect(e.target.checked ? filtered.map(function (row) {
         return row[primary];
       }) : []);

@@ -9,6 +9,8 @@ var _react = _interopRequireDefault(require("react"));
 
 var _Box = _interopRequireDefault(require("../Box/Box"));
 
+var _Text = _interopRequireDefault(require("../Text/Text"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -82,17 +84,27 @@ var CheckboxIcon = function CheckboxIcon(props) {
 
 var _default = _react.default.forwardRef(function (_ref2, ref) {
   var indeterminate = _ref2.indeterminate,
+      checked = _ref2.checked,
       _ref2$variant = _ref2.variant,
       variant = _ref2$variant === void 0 ? 'checkbox' : _ref2$variant,
-      rest = _objectWithoutProperties(_ref2, ["indeterminate", "variant"]);
+      label = _ref2.label,
+      onChange = _ref2.onChange,
+      rest = _objectWithoutProperties(_ref2, ["indeterminate", "checked", "variant", "label", "onChange"]);
 
-  return /*#__PURE__*/_react.default.createElement(_Box.default, {
-    as: "label"
-  }, /*#__PURE__*/_react.default.createElement(_Box.default, _extends({
+  return /*#__PURE__*/_react.default.createElement(_Box.default, _extends({
+    as: "label",
+    variant: "label"
+  }, rest, {
+    __themeKey: "forms",
+    __css: {
+      display: 'flex'
+    }
+  }), /*#__PURE__*/_react.default.createElement(_Box.default, {
     ref: ref,
     as: "input",
-    type: "checkbox"
-  }, rest, {
+    type: "checkbox",
+    checked: checked,
+    onChange: onChange,
     sx: {
       position: 'absolute',
       opacity: 0,
@@ -101,7 +113,7 @@ var _default = _react.default.forwardRef(function (_ref2, ref) {
       height: 1,
       overflow: 'hidden'
     }
-  })), /*#__PURE__*/_react.default.createElement(_Box.default, {
+  }), /*#__PURE__*/_react.default.createElement(_Box.default, {
     as: CheckboxIcon,
     "aria-hidden": "true",
     __themeKey: "forms",
@@ -122,9 +134,9 @@ var _default = _react.default.forwardRef(function (_ref2, ref) {
         color: 'muted'
       }
     }
-  }));
+  }), label);
 });
 
 exports.default = _default;
 
-//# sourceMappingURL=Checkbox.js.map
+//# sourceMappingURL=_Checkbox.js.map

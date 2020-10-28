@@ -1,275 +1,227 @@
 import React, { useState, useMemo, useCallback, useReducer } from 'react'
 import PropTypes from 'prop-types'
-import { Box } from '../../atoms'
+import { Checkbox, Flex, Text } from '../../atoms'
 
-import Header from './DataTableHeader'
-import Body from './DataTableBody'
-import Footer from './DataTableFooter'
-import Pagination from './DataTablePagination'
+import { Table } from '../Table'
+import { TableHeader } from '../TableHeader'
+import { TableBody } from '../TableBody'
+import { TableFooter } from '../TableFooter'
+import { TableRow } from '../TableRow'
+import { TableCell } from '../TableCell'
+import { TablePagination } from '../TablePagination'
 
-import { addCheckboxes, adjustData, getPages, getPrimary } from './utils'
+import { sortAndFilterData } from '../Table/utils'
+import { getFilters, SortController, SearchController, adjustData } from './utils'
 
-const DataTable = React.forwardRef(
-({
-    columns = [],
-    pageSize = undefined,
-    primaryKey = undefined,
-    rows = [],
-    selected = undefined,
-    onSelect = undefined,
-    title = undefined,
-    ...rest
-}, ref ) => {
+const DataTable = ({
+    columns,
+    rows,
+    rowsPerPage,
+    rowsPerPageOptions = [5, 10, 25],
+    primaryKey,
+    selected,
+    onSelect
+}) => {
 
-    const primary = useMemo(
-        () => getPrimary(columns, primaryKey),
-        [columns, primaryKey]
-    )
-    
-    let [adjustedColumns, adjustedRows] = useMemo(
-        () => adjustData(columns, rows),
-        [columns, rows]
-    )
+    rows = adjustData(rows, columns)
 
-    let initialState = {}
-    columns.forEach( column => {
-        if( column.search ) { initialState[column.field] = '' }
-    })
-
-    const [activePage, setActivePage] = useState(0)
-    const [filtered, setFiltered] = useState(adjustedRows)
-    const [perPage, setPerPage] = useState(pageSize)
+    const primary = columns.filter(col => col.primary).field || primaryKey || columns[0].field
+    const [focused, setFocused] = useState()
+    const [perPage, setPerPage] = useState(rowsPerPage)
+    const [page, setPage] = useState(0)
     const [sorting, setSorting] = useState({})
-
-    const [search, setSearch] = useReducer(
+    const [searching, setSearching] = useReducer(
         (state, newState) => {
             return ({...state, ...newState})
         },
-        initialState
+        getFilters(columns)
     )
-    
-    const selectAll = useCallback(
-        e => {
-            if (!onSelect) {
-                console.warn("To enable selection, provide the 'onSelect' function to 'DataTable' component. If you are storing select state via a 'useState' hook, you can do something like: '<DataTable select={select} onSelect={setSelect} />'. See https://bit.dev/icomera/components/layout/data-table for more information.")
-            } else {
-                console.log(e.target.checked)
-                onSelect(
-                    e.target.checked
-                    ? filtered.map( row => row[primary] )
-                    : []
-                )
+    const modifiedRows = useMemo(
+        () => {
+            return sortAndFilterData(rows, searching, sorting)
+        },
+        [rows, sorting, searching]
+    )
+    const slice = useMemo(
+        () => {
+            if (perPage) {
+                return ({
+                    start: page * perPage,
+                    end: page * perPage + perPage
+                })
+            }
+            else {
+                return ({
+                    start: 0,
+                    end: modifiedRows.length
+                })
             }
         },
-        [primary, filtered, onSelect]
+        [page, perPage, modifiedRows]
     )
 
-    const selectRow = useCallback(
-        (e, row) => {
-            if (!onSelect) {
-                console.warn("To enable selection, provide the 'onSelect' function to 'DataTable' component. If you are storing select state via a 'useState' hook, you can do something like: '<DataTable select={select} onSelect={setSelect} />'. See https://bit.dev/icomera/components/layout/data-table for more information.")
-            } else {
-                onSelect(
-                    e.target.checked
-                    ? selected.concat(row[primary])
-                    : selected.filter( val => val !== row[primary] )
-                )
-            }
-        },
+    const handleSelectAll = useCallback(
+        e => 
+            onSelect(
+                e.target.checked
+                ? modifiedRows.map( row => row[primary] )
+                : []
+            ),
+        [modifiedRows, primary, onSelect]
+    )
+
+    const handleSelectRow = useCallback(
+        (e, row) =>
+            onSelect(
+                e.target.checked
+                ? selected.concat(row[primary])
+                : selected.filter( val => val !== row[primary] )
+            ),
         [primary, selected, onSelect]
     )
 
-    const sortData = useCallback(
-        (field, direction) => {
-            const sorted = [...filtered].sort(
-                (a, b) => {
-                    if (a[field] < b[field]) {
-                        return direction === 'asc' ? -1 : 1;
-                    }
-                    if (a[field] > b[field]) {
-                        return direction === 'asc' ? 1 : -1;
-                    }
-                    return 0;
-                }
-            )
-            setSorting({field, direction})
-            setFiltered(sorted)
-        },
-        [filtered]
-    )
-
-    if (selected) {
-        adjustedColumns = useMemo(
-            () => addCheckboxes(
-                adjustedColumns,
-                filtered,
-                selected,
-                selectAll,
-                selectRow,
-                primary)
-            ,
-            [adjustedColumns, filtered, selected, selectAll, selectRow, primary]
-        )
-    }
-    
-    // Search
-
-    const handleSearch = event => {
-        const {name, value} = event.target
-        setSearch({[name] : value})
-        if (selected) {
-            filterSelected(name, value)
-        }
-        filterAll(name, value)
+    const handleChangePerPage = e => {
+        setPerPage( parseInt(e.target.value) )
+        setPage(0)
     }
 
-    const filterAll = useCallback(
-        (field, query) => {
-
-            let rows = adjustedRows
-
-            // if sorting is active, sort the rows before filtering
-            if(Object.keys(sorting).length !== 0) {
-                rows = [...rows].sort(
-                    (a, b) => {
-                        if (a[sorting.field] < b[sorting.field]) {
-                            return sorting.direction === 'asc' ? -1 : 1;
-                        }
-                        if (a[sorting.field] > b[sorting.field]) {
-                            return sorting.direction === 'asc' ? 1 : -1;
-                        }
-                        return 0;
-                    }
-                )
-            }
-
-            const previous = rows.filter( row => {
-                let match = true
-                for ( const prop in search) {
-                    const source = row[prop].toString().toLowerCase()
-                    const target = search[prop].toLowerCase()
-                    if (!source.includes(target) && prop !== field) {
-                        match = false
-                    }
-                }
-                return match
-            })
-            const result = previous.filter(row => 
-                row[field].toString().toLowerCase().includes(query.toLowerCase())
-            )
-
-            setActivePage(0)
-           
-            setFiltered(result)
-        },
-        [search, adjustedRows, sorting]
-    )
-
-    const filterSelected = useCallback(
-        (field, query) => {
-            const filtered = adjustedRows.filter(row => row[field].toString().toLowerCase().includes(query.toLowerCase()))
-            const filteredIDs = filtered.map(row => row[primary])
-            const result = selected.filter(id => filteredIDs.indexOf(id) !== -1)
-            onSelect(result)
-        },
-        [selected, onSelect, adjustedRows, primary]
-    )
-
-    // pages
-
-    const pages = useMemo(
-        () => getPages(
-            filtered,
-            perPage,
-            primary)
-        ,
-        [filtered, perPage, primary]
-    )
-
-    const handlePerPage = useCallback(
-        number => {
-            if( activePage > Math.ceil(
-                filtered.length / number
-                )) {
-                setActivePage(Math.ceil(
-                    filtered.length / number
-                ) - 1 )
-            }
-            setPerPage(number)
-        },
-        [activePage, filtered]
-    )
+    const handleChangePage = newPage => setPage(newPage)
 
     return (
-        <Box ref={ref} {...rest}>
-            <Header
-                columns={adjustedColumns}
-                sortData={sortData}
-                sorting={sorting}
-                search={search}
-                handleSearch={handleSearch}
-            />
-            <Body
-                activePage={activePage}
-                columns={adjustedColumns}
-                selected={selected}
-                rows={filtered}
-                pages={pages}
-                primary={primary}
-            />
-            { filtered.length > perPage &&
-                <Footer>
-                    <Pagination
-                        totalPages={pages.length}
-                        totalRows={filtered.length}
-                        active={activePage}
-                        setActive={setActivePage}
-                        perPage={perPage}
-                        handlePerPage={handlePerPage}
-                    />
-                </Footer>
-            }
-        </Box>
+        <Table>
+            <TableHeader>
+                <TableRow>
+                    { selected &&
+                        <TableCell as='th' sx={{ width: '64px' }}>
+                            <Checkbox
+                                indeterminate={selected.length > 0 && selected.length < modifiedRows.length}
+                                checked={modifiedRows.length > 0 && selected.length === modifiedRows.length}
+                                onChange={e => handleSelectAll(e)}
+                            />
+                        </TableCell>
+                    }
+                    {columns.map( column =>
+                        <TableCell as='th' key={column.field}>
+                            <Flex 
+                                sx={{ 
+                                    justifyContent: !column.align ? 'space-between' : column.align === 'end' ? 'flex-end' : 'center', 
+                                    alignItems: 'center' 
+                                }}
+                            >
+                                { !column.sort &&
+                                    <Text variant='tableHeader'>
+                                        {column.header}
+                                    </Text>
+                                }
+                                { column.sort &&
+                                    <SortController
+                                        field={column.field}
+                                        label={column.header}
+                                        sorting={sorting}
+                                        onSort={setSorting}
+                                        setPage={setPage}
+                                    />
+                                }
+                                { column.search &&
+                                    <SearchController
+                                        field={column.field}
+                                        searching={searching}
+                                        onSearch={setSearching}
+                                        focused={focused}
+                                        setFocused={setFocused}
+                                        setPage={setPage}
+                                    />
+                                }
+                            </Flex>
+                        </TableCell>
+                    )}
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                { modifiedRows
+                    .slice(slice.start, slice.end)
+                    .map( row => 
+                    <TableRow key={row[primary]} selected={selected.indexOf(row[primary]) !== -1}>
+                        { selected &&
+                            <TableCell>
+                                <Checkbox
+                                    checked={selected.indexOf(row[primary]) !== -1}
+                                    onChange={e => handleSelectRow(e, row)}
+                                />
+                            </TableCell>
+                        }
+                        { columns.map( column => 
+                            <TableCell key={row[primary] + row[column.field]} align={column.align}>
+                                { row[column.field] && !column.render
+                                    ? 
+                                    <Text>
+                                        {row[column.field]}
+                                    </Text>
+                                    :
+                                    column.render(row)
+                                }
+                            </TableCell>
+                        )}
+                    </TableRow>
+                )}
+            </TableBody>
+            <TableFooter>
+                <TableRow>
+                    <TableCell colSpan={(selected ? columns.length + 1 : columns.length).toString()}>
+                        <Flex sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                            <Flex>
+                                { modifiedRows.length < rows.length && 
+                                    <Text 
+                                        pr={3}
+                                        mr={3}
+                                        sx={{ borderRightWeight: 'thin', borderRightStyle: 'solid', borderRightColor: 'border'  }}
+                                    >
+                                        Filtered: {modifiedRows.length} of {rows.length}
+                                    </Text>
+                                }
+                                <Text color={selected.length > 0 ? 'text' : 'muted'}>
+                                    Selected: {selected.length} of {rows.length}
+                                </Text>
+                            </Flex>
+                            { perPage &&
+                                <TablePagination
+                                    count={modifiedRows.length}
+                                    page={page}
+                                    rowsPerPage={perPage}
+                                    rowsPerPageOptions={rowsPerPageOptions}
+                                    onChangePage={handleChangePage}
+                                    onChangeRowsPerPage={handleChangePerPage}
+                                />
+                            }
+                        </Flex>
+                    </TableCell>
+                </TableRow>
+            </TableFooter>
+        </Table>
     )
-})
+}
 
 DataTable.propTypes = {
     columns: PropTypes.arrayOf(
         PropTypes.shape({
-            align: PropTypes.oneOf([
-                'center',
-                'left',
-                'right'
-            ]),
+            align: PropTypes.oneOf(['start', 'center', 'end']),
             field: PropTypes.string.isRequired,
-            fixed: PropTypes.bool,
-            header: PropTypes.oneOfType([
-                PropTypes.string,
-                PropTypes.element
-            ]),
-            render: PropTypes.oneOfType([
-                PropTypes.func,
-                PropTypes.element
-            ]),
+            header: PropTypes.string,
+            render: PropTypes.func,
             primary: PropTypes.bool,
             search: PropTypes.bool,
-            sortable: PropTypes.bool,
-            sortOn: PropTypes.oneOfType([
-                PropTypes.func,
-                PropTypes.string,
-                PropTypes.number
-            ]),
-            width: PropTypes.number,
+            sort: PropTypes.oneOfType([
+                PropTypes.bool,
+                PropTypes.func
+            ])
         })
     ).isRequired,
-    rows: PropTypes.arrayOf(PropTypes.object).isRequired,
-    onSelect: PropTypes.func,
-    pageSize: PropTypes.oneOf([
-        5, 10, 20, 50
-    ]),
+    rows: PropTypes.array.isRequired,
+    rowsPerPage: PropTypes.number,
+    rowsPerPageOptions: PropTypes.array,
     primaryKey: PropTypes.string,
     selected: PropTypes.array,
-    title: PropTypes.string,
+    onSelect: PropTypes.func
 }
 
 export default DataTable

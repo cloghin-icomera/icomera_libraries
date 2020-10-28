@@ -120,12 +120,17 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms/checkbox@0.0.8": {
+    "icomera.components/atoms/checkbox@0.0.9": {
         "files": [
             {
                 "relativePath": "src/components/atoms/Checkbox/Checkbox.js",
                 "test": false,
                 "name": "Checkbox.js"
+            },
+            {
+                "relativePath": "src/components/atoms/Checkbox/_Checkbox.js",
+                "test": false,
+                "name": "_Checkbox.js"
             }
         ],
         "mainFile": "src/components/atoms/Checkbox/Checkbox.js",
@@ -499,7 +504,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms@0.0.31": {
+    "icomera.components/atoms@0.0.33": {
         "files": [
             {
                 "relativePath": "src/components/atoms/index.js",
@@ -511,7 +516,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/layout/data-table@0.0.18": {
+    "icomera.components/layout/data-table@0.0.20": {
         "files": [
             {
                 "relativePath": "src/components/layout/DataTable/DataTable.js",
@@ -577,7 +582,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/layout@0.0.20": {
+    "icomera.components/layout@0.0.22": {
         "files": [
             {
                 "relativePath": "src/components/layout/index.js",
@@ -1042,7 +1047,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.themes/icomera@0.0.38": {
+    "icomera.themes/icomera@0.0.39": {
         "files": [
             {
                 "relativePath": "src/themes/icomera.js",
