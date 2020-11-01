@@ -120,7 +120,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms/checkbox@0.0.9": {
+    "icomera.components/atoms/checkbox@0.0.10": {
         "files": [
             {
                 "relativePath": "src/components/atoms/Checkbox/Checkbox.js",
@@ -138,7 +138,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms/close@0.0.24": {
+    "icomera.components/atoms/close@0.0.25": {
         "files": [
             {
                 "relativePath": "src/components/atoms/Close/Close.js",
@@ -255,7 +255,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms/icon-button@0.0.22": {
+    "icomera.components/atoms/icon-button@0.0.23": {
         "files": [
             {
                 "relativePath": "src/components/atoms/IconButton/IconButton.js",
@@ -335,7 +335,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms/menu-button@0.0.23": {
+    "icomera.components/atoms/menu-button@0.0.24": {
         "files": [
             {
                 "relativePath": "src/components/atoms/MenuButton/MenuButton.js",
@@ -504,7 +504,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/atoms@0.0.33": {
+    "icomera.components/atoms@0.0.34": {
         "files": [
             {
                 "relativePath": "src/components/atoms/index.js",
@@ -516,7 +516,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/layout/data-table@0.0.20": {
+    "icomera.components/layout/data-table@0.0.24": {
         "files": [
             {
                 "relativePath": "src/components/layout/DataTable/DataTable.js",
@@ -524,39 +524,14 @@
                 "name": "DataTable.js"
             },
             {
-                "relativePath": "src/components/layout/DataTable/DataTableBody.js",
-                "test": false,
-                "name": "DataTableBody.js"
-            },
-            {
-                "relativePath": "src/components/layout/DataTable/DataTableCell.js",
-                "test": false,
-                "name": "DataTableCell.js"
-            },
-            {
-                "relativePath": "src/components/layout/DataTable/DataTableFooter.js",
-                "test": false,
-                "name": "DataTableFooter.js"
-            },
-            {
-                "relativePath": "src/components/layout/DataTable/DataTableHeader.js",
-                "test": false,
-                "name": "DataTableHeader.js"
-            },
-            {
-                "relativePath": "src/components/layout/DataTable/DataTablePagination.js",
-                "test": false,
-                "name": "DataTablePagination.js"
-            },
-            {
-                "relativePath": "src/components/layout/DataTable/DataTableRow.js",
-                "test": false,
-                "name": "DataTableRow.js"
-            },
-            {
                 "relativePath": "src/components/layout/DataTable/README.md",
                 "test": false,
                 "name": "README.md"
+            },
+            {
+                "relativePath": "src/components/layout/DataTable/index.js",
+                "test": false,
+                "name": "index.js"
             },
             {
                 "relativePath": "src/components/layout/DataTable/utils.js",
@@ -582,7 +557,169 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/layout@0.0.22": {
+    "icomera.components/layout/table-body@0.0.1": {
+        "files": [
+            {
+                "relativePath": "src/components/layout/TableBody/TableBody.js",
+                "test": false,
+                "name": "TableBody.js"
+            },
+            {
+                "relativePath": "src/components/layout/TableBody/index.js",
+                "test": false,
+                "name": "index.js"
+            }
+        ],
+        "mainFile": "src/components/layout/TableBody/index.js",
+        "trackDir": "src/components/layout/TableBody",
+        "origin": "AUTHORED",
+        "exported": true
+    },
+    "icomera.components/layout/table-cell@0.0.1": {
+        "files": [
+            {
+                "relativePath": "src/components/layout/TableCell/TableCell.js",
+                "test": false,
+                "name": "TableCell.js"
+            },
+            {
+                "relativePath": "src/components/layout/TableCell/index.js",
+                "test": false,
+                "name": "index.js"
+            }
+        ],
+        "mainFile": "src/components/layout/TableCell/index.js",
+        "trackDir": "src/components/layout/TableCell",
+        "origin": "AUTHORED",
+        "exported": true
+    },
+    "icomera.components/layout/table-footer@0.0.1": {
+        "files": [
+            {
+                "relativePath": "src/components/layout/TableFooter/TableFooter.js",
+                "test": false,
+                "name": "TableFooter.js"
+            },
+            {
+                "relativePath": "src/components/layout/TableFooter/index.js",
+                "test": false,
+                "name": "index.js"
+            }
+        ],
+        "mainFile": "src/components/layout/TableFooter/index.js",
+        "trackDir": "src/components/layout/TableFooter",
+        "origin": "AUTHORED",
+        "exported": true
+    },
+    "icomera.components/layout/table-header@0.0.1": {
+        "files": [
+            {
+                "relativePath": "src/components/layout/TableHeader/TableHeader.js",
+                "test": false,
+                "name": "TableHeader.js"
+            },
+            {
+                "relativePath": "src/components/layout/TableHeader/index.js",
+                "test": false,
+                "name": "index.js"
+            }
+        ],
+        "mainFile": "src/components/layout/TableHeader/index.js",
+        "trackDir": "src/components/layout/TableHeader",
+        "origin": "AUTHORED",
+        "exported": true
+    },
+    "icomera.components/layout/table-pagination@0.0.1": {
+        "files": [
+            {
+                "relativePath": "src/components/layout/TablePagination/TablePagination.js",
+                "test": false,
+                "name": "TablePagination.js"
+            },
+            {
+                "relativePath": "src/components/layout/TablePagination/index.js",
+                "test": false,
+                "name": "index.js"
+            }
+        ],
+        "mainFile": "src/components/layout/TablePagination/index.js",
+        "trackDir": "src/components/layout/TablePagination",
+        "origin": "AUTHORED",
+        "exported": true
+    },
+    "icomera.components/layout/table-row@0.0.1": {
+        "files": [
+            {
+                "relativePath": "src/components/layout/TableRow/TableRow.js",
+                "test": false,
+                "name": "TableRow.js"
+            },
+            {
+                "relativePath": "src/components/layout/TableRow/index.js",
+                "test": false,
+                "name": "index.js"
+            }
+        ],
+        "mainFile": "src/components/layout/TableRow/index.js",
+        "trackDir": "src/components/layout/TableRow",
+        "origin": "AUTHORED",
+        "exported": true
+    },
+    "icomera.components/layout/table-search-field@0.0.1": {
+        "files": [
+            {
+                "relativePath": "src/components/layout/TableSearchField/TableSearchField.js",
+                "test": false,
+                "name": "TableSearchField.js"
+            },
+            {
+                "relativePath": "src/components/layout/TableSearchField/index.js",
+                "test": false,
+                "name": "index.js"
+            }
+        ],
+        "mainFile": "src/components/layout/TableSearchField/index.js",
+        "trackDir": "src/components/layout/TableSearchField",
+        "origin": "AUTHORED",
+        "exported": true
+    },
+    "icomera.components/layout/table-sort-button@0.0.1": {
+        "files": [
+            {
+                "relativePath": "src/components/layout/TableSortButton/TableSortButton.js",
+                "test": false,
+                "name": "TableSortButton.js"
+            },
+            {
+                "relativePath": "src/components/layout/TableSortButton/index.js",
+                "test": false,
+                "name": "index.js"
+            }
+        ],
+        "mainFile": "src/components/layout/TableSortButton/index.js",
+        "trackDir": "src/components/layout/TableSortButton",
+        "origin": "AUTHORED",
+        "exported": true
+    },
+    "icomera.components/layout/table@0.0.2": {
+        "files": [
+            {
+                "relativePath": "src/components/layout/Table/Table.js",
+                "test": false,
+                "name": "Table.js"
+            },
+            {
+                "relativePath": "src/components/layout/Table/index.js",
+                "test": false,
+                "name": "index.js"
+            }
+        ],
+        "mainFile": "src/components/layout/Table/index.js",
+        "trackDir": "src/components/layout/Table",
+        "origin": "AUTHORED",
+        "exported": true
+    },
+    "icomera.components/layout@0.0.26": {
         "files": [
             {
                 "relativePath": "src/components/layout/index.js",
@@ -594,7 +731,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.components/utils@0.0.8": {
+    "icomera.components/utils@0.0.9": {
         "files": [
             {
                 "relativePath": "src/components/utils/index.js",
@@ -1047,7 +1184,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "icomera.themes/icomera@0.0.39": {
+    "icomera.themes/icomera@0.0.40": {
         "files": [
             {
                 "relativePath": "src/themes/icomera.js",

@@ -20,7 +20,7 @@ var getClassName = function getClassName(active, rounded, disabled, href, onClic
     classes.push('hover-back');
   }
 
-  if (disabled || !href && !onClick) {
+  if (disabled) {
     classes.push('disabled');
   }
 

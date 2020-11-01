@@ -8,17 +8,20 @@ import {
 	Back,
 	Calendar,
 	Confirm,
-	Copy,
+    Copy,
+    Dashboard,
 	Delete,
 	Edit,
 	Kibana,
 	Link,
 	Remove,
 	RemoveCircle,
-	Portal,
+    Portal,
+    Script,
 	Search,
 	Sync,
-	System,
+    System,
+    SystemDetails,
 	Timer,
 	Upload
 } from '../icons/icomera/outline';
@@ -33,7 +36,8 @@ import {
 
 import {
 	Alert,
-	Box,
+    Box,
+    Button,
 	Close,
 	Text,
 	Card,
@@ -51,27 +55,21 @@ import { TypeScale, TypeStyle, ColorPalette } from '@theme-ui/style-guide';
 const ModeChanger = props => {
 	const [colorMode, setColorMode] = useColorMode();
 	return (
-		<button {...props} onClick={e => { setColorMode(colorMode === 'default' ? 'dark' : 'default') }}>
-			Toggle {colorMode === 'default' ? 'Dark' : 'Light'}
-      	</button>
+		<Button size='small' label={colorMode === 'default' ? 'Dark' : 'Light'} onClick={e => { setColorMode(colorMode === 'default' ? 'dark' : 'default') }} />
 	)
 }
 
 export default () => (
     <Flex sx={{ flexWrap: 'wrap', height: '100%', overflow: 'hidden' }}>
-        <ColorModeProvider mode='dark'>
-            <Flex p={4} bg='background' sx={{ width: '100%', height: '72px' }}>
-                <ModeChanger />
-            </Flex>
-        </ColorModeProvider>
+        <Flex p={4} bg='card' sx={{ width: '100%', height: '64px', justifyContent: 'flex-end', boxShadow: t => `0 10px 10px ${t.colors.background}`, zIndex: '1' }}>
+            <ModeChanger />
+        </Flex>
         <Flex sx={{ height: '100%', flex: '1 1 100%' }}>
-            <ColorModeProvider mode='dark'>
-                <Sidebar>
-                    <NavLink to='/portals' exact variant='sidebar' icon={<Portal />} label="Portals" />
-                    <NavLink to='/servers' exact variant='sidebar' icon={<Sync />} label="Sync Servers" />
-                    <NavLink to='/systems' exact variant='sidebar' icon={<System />} label="Systems" />
-                </Sidebar>
-            </ColorModeProvider>
+            <Sidebar pt={6}>
+                <NavLink to='/buttons' exact variant='sidebar' icon={<Dashboard />} label="Dashboard" />
+                <NavLink to='/tables' exact variant='sidebar' icon={<SystemDetails />} label="Probes" />
+                <NavLink to='/' exact variant='sidebar' icon={<Script />} label="Script Library" />
+            </Sidebar>
             <Box p={6} sx={{ overflowY: 'scroll' }}>
                 <TypeScale />
                 <TypeStyle
@@ -95,16 +93,16 @@ export default () => (
                         <Calendar stroke='text' />
                         <Confirm stroke='text' />
                         <Copy stroke='text' />
-                        <Delete stroke='#ff0000' />
+                        <Dashboard stroke='text' />
                         <Edit stroke='text' />
                         <Kibana stroke='text' />
                         <Link stroke='text' />
                         <Remove stroke='text' />
                         <RemoveCircle stroke='text' />
                         <Portal stroke='text' />
-                        <Search stroke='text' />
+                        <Script stroke='text' />
                         <Sync stroke='text' />
-                        <System stroke='text' />
+                        <SystemDetails stroke='text' />
                         <Timer stroke='text' />
                         <Upload stroke='text' />
                         <Error fill='error' />

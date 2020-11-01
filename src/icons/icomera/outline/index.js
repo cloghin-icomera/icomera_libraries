@@ -24,6 +24,9 @@ import Upload from './Upload/Upload';
 
 export { default as ArrowStart} from './ArrowStart/ArrowStart'
 export { default as ArrowEnd} from './ArrowEnd/ArrowEnd'
+export { Dashboard } from './Dashboard'
+export { Script } from './Script'
+export { SystemDetails } from './SystemDetails'
 
 export {
     Add,

@@ -3,11 +3,26 @@ import React, { useCallback, useRef, useEffect } from 'react'
 import { TableSortButton } from '../TableSortButton'
 import { TableSearchField } from '../TableSearchField'
 
-export const adjustData = (rows, columns) => {
+export const adjustData = (rows, columns) => {    
+    // check if columns field has a correspondent inside the rows
+    const baseColumns = columns.filter(column => !column.render && column.field)
+    if (baseColumns.length > 0 && rows.length > 0) {
+        
+        baseColumns.forEach(column => {
+            rows.forEach(row => {
+                if(!row[column.field]) {
+                    console.error('row:', row, 'does not include property', column.field, '--> columns:', columns)
+                    row[column.field] = '(not found)'
+                }
+            })
+        })
+    }
 
+    //
     const renderedColumns = columns
-        .filter( c => c.render && !(c.field in rows[0]))
-
+    .filter( c => 
+        c.render && c.field && !c.field.includes(rows[0])
+    )
     const renderedFields = row => {
         let obj = {}
         if (renderedColumns.length > 0) {
@@ -37,6 +52,35 @@ export const getFilters = columns => {
         }
     })
     return result
+}
+
+export const getPrimary = (columns, rows, primaryKey) => {
+
+    if (primaryKey) {
+        if ( rows.filter(row => row[primaryKey]).length === 0 ) {
+            console.error('Could not find property:', primaryKey, 'in rows data. Selection disabled.')
+            return false
+        }
+        return primaryKey
+    }
+
+    // find primary key in columns
+    const pc = columns.filter(col => col.primary)
+
+    if (pc.length === 1) {
+        return pc[0].field
+    }
+    if (pc.length > 1) {
+        console.warn('Multiple primary keys defined, using:', pc[0].field, '--> columns:', pc)
+        return pc[0].field
+    }
+    
+    if (columns.length > 0){
+        console.warn('No primary key defined. Selection disabled.')
+        return false
+    }
+
+    return false
 }
 
 export const SortController = ({field, label, sorting, onSort, setPage}) => {

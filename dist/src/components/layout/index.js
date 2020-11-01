@@ -3,16 +3,16 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-Object.defineProperty(exports, "DataTable", {
-  enumerable: true,
-  get: function get() {
-    return _DataTable.default;
-  }
-});
 Object.defineProperty(exports, "Sidebar", {
   enumerable: true,
   get: function get() {
     return _Sidebar.default;
+  }
+});
+Object.defineProperty(exports, "DataTable", {
+  enumerable: true,
+  get: function get() {
+    return _DataTable.DataTable;
   }
 });
 Object.defineProperty(exports, "Table", {
@@ -63,10 +63,16 @@ Object.defineProperty(exports, "TableSearchField", {
     return _TableSearchField.TableSearchField;
   }
 });
-
-var _DataTable = _interopRequireDefault(require("./DataTable/DataTable"));
+Object.defineProperty(exports, "TablePagination", {
+  enumerable: true,
+  get: function get() {
+    return _TablePagination.TablePagination;
+  }
+});
 
 var _Sidebar = _interopRequireDefault(require("./Sidebar/Sidebar"));
+
+var _DataTable = require("./DataTable");
 
 var _Table = require("./Table");
 
@@ -83,6 +89,8 @@ var _TableFooter = require("./TableFooter");
 var _TableSortButton = require("./TableSortButton");
 
 var _TableSearchField = require("./TableSearchField");
+
+var _TablePagination = require("./TablePagination");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

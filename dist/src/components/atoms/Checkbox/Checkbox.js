@@ -108,7 +108,6 @@ var _default = _react.default.forwardRef(function (_ref2, ref) {
     variant: variant,
     className: indeterminate ? 'indeterminate' : undefined,
     __css: {
-      mr: 1,
       borderRadius: 4,
       flexShrink: 0,
       'input:checked ~ &': {

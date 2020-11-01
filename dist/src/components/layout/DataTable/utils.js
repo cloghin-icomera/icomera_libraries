@@ -1,15 +1,21 @@
 "use strict";
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getPrimary = exports.getPages = exports.adjustData = exports.addCheckboxes = void 0;
+exports.SearchController = exports.SortController = exports.getFilters = exports.adjustData = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
-var _atoms = require("../../atoms");
+var _TableSortButton = require("../TableSortButton");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _TableSearchField = require("../TableSearchField");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -17,68 +23,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-var TableCheckbox = function TableCheckbox(_ref) {
-  var checked = _ref.checked,
-      indeterminate = _ref.indeterminate,
-      onChange = _ref.onChange,
-      label = _ref.label,
-      props = _objectWithoutProperties(_ref, ["checked", "indeterminate", "onChange", "label"]);
-
-  return /*#__PURE__*/_react.default.createElement(_atoms.Checkbox, {
-    checked: checked,
-    indeterminate: indeterminate,
-    onChange: onChange,
-    label: label,
-    sx: {
-      fontSize: 1
-    }
-  });
-};
-
-var addCheckboxes = function addCheckboxes(columns, rows, selected, selectAll, selectRow, primaryKey) {
-  return [{
-    field: 'select',
-    width: 72,
-    fixed: true,
-    header: /*#__PURE__*/_react.default.createElement(TableCheckbox, {
-      checked: selected.length === rows.length && rows.length > 0,
-      indeterminate: selected.length > 0 && selected.length < rows.length,
-      onChange: function onChange(e) {
-        return selectAll(e);
-      },
-      label: selected.length > 0 && "(".concat(selected.length, ")")
-    }),
-    render: function render(row) {
-      return /*#__PURE__*/_react.default.createElement(TableCheckbox, {
-        key: row[primaryKey],
-        checked: selected.indexOf(row[primaryKey]) !== -1,
-        onChange: function onChange(e) {
-          return selectRow(e, row);
-        }
-      });
-    }
-  }].concat(_toConsumableArray(columns));
-};
-
-exports.addCheckboxes = addCheckboxes;
-
-var adjustData = function adjustData(columns, rows) {
+var adjustData = function adjustData(rows, columns) {
   var renderedColumns = columns.filter(function (c) {
     return c.render && !(c.field in rows[0]);
   });
@@ -88,8 +33,8 @@ var adjustData = function adjustData(columns, rows) {
 
     if (renderedColumns.length > 0) {
       renderedColumns.forEach(function (column) {
-        if (column.sortOn) {
-          obj[column.field] = column.sortOn(row);
+        if (column.sort) {
+          obj[column.field] = column.sort(row);
         }
       });
       return obj;
@@ -99,68 +44,94 @@ var adjustData = function adjustData(columns, rows) {
   }; // add the rendered fields to rows
 
 
-  var adjustedRows = rows.map(function (row) {
+  return rows.map(function (row) {
     return _objectSpread({}, renderedFields(row), {}, row);
   });
-  var adjustedColumns = columns.map(function (c) {
-    if (!c.sortOn && c.render && !(c.field in rows[0])) {
-      console.warn("Sorting on rendered column '".concat(c.header, "' is disabled. To enable, use the 'sortOn' property to return a sortable value eg. sortOn: row => value"));
-      c.sortable = false;
-    } else if (c.sortable === undefined) {
-      c.sortable = true;
-    }
-
-    return c;
-  });
-  return [adjustedColumns, adjustedRows];
 };
 
 exports.adjustData = adjustData;
 
-var getPages = function getPages(rows, pageSize, primaryKey) {
-  var pages = [];
-
-  if (pageSize && rows.length > pageSize) {
-    var _loop = function _loop(index) {
-      var start = index * pageSize;
-      var end = index * pageSize + pageSize;
-      var page = [];
-      rows.slice(start, end).forEach(function (row) {
-        page.push(row[primaryKey]);
-      });
-      pages.push(page);
-    };
-
-    for (var index = 0; index < Math.ceil(rows.length / pageSize); index++) {
-      _loop(index);
-    }
-  } else {
-    var page = [];
-    rows.forEach(function (row) {
-      page.push(row[primaryKey]);
-    });
-    pages.push(page);
-  }
-
-  return pages;
-};
-
-exports.getPages = getPages;
-
-var getPrimary = function getPrimary(columns, primaryKey) {
-  var primary;
+var getFilters = function getFilters(columns) {
+  var result = {};
   columns.forEach(function (column) {
-    if ('primary' in column) {
-      primary = column.field;
-    } else if (primaryKey) {
-      primary = primaryKey;
-    } else {
-      primary = columns[0].field;
+    if (column.search) {
+      result[column.field] = {
+        value: '',
+        active: false
+      };
     }
   });
-  return primary;
+  return result;
 };
 
-exports.getPrimary = getPrimary;
+exports.getFilters = getFilters;
+
+var SortController = function SortController(_ref) {
+  var field = _ref.field,
+      label = _ref.label,
+      sorting = _ref.sorting,
+      onSort = _ref.onSort,
+      setPage = _ref.setPage;
+  var handleSorting = (0, _react.useCallback)(function () {
+    var value = !sorting[field] ? 'asc' : sorting[field] === 'asc' ? 'desc' : 'asc';
+    setPage(0);
+    onSort(_defineProperty({}, field, value));
+  }, [sorting, field, onSort, setPage]);
+  return /*#__PURE__*/_react.default.createElement(_TableSortButton.TableSortButton, {
+    label: label,
+    sortOrder: sorting[field],
+    onSort: handleSorting
+  });
+};
+
+exports.SortController = SortController;
+
+var SearchController = function SearchController(_ref2) {
+  var field = _ref2.field,
+      searching = _ref2.searching,
+      onSearch = _ref2.onSearch,
+      focused = _ref2.focused,
+      setFocused = _ref2.setFocused,
+      setPage = _ref2.setPage;
+  var inputEl = (0, _react.useRef)();
+  var handleSearch = (0, _react.useCallback)(function (e) {
+    var query = _objectSpread({}, searching, _defineProperty({}, field, {
+      active: searching[field].active,
+      value: e.target.value
+    }));
+
+    setPage(0);
+    onSearch(query);
+  }, [field, searching, onSearch, setPage]);
+  var handleToggle = (0, _react.useCallback)(function () {
+    setFocused(searching[field].active ? null : field);
+
+    var query = _objectSpread({}, searching, _defineProperty({}, field, {
+      active: !searching[field].active,
+      value: ''
+    }));
+
+    onSearch(query);
+  }, [field, searching, setFocused, onSearch]);
+  var handleBlur = (0, _react.useCallback)(function () {
+    return setFocused(null);
+  }, [setFocused]);
+  (0, _react.useEffect)(function () {
+    if (inputEl && focused === field) {
+      inputEl.current.focus();
+    }
+  });
+  return /*#__PURE__*/_react.default.createElement(_TableSearchField.TableSearchField, {
+    active: searching[field].active,
+    value: searching[field].value,
+    name: field,
+    ref: inputEl,
+    onSearch: handleSearch,
+    onToggle: handleToggle,
+    onBlur: handleBlur
+  });
+};
+
+exports.SearchController = SearchController;
 
 //# sourceMappingURL=utils.js.map
